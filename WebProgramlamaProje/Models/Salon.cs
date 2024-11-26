@@ -2,7 +2,7 @@
 
 namespace WebProgramlamaProje.Models
 {
-    public class Salon : DbContext
+    public class Salon 
     {
         public int SalonId { get; set; }
         public string Isim { get; set; }

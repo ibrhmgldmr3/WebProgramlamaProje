@@ -2,7 +2,7 @@
 {
     public class CalisanUygunluk
     {
-        public int UygunlukId { get; set; }
+        public int CalisanUygunlukId { get; set; }
         public int CalisanId { get; set; }
         public Calisan Calisan { get; set; }
         public TimeSpan Baslangic { get; set; }
