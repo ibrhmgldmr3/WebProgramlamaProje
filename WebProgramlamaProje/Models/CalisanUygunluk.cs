@@ -9,4 +9,5 @@
         public TimeSpan Bitis { get; set; }
     }
 
+
 }
