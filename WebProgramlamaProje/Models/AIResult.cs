@@ -3,11 +3,13 @@
     public class AIResult
     {
         public int AIResultId { get; set; }
-        public int UserId { get; set; }
-        public User Kullanici { get; set; }
-        public string ImageUrl { get; set; }
-        public string OnerilenSacModeli { get; set; }
-        public string OnerilenSacRengi { get; set; }
+        public string ModelName { get; set; }
+        public string SuggestedColor { get; set; }
+        public DateTime CreatedAt { get; set; }
+
+        // Kullanıcı ile ilişki
+        public int KullaniciId { get; set; }
+        public Kullanici Kullanici { get; set; }
     }
 
 }

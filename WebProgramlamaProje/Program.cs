@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using WebProgramlamaProje.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+var conn = "Server=(localdb)\\mssqllocaldb;Database=WebProgramlamaProje;Trusted_Connection=True";
+builder.Services.AddDbContext<SalonDbContext>(options =>
+{
+    options.UseSqlServer(conn);
+});
 
 var app = builder.Build();
 

@@ -1,6 +1,8 @@
-﻿namespace WebProgramlamaProje.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace WebProgramlamaProje.Models
 {
-    public class Salon
+    public class Salon : DbContext
     {
         public int SalonId { get; set; }
         public string Isim { get; set; }
@@ -11,7 +13,8 @@
         public TimeSpan CalismaBitis { get; set; }
         public List<Islem> Islemler { get; set; } = new List<Islem>();
         public List<Calisan> Calisanlar { get; set; } = new List<Calisan>();
+
+
+
     }
-
-
 }

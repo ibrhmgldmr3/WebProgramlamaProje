@@ -13,7 +13,12 @@ namespace WebProgramlamaProje.Models
         [MaxLength(11)]
         
         public string PhoneNumber { get; set; }
+
+        // Kullanıcının randevuları
         public List<Randevu> Randevular { get; set; } = new List<Randevu>();
+
+        // Kullanıcının yapay zeka sonuçları
+        public List<AIResult> AIResult { get; set; } = new List<AIResult>();
     }
 
 }
