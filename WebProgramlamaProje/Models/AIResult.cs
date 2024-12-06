@@ -5,6 +5,7 @@
         public int AIResultId { get; set; }
         public string ModelName { get; set; }
         public string SuggestedColor { get; set; }
+        public string SuggestedStyle { get; set; }
         public DateTime CreatedAt { get; set; }
 
         // Kullanıcı ile ilişki

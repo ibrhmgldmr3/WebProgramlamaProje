@@ -9,6 +9,8 @@
         public int SalonId { get; set; }
         public Salon Salon { get; set; }
         public List<CalisanUygunluk> UygunlukSaatleri { get; set; } = new List<CalisanUygunluk>();
+        public List<Islem> Islemler { get; set; } = new List<Islem>();
+
     }
 
 
