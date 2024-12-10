@@ -11,7 +11,6 @@ namespace WebProgramlamaProje.Models
         public string Tip { get; set; } // "Kuaför" veya "Berber"
         public TimeSpan CalismaBaslangic { get; set; }
         public TimeSpan CalismaBitis { get; set; }
-        public List<Islem> Islemler { get; set; } = new List<Islem>();
         public List<Calisan> Calisanlar { get; set; } = new List<Calisan>();
 
 

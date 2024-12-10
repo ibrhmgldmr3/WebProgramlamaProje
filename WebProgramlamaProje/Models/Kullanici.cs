@@ -15,12 +15,12 @@ namespace WebProgramlamaProje.Models
         public string PhoneNumber { get; set; }
 
         // Kullanıcının randevuları
-        public List<Randevu> Randevular { get; set; } = new List<Randevu>();
+       public List<Randevu> Randevular { get; set; } = new List<Randevu>();
 
-        public List<Islem> YaptirdiğiIslemlemler { get; set; } = new List<Islem>();
+       // public List<Islem> YaptirdiğiIslemlemler { get; set; } = new List<Islem>();
 
         // Kullanıcının yapay zeka sonuçları
-        public List<AIResult> AIResult { get; set; } = new List<AIResult>();
+        //public List<AIResult> AIResult { get; set; } = new List<AIResult>();
     }
 
 }
