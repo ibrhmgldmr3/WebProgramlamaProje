@@ -6,22 +6,37 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebProgramlamaProje.Migrations
 {
     /// <inheritdoc />
-    public partial class Olusturma : Migration
+    public partial class ddd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Islemler",
+                columns: table => new
+                {
+                    IslemId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Ad = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Sure = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Ucret = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Islemler", x => x.IslemId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Kullanicilar",
                 columns: table => new
                 {
                     KullaniciId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false)
+                    FullName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,21 +44,21 @@ namespace WebProgramlamaProje.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Salon",
+                name: "Salonlar",
                 columns: table => new
                 {
                     SalonId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Isim = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Isim = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Adres = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telefon = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telefon = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     Tip = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CalismaBaslangic = table.Column<TimeSpan>(type: "time", nullable: false),
                     CalismaBitis = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Salon", x => x.SalonId);
+                    table.PrimaryKey("PK_Salonlar", x => x.SalonId);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,10 +67,10 @@ namespace WebProgramlamaProje.Migrations
                 {
                     AIResultId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ModelName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SuggestedColor = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    KullaniciId = table.Column<int>(type: "int", nullable: false)
+                    KullaniciId = table.Column<int>(type: "int", nullable: true),
+                    SuggestedColor = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SuggestedStyle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,66 +84,57 @@ namespace WebProgramlamaProje.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Calisan",
+                name: "Calisanlar",
                 columns: table => new
                 {
                     CalisanId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    KullaniciId = table.Column<int>(type: "int", nullable: true),
                     Ad = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Soyad = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Uzmanlik = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SalonId = table.Column<int>(type: "int", nullable: false)
+                    SalonId = table.Column<int>(type: "int", nullable: true),
+                    SalonId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Calisan", x => x.CalisanId);
+                    table.PrimaryKey("PK_Calisanlar", x => x.CalisanId);
                     table.ForeignKey(
-                        name: "FK_Calisan_Salon_SalonId",
+                        name: "FK_Calisanlar_Kullanicilar_KullaniciId",
+                        column: x => x.KullaniciId,
+                        principalTable: "Kullanicilar",
+                        principalColumn: "KullaniciId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Calisanlar_Salonlar_SalonId",
                         column: x => x.SalonId,
-                        principalTable: "Salon",
+                        principalTable: "Salonlar",
                         principalColumn: "SalonId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Calisanlar_Salonlar_SalonId1",
+                        column: x => x.SalonId1,
+                        principalTable: "Salonlar",
+                        principalColumn: "SalonId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Islem",
-                columns: table => new
-                {
-                    IslemId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ad = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sure = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Ucret = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    SalonId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Islem", x => x.IslemId);
-                    table.ForeignKey(
-                        name: "FK_Islem_Salon_SalonId",
-                        column: x => x.SalonId,
-                        principalTable: "Salon",
-                        principalColumn: "SalonId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CalisanUygunluk",
+                name: "CalisanUygunluklar",
                 columns: table => new
                 {
                     CalisanUygunlukId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CalisanId = table.Column<int>(type: "int", nullable: false),
+                    CalisanId = table.Column<int>(type: "int", nullable: true),
                     Baslangic = table.Column<TimeSpan>(type: "time", nullable: false),
                     Bitis = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CalisanUygunluk", x => x.CalisanUygunlukId);
+                    table.PrimaryKey("PK_CalisanUygunluklar", x => x.CalisanUygunlukId);
                     table.ForeignKey(
-                        name: "FK_CalisanUygunluk_Calisan_CalisanId",
+                        name: "FK_CalisanUygunluklar_Calisanlar_CalisanId",
                         column: x => x.CalisanId,
-                        principalTable: "Calisan",
+                        principalTable: "Calisanlar",
                         principalColumn: "CalisanId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -139,34 +145,46 @@ namespace WebProgramlamaProje.Migrations
                 {
                     RandevuId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CalisanId = table.Column<int>(type: "int", nullable: false),
-                    IslemId = table.Column<int>(type: "int", nullable: false),
-                    KullaniciId = table.Column<int>(type: "int", nullable: false),
+                    CalisanId = table.Column<int>(type: "int", nullable: true),
+                    IslemId = table.Column<int>(type: "int", nullable: true),
+                    KullaniciId = table.Column<int>(type: "int", nullable: true),
                     Tarih = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Saat = table.Column<TimeSpan>(type: "time", nullable: false),
-                    OnaylandiMi = table.Column<bool>(type: "bit", nullable: false)
+                    OnaylandiMi = table.Column<bool>(type: "bit", nullable: false),
+                    CalisanId1 = table.Column<int>(type: "int", nullable: true),
+                    KullaniciId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Randevular", x => x.RandevuId);
                     table.ForeignKey(
-                        name: "FK_Randevular_Calisan_CalisanId",
+                        name: "FK_Randevular_Calisanlar_CalisanId",
                         column: x => x.CalisanId,
-                        principalTable: "Calisan",
+                        principalTable: "Calisanlar",
                         principalColumn: "CalisanId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Randevular_Islem_IslemId",
+                        name: "FK_Randevular_Calisanlar_CalisanId1",
+                        column: x => x.CalisanId1,
+                        principalTable: "Calisanlar",
+                        principalColumn: "CalisanId");
+                    table.ForeignKey(
+                        name: "FK_Randevular_Islemler_IslemId",
                         column: x => x.IslemId,
-                        principalTable: "Islem",
+                        principalTable: "Islemler",
                         principalColumn: "IslemId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Randevular_Kullanicilar_KullaniciId",
                         column: x => x.KullaniciId,
                         principalTable: "Kullanicilar",
                         principalColumn: "KullaniciId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Randevular_Kullanicilar_KullaniciId1",
+                        column: x => x.KullaniciId1,
+                        principalTable: "Kullanicilar",
+                        principalColumn: "KullaniciId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -175,24 +193,34 @@ namespace WebProgramlamaProje.Migrations
                 column: "KullaniciId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Calisan_SalonId",
-                table: "Calisan",
+                name: "IX_Calisanlar_KullaniciId",
+                table: "Calisanlar",
+                column: "KullaniciId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Calisanlar_SalonId",
+                table: "Calisanlar",
                 column: "SalonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CalisanUygunluk_CalisanId",
-                table: "CalisanUygunluk",
+                name: "IX_Calisanlar_SalonId1",
+                table: "Calisanlar",
+                column: "SalonId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CalisanUygunluklar_CalisanId",
+                table: "CalisanUygunluklar",
                 column: "CalisanId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Islem_SalonId",
-                table: "Islem",
-                column: "SalonId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Randevular_CalisanId",
                 table: "Randevular",
                 column: "CalisanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Randevular_CalisanId1",
+                table: "Randevular",
+                column: "CalisanId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Randevular_IslemId",
@@ -203,6 +231,11 @@ namespace WebProgramlamaProje.Migrations
                 name: "IX_Randevular_KullaniciId",
                 table: "Randevular",
                 column: "KullaniciId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Randevular_KullaniciId1",
+                table: "Randevular",
+                column: "KullaniciId1");
         }
 
         /// <inheritdoc />
@@ -212,22 +245,22 @@ namespace WebProgramlamaProje.Migrations
                 name: "AIResults");
 
             migrationBuilder.DropTable(
-                name: "CalisanUygunluk");
+                name: "CalisanUygunluklar");
 
             migrationBuilder.DropTable(
                 name: "Randevular");
 
             migrationBuilder.DropTable(
-                name: "Calisan");
+                name: "Calisanlar");
 
             migrationBuilder.DropTable(
-                name: "Islem");
+                name: "Islemler");
 
             migrationBuilder.DropTable(
                 name: "Kullanicilar");
 
             migrationBuilder.DropTable(
-                name: "Salon");
+                name: "Salonlar");
         }
     }
 }

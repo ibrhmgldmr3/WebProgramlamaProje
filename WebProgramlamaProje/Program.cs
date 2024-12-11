@@ -5,10 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-var conn = "Host=localhost;Port=5432;Database=WebProgramlamaProje;Username=postgres;Password=0326";
+var conn = "Server=(localdb)\\mssqllocaldb;Database=WebProgramlamaProje;Trusted_Connection=True";
 builder.Services.AddDbContext<SalonDbContext>(options =>
 {
-    options.UseNpgsql(conn);
+    options.UseSqlServer(conn);
 });
 
 var app = builder.Build();

@@ -32,7 +32,7 @@ namespace WebProgramlamaProje.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("KullaniciId")
+                    b.Property<int?>("KullaniciId")
                         .HasColumnType("int");
 
                     b.Property<string>("SuggestedColor")
@@ -63,10 +63,10 @@ namespace WebProgramlamaProje.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("KullaniciId")
+                    b.Property<int?>("KullaniciId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SalonId")
+                    b.Property<int?>("SalonId")
                         .HasColumnType("int");
 
                     b.Property<int?>("SalonId1")
@@ -105,7 +105,7 @@ namespace WebProgramlamaProje.Migrations
                     b.Property<TimeSpan>("Bitis")
                         .HasColumnType("time");
 
-                    b.Property<int>("CalisanId")
+                    b.Property<int?>("CalisanId")
                         .HasColumnType("int");
 
                     b.HasKey("CalisanUygunlukId");
@@ -131,9 +131,9 @@ namespace WebProgramlamaProje.Migrations
                     b.Property<TimeSpan>("Sure")
                         .HasColumnType("time");
 
-                    b.Property<float>("Ucret")
+                    b.Property<decimal>("Ucret")
                         .HasPrecision(18, 2)
-                        .HasColumnType("real(18)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("IslemId");
 
@@ -184,16 +184,16 @@ namespace WebProgramlamaProje.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RandevuId"));
 
-                    b.Property<int>("CalisanId")
+                    b.Property<int?>("CalisanId")
                         .HasColumnType("int");
 
                     b.Property<int?>("CalisanId1")
                         .HasColumnType("int");
 
-                    b.Property<int>("IslemId")
+                    b.Property<int?>("IslemId")
                         .HasColumnType("int");
 
-                    b.Property<int>("KullaniciId")
+                    b.Property<int?>("KullaniciId")
                         .HasColumnType("int");
 
                     b.Property<int?>("KullaniciId1")
@@ -265,8 +265,7 @@ namespace WebProgramlamaProje.Migrations
                     b.HasOne("WebProgramlamaProje.Models.Kullanici", "Kullanici")
                         .WithMany()
                         .HasForeignKey("KullaniciId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Kullanici");
                 });
@@ -276,14 +275,12 @@ namespace WebProgramlamaProje.Migrations
                     b.HasOne("WebProgramlamaProje.Models.Kullanici", "Kullanici")
                         .WithMany()
                         .HasForeignKey("KullaniciId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("WebProgramlamaProje.Models.Salon", "Salon")
                         .WithMany()
                         .HasForeignKey("SalonId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("WebProgramlamaProje.Models.Salon", null)
                         .WithMany("Calisanlar")
@@ -299,8 +296,7 @@ namespace WebProgramlamaProje.Migrations
                     b.HasOne("WebProgramlamaProje.Models.Calisan", "Calisan")
                         .WithMany()
                         .HasForeignKey("CalisanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Calisan");
                 });
@@ -310,8 +306,7 @@ namespace WebProgramlamaProje.Migrations
                     b.HasOne("WebProgramlamaProje.Models.Calisan", "Calisan")
                         .WithMany()
                         .HasForeignKey("CalisanId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("WebProgramlamaProje.Models.Calisan", null)
                         .WithMany("Randevular")
@@ -320,14 +315,12 @@ namespace WebProgramlamaProje.Migrations
                     b.HasOne("WebProgramlamaProje.Models.Islem", "Islem")
                         .WithMany()
                         .HasForeignKey("IslemId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("WebProgramlamaProje.Models.Kullanici", "Kullanici")
                         .WithMany()
                         .HasForeignKey("KullaniciId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebProgramlamaProje.Models.Kullanici", null)
                         .WithMany("Randevular")

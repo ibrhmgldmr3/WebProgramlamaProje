@@ -5,7 +5,7 @@ namespace WebProgramlamaProje.Models
     public class AIResult
     {
         public int AIResultId { get; set; }
-        public int KullaniciId { get; set; }
+        public int ?KullaniciId { get; set; }
         public Kullanici Kullanici { get; set; }
         
         public string SuggestedColor { get; set; }

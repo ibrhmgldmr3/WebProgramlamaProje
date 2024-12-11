@@ -15,7 +15,7 @@ namespace WebProgramlamaProje.Models
         public string PhoneNumber { get; set; }
 
         // Kullanıcının randevuları
-       public List<Randevu> Randevular { get; set; } = new List<Randevu>();
+       public List<Randevu> ?Randevular { get; set; } = new List<Randevu>();
 
        // public List<Islem> YaptirdiğiIslemlemler { get; set; } = new List<Islem>();
 
