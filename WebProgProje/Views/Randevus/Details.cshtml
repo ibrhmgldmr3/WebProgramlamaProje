@@ -1,0 +1,54 @@
+﻿@model WebProgramlamaProje.Models.Randevu
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Randevu</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Calisan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Calisan.Uzmanlik)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Islem)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Islem.Ad)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Kullanici)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Kullanici.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tarih)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tarih)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Saat)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Saat)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.OnaylandiMi)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OnaylandiMi)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.RandevuId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
