@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\relax\\source\\repos\\WPJ\\WebProgProje\\WebProgProje.csproj": {}
+    "C:\\Users\\relax\\Source\\Repos\\WPJ\\WebProgProje\\WebProgProje.csproj": {}
   },
   "projects": {
-    "C:\\Users\\relax\\source\\repos\\WPJ\\WebProgProje\\WebProgProje.csproj": {
+    "C:\\Users\\relax\\Source\\Repos\\WPJ\\WebProgProje\\WebProgProje.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\relax\\source\\repos\\WPJ\\WebProgProje\\WebProgProje.csproj",
+        "projectUniqueName": "C:\\Users\\relax\\Source\\Repos\\WPJ\\WebProgProje\\WebProgProje.csproj",
         "projectName": "WebProgProje",
-        "projectPath": "C:\\Users\\relax\\source\\repos\\WPJ\\WebProgProje\\WebProgProje.csproj",
+        "projectPath": "C:\\Users\\relax\\Source\\Repos\\WPJ\\WebProgProje\\WebProgProje.csproj",
         "packagesPath": "C:\\Users\\relax\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\relax\\source\\repos\\WPJ\\WebProgProje\\obj\\",
         "projectStyle": "PackageReference",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9tRrdbKIFGk=",
+  "dgSpecHash": "djedm3VF670=",
   "success": true,
-  "projectFilePath": "C:\\Users\\relax\\source\\repos\\WPJ\\WebProgProje\\WebProgProje.csproj",
+  "projectFilePath": "C:\\Users\\relax\\Source\\Repos\\WPJ\\WebProgProje\\WebProgProje.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\relax\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\relax\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
