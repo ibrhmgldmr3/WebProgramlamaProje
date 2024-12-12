@@ -9,22 +9,22 @@ using WebProgramlamaProje.Models;
 
 namespace WebProgProje.Controllers
 {
-    public class KullanicisController : Controller
+    public class IslemsController : Controller
     {
         private readonly SalonDbContext _context;
 
-        public KullanicisController(SalonDbContext context)
+        public IslemsController(SalonDbContext context)
         {
             _context = context;
         }
 
-        // GET: Kullanicis
+        // GET: Islems
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Kullanicilar.ToListAsync());
+            return View(await _context.Islemler.ToListAsync());
         }
 
-        // GET: Kullanicis/Details/5
+        // GET: Islems/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,45 +32,39 @@ namespace WebProgProje.Controllers
                 return NotFound();
             }
 
-            var kullanici = await _context.Kullanicilar
-                .FirstOrDefaultAsync(m => m.KullaniciId == id);
-            if (kullanici == null)
+            var islem = await _context.Islemler
+                .FirstOrDefaultAsync(m => m.IslemId == id);
+            if (islem == null)
             {
                 return NotFound();
             }
 
-            return View(kullanici);
+            return View(islem);
         }
 
-        // GET: Kullanicis/Create
+        // GET: Islems/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Kullanicis/Create
+        // POST: Islems/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Email,PasswordHash,FullName,PhoneNumber")] Kullanici kullanici)
+        public async Task<IActionResult> Create([Bind("IslemId,Ad,Sure,Ucret")] Islem islem)
         {
             if (ModelState.IsValid)
             {
-                kullanici.Role = "Müşteri"; // Role alanını koda gömülü olarak ayarlayın
-                _context.Add(kullanici);
+                _context.Add(islem);
                 await _context.SaveChangesAsync();
-                TempData["Message"] = kullanici.Email + ' ' + kullanici.FullName + " kaydınız başarıyla tamamlandı!!";
-
                 return RedirectToAction(nameof(Index));
             }
-            TempData["Message"] = "Kaydolma Başarısız! ):";
-
-            return View(kullanici);
+            return View(islem);
         }
 
-
-        // GET: Kullanicis/Edit/5
+        // GET: Islems/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,22 +72,22 @@ namespace WebProgProje.Controllers
                 return NotFound();
             }
 
-            var kullanici = await _context.Kullanicilar.FindAsync(id);
-            if (kullanici == null)
+            var islem = await _context.Islemler.FindAsync(id);
+            if (islem == null)
             {
                 return NotFound();
             }
-            return View(kullanici);
+            return View(islem);
         }
 
-        // POST: Kullanicis/Edit/5
+        // POST: Islems/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("KullaniciId,Email,PasswordHash,Role,FullName,PhoneNumber")] Kullanici kullanici)
+        public async Task<IActionResult> Edit(int id, [Bind("IslemId,Ad,Sure,Ucret")] Islem islem)
         {
-            if (id != kullanici.KullaniciId)
+            if (id != islem.IslemId)
             {
                 return NotFound();
             }
@@ -102,12 +96,12 @@ namespace WebProgProje.Controllers
             {
                 try
                 {
-                    _context.Update(kullanici);
+                    _context.Update(islem);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!KullaniciExists(kullanici.KullaniciId))
+                    if (!IslemExists(islem.IslemId))
                     {
                         return NotFound();
                     }
@@ -118,10 +112,10 @@ namespace WebProgProje.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(kullanici);
+            return View(islem);
         }
 
-        // GET: Kullanicis/Delete/5
+        // GET: Islems/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,34 +123,34 @@ namespace WebProgProje.Controllers
                 return NotFound();
             }
 
-            var kullanici = await _context.Kullanicilar
-                .FirstOrDefaultAsync(m => m.KullaniciId == id);
-            if (kullanici == null)
+            var islem = await _context.Islemler
+                .FirstOrDefaultAsync(m => m.IslemId == id);
+            if (islem == null)
             {
                 return NotFound();
             }
 
-            return View(kullanici);
+            return View(islem);
         }
 
-        // POST: Kullanicis/Delete/5
+        // POST: Islems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var kullanici = await _context.Kullanicilar.FindAsync(id);
-            if (kullanici != null)
+            var islem = await _context.Islemler.FindAsync(id);
+            if (islem != null)
             {
-                _context.Kullanicilar.Remove(kullanici);
+                _context.Islemler.Remove(islem);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool KullaniciExists(int id)
+        private bool IslemExists(int id)
         {
-            return _context.Kullanicilar.Any(e => e.KullaniciId == id);
+            return _context.Islemler.Any(e => e.IslemId == id);
         }
     }
 }

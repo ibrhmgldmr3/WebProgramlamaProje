@@ -11,7 +11,7 @@
         "projectName": "WebProgProje",
         "projectPath": "C:\\Users\\relax\\Source\\Repos\\WPJ\\WebProgProje\\WebProgProje.csproj",
         "packagesPath": "C:\\Users\\relax\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\relax\\source\\repos\\WPJ\\WebProgProje\\obj\\",
+        "outputPath": "C:\\Users\\relax\\Source\\Repos\\WPJ\\WebProgProje\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
