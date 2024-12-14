@@ -1,0 +1,275 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Migrations\\20241214131209_D4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Migrations\\20241214131209_D4.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\AppData\\Local\\Temp\\bave2l2f..sql||{CC5D8DF0-88F4-4BB2-9DBB-B48CEE65C30A}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\SalonDbContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Models\\SalonDbContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Salon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Models\\Salon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Randevu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Models\\Randevu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\LoginViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Models\\LoginViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Controllers\\CalisansController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Controllers\\CalisansController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Controllers\\KullanicisController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Controllers\\KullanicisController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Kullanici.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Models\\Kullanici.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Islem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Models\\Islem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\ErrorViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Models\\ErrorViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Calisan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Models\\Calisan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\CalisanUygunluk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Models\\CalisanUygunluk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\AIResult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Models\\AIResult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Views\\Shared\\_Layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Views\\Shared\\_Layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WebProgProje\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20241214131209_D4.cs",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Migrations\\20241214131209_D4.cs",
+              "RelativeDocumentMoniker": "WebProgProje\\Migrations\\20241214131209_D4.cs",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Migrations\\20241214131209_D4.cs",
+              "RelativeToolTip": "WebProgProje\\Migrations\\20241214131209_D4.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T13:12:09.994Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SalonDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\SalonDbContext.cs",
+              "RelativeDocumentMoniker": "WebProgProje\\Models\\SalonDbContext.cs",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\SalonDbContext.cs",
+              "RelativeToolTip": "WebProgProje\\Models\\SalonDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T13:11:31.078Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Salon.cs",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Salon.cs",
+              "RelativeDocumentMoniker": "WebProgProje\\Models\\Salon.cs",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Salon.cs",
+              "RelativeToolTip": "WebProgProje\\Models\\Salon.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T13:11:04.586Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Randevu.cs",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Randevu.cs",
+              "RelativeDocumentMoniker": "WebProgProje\\Models\\Randevu.cs",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Randevu.cs",
+              "RelativeToolTip": "WebProgProje\\Models\\Randevu.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T13:07:15.563Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LoginViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\LoginViewModel.cs",
+              "RelativeDocumentMoniker": "WebProgProje\\Models\\LoginViewModel.cs",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\LoginViewModel.cs",
+              "RelativeToolTip": "WebProgProje\\Models\\LoginViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T13:07:12.067Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CalisansController.cs",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Controllers\\CalisansController.cs",
+              "RelativeDocumentMoniker": "WebProgProje\\Controllers\\CalisansController.cs",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Controllers\\CalisansController.cs",
+              "RelativeToolTip": "WebProgProje\\Controllers\\CalisansController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T13:05:35.385Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "KullanicisController.cs",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Controllers\\KullanicisController.cs",
+              "RelativeDocumentMoniker": "WebProgProje\\Controllers\\KullanicisController.cs",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Controllers\\KullanicisController.cs",
+              "RelativeToolTip": "WebProgProje\\Controllers\\KullanicisController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwDoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T13:05:11.987Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "bave2l2f..sql",
+              "DocumentMoniker": "C:\\Users\\Stark\\AppData\\Local\\Temp\\bave2l2f..sql",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\bave2l2f..sql",
+              "ToolTip": "C:\\Users\\Stark\\AppData\\Local\\Temp\\bave2l2f..sql",
+              "RelativeToolTip": "..\\..\\..\\..\\AppData\\Local\\Temp\\bave2l2f..sql",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2024-12-14T13:02:05.028Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Kullanici.cs",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Kullanici.cs",
+              "RelativeDocumentMoniker": "WebProgProje\\Models\\Kullanici.cs",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Kullanici.cs",
+              "RelativeToolTip": "WebProgProje\\Models\\Kullanici.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA5wBQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T12:57:36.384Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Islem.cs",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Islem.cs",
+              "RelativeDocumentMoniker": "WebProgProje\\Models\\Islem.cs",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Islem.cs",
+              "RelativeToolTip": "WebProgProje\\Models\\Islem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T12:57:16.01Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ErrorViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\ErrorViewModel.cs",
+              "RelativeDocumentMoniker": "WebProgProje\\Models\\ErrorViewModel.cs",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\ErrorViewModel.cs",
+              "RelativeToolTip": "WebProgProje\\Models\\ErrorViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T12:57:11.655Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Calisan.cs",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Calisan.cs",
+              "RelativeDocumentMoniker": "WebProgProje\\Models\\Calisan.cs",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\Calisan.cs",
+              "RelativeToolTip": "WebProgProje\\Models\\Calisan.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T12:49:55.063Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "CalisanUygunluk.cs",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\CalisanUygunluk.cs",
+              "RelativeDocumentMoniker": "WebProgProje\\Models\\CalisanUygunluk.cs",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\CalisanUygunluk.cs",
+              "RelativeToolTip": "WebProgProje\\Models\\CalisanUygunluk.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T12:52:24.182Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AIResult.cs",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\AIResult.cs",
+              "RelativeDocumentMoniker": "WebProgProje\\Models\\AIResult.cs",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Models\\AIResult.cs",
+              "RelativeToolTip": "WebProgProje\\Models\\AIResult.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T12:49:42.518Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "WebProgProje\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "WebProgProje\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABRAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-14T12:48:13.972Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Program.cs",
+              "RelativeDocumentMoniker": "WebProgProje\\Program.cs",
+              "ToolTip": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\Program.cs",
+              "RelativeToolTip": "WebProgProje\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-14T12:47:29.743Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

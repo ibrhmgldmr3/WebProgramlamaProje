@@ -63,6 +63,12 @@ namespace WebProgProje.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<TimeSpan>("CalismaSaatiCikis")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("CalismaSaatiGiris")
+                        .HasColumnType("time");
+
                     b.Property<int?>("KullaniciId")
                         .HasColumnType("int");
 
@@ -167,6 +173,9 @@ namespace WebProgProje.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<byte[]>("ProfilResmi")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -205,8 +214,11 @@ namespace WebProgProje.Migrations
                     b.Property<TimeSpan>("Saat")
                         .HasColumnType("time");
 
-                    b.Property<DateTime>("Tarih")
-                        .HasColumnType("datetime2");
+                    b.Property<int?>("SalonId")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("Tarih")
+                        .HasColumnType("date");
 
                     b.HasKey("RandevuId");
 
@@ -219,6 +231,8 @@ namespace WebProgProje.Migrations
                     b.HasIndex("KullaniciId");
 
                     b.HasIndex("KullaniciId1");
+
+                    b.HasIndex("SalonId");
 
                     b.ToTable("Randevular");
                 });
@@ -326,11 +340,17 @@ namespace WebProgProje.Migrations
                         .WithMany("Randevular")
                         .HasForeignKey("KullaniciId1");
 
+                    b.HasOne("WebProgramlamaProje.Models.Salon", "Salon")
+                        .WithMany()
+                        .HasForeignKey("SalonId");
+
                     b.Navigation("Calisan");
 
                     b.Navigation("Islem");
 
                     b.Navigation("Kullanici");
+
+                    b.Navigation("Salon");
                 });
 
             modelBuilder.Entity("WebProgramlamaProje.Models.Calisan", b =>

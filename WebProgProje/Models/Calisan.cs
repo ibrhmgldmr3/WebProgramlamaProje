@@ -10,6 +10,8 @@
         public string Uzmanlik { get; set; } // Saç Kesimi, Saç Boyama vb.
         public int ?SalonId { get; set; }
         public Salon ?Salon { get; set; }
+        public TimeSpan CalismaSaatiGiris { get; set; }
+        public TimeSpan CalismaSaatiCikis { get; set; }
         public List<Randevu> ?Randevular { get; set; }
 
     }
