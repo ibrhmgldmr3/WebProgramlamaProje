@@ -5,6 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession();
 //Veritabani baðlanti adresi
 var conn = "Server=(localdb)\\mssqllocaldb;Database=WebProgramlamaProje;Trusted_Connection=True";
 builder.Services.AddDbContext<SalonDbContext>(options =>
@@ -26,6 +28,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession(); // Session'ý kullanýma alýn
 
 app.UseAuthorization();
 
