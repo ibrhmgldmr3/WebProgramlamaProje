@@ -12,7 +12,7 @@
         public int ?KullaniciId { get; set; }
         public Kullanici ?Kullanici { get; set; }
 
-        public DateTime Tarih { get; set; }
+        public DateOnly Tarih { get; set; }
         public TimeSpan Saat { get; set; }
         public bool OnaylandiMi { get; set; }
     }

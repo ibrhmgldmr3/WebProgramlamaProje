@@ -1,0 +1,21 @@
+﻿@model WebProgramlamaProje.Models.LoginViewModel
+
+<h3>Giriş Yap</h3>
+
+<form asp-action="Login" method="post">
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" asp-for="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="password">Şifre:</label>
+        <input type="password" id="password" asp-for="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <button type="submit">Giriş Yap</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

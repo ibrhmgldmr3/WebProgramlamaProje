@@ -12,10 +12,12 @@ namespace WebProgProje.Controllers
     public class IslemsController : Controller
     {
         private readonly SalonDbContext _context;
+        private string userRole;
 
         public IslemsController(SalonDbContext context)
         {
             _context = context;
+            userRole = GetUserRole();
         }
 
         // GET: Islems
@@ -41,10 +43,27 @@ namespace WebProgProje.Controllers
 
             return View(islem);
         }
-
+        private string GetUserRole()
+        {
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            if (userEmail != null)
+            {
+                var user = _context.Kullanicilar.SingleOrDefault(u => u.Email == userEmail);
+                if (user != null)
+                {
+                    return user.Role;
+                }
+            }
+            return null;
+        }
         // GET: Islems/Create
         public IActionResult Create()
         {
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
+            {
+                return Unauthorized();
+            }
             return View();
         }
 
@@ -67,6 +86,11 @@ namespace WebProgProje.Controllers
         // GET: Islems/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
+            {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -118,6 +142,11 @@ namespace WebProgProje.Controllers
         // GET: Islems/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+
+            if (userRole != "Admin")
+            {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -154,3 +183,4 @@ namespace WebProgProje.Controllers
         }
     }
 }
+
