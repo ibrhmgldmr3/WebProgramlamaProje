@@ -15,6 +15,12 @@ namespace WebProgProje.Controllers
 
         public IActionResult Index()
         {
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            var userFullName = HttpContext.Session.GetString("UserFullName");
+
+            ViewBag.UserEmail = userEmail;
+            ViewBag.UserFullName = userFullName;
+
             return View();
         }
 

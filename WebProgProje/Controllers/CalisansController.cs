@@ -13,6 +13,19 @@ namespace WebProgProje.Controllers
     {
         private readonly SalonDbContext _context;
 
+        private string GetUserRole()
+        {
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            if (userEmail != null)
+            {
+                var user = _context.Kullanicilar.SingleOrDefault(u => u.Email == userEmail);
+                if (user != null)
+                {
+                    return user.Role;
+                }
+            }
+            return null;
+        }
         public CalisansController(SalonDbContext context)
         {
             _context = context;
@@ -21,33 +34,53 @@ namespace WebProgProje.Controllers
         // GET: Calisans
         public async Task<IActionResult> Index()
         {
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
+            {
+                return Unauthorized();
+            }
             var salonDbContext = _context.Calisanlar.Include(c => c.Kullanici).Include(c => c.Salon);
             return View(await salonDbContext.ToListAsync());
+        
+        
         }
 
         // GET: Calisans/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
             {
-                return NotFound();
+                return Unauthorized();
             }
-
-            var calisan = await _context.Calisanlar
-                .Include(c => c.Kullanici)
-                .Include(c => c.Salon)
-                .FirstOrDefaultAsync(m => m.CalisanId == id);
-            if (calisan == null)
+            else
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            return View(calisan);
+                var calisan = await _context.Calisanlar
+                    .Include(c => c.Kullanici)
+                    .Include(c => c.Salon)
+                    .FirstOrDefaultAsync(m => m.CalisanId == id);
+                if (calisan == null)
+                {
+                    return NotFound();
+                }
+
+                return View(calisan);
+            }
         }
 
         // GET: Calisans/Create
         public IActionResult Create()
         {
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
+            {
+                return Unauthorized();
+            }
             ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "Email");
             ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Adres");
             return View();
@@ -86,6 +119,11 @@ namespace WebProgProje.Controllers
         // GET: Calisans/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
+            {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -141,6 +179,11 @@ namespace WebProgProje.Controllers
         // GET: Calisans/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
+            {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();

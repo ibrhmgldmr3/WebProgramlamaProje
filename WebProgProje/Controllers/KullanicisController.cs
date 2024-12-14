@@ -158,5 +158,41 @@ namespace WebProgProje.Controllers
         {
             return _context.Kullanicilar.Any(e => e.KullaniciId == id);
         }
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = AuthenticateUser(model.Email, model.Password);
+                if (user != null)
+                {
+                    // Kullanıcı bilgilerini session'a kaydet
+                    HttpContext.Session.SetString("UserEmail", user.Email);
+                    HttpContext.Session.SetString("UserFullName", user.FullName);
+
+                    // Ana sayfaya yönlendir
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Geçersiz kullanıcı adı veya şifre.");
+                }
+            }
+            return View(model);
+        }
+
+        private Kullanici AuthenticateUser(string email, string password)
+        {
+            // Bu metot, kullanıcıyı doğrulamak için veritabanı kontrolü yapar
+            var user = _context.Kullanicilar.SingleOrDefault(u => u.Email == email && u.PasswordHash == password);
+            return user;
+        }
     }
 }
+

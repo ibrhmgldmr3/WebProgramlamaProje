@@ -12,9 +12,10 @@ namespace WebProgProje.Controllers
     public class RandevusController : Controller
     {
         private readonly SalonDbContext _context;
-
+        private string userRole;   
         public RandevusController(SalonDbContext context)
         {
+
             _context = context;
         }
 
