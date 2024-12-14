@@ -2,19 +2,29 @@
 
 <h3>Giriş Yap</h3>
 
-<form asp-action="Login" method="post">
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" asp-for="Email" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-    <div>
-        <label for="password">Şifre:</label>
-        <input type="password" id="password" asp-for="Password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-    <button type="submit">Giriş Yap</button>
+<form>
+    <fieldset>
+        <div>
+            <label for="exampleInputEmail1" class="form-label mt-4">Email</label>
+            <input asp-for="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email@example.com">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div>
+            <label for="exampleInputPassword1" class="form-label mt-4">Şifre</label>
+            <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" autocomplete="off">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <!-- Buton grubu -->
+        <div class="button-group">
+            <button type="submit" class="btn btn-primary">Giriş Yap</button>
+            <button type="button" class="btn btn-success">Kayıt Ol</button>
+        </div>
+    </fieldset>
 </form>
+
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
