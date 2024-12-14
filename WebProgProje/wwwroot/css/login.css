@@ -1,0 +1,78 @@
+form {
+    max-width: 400px; /* Formun maksimum geniþliði */
+    width: 100%; /* Formun geniþliðini %100 yap */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: absolute; /* Pozisyonu mutlak yap */
+    top: 50%; /* Dikeyde %50 uzaklýk */
+    left: 50%; /* Yatayda %50 uzaklýk */
+    transform: translate(-50%, -50%); /* Kendi boyutunu referans alarak tam ortalar */
+}
+
+/* Baþlýk stili */
+h3 {
+    text-align: center;
+    color: #333;
+}
+
+/* Form alanlarý */
+label {
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* Hata mesajlarý */
+.text-danger {
+    font-size: 12px;
+    color: #d9534f;
+}
+
+/* Buton grubu */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+    .button-group .btn {
+        flex: 1;
+        margin: 0 5px;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+
+/* Giriþ Yap butonunun stili */
+.btn-primary {
+    background-color: #49BEAA;
+    border: none;
+    color: white;
+}
+
+    .btn-primary:hover {
+        background-color: #38a68a;
+    }
+
+/* Kayýt Ol butonunun stili */
+.btn-success {
+    background-color: #EF767A;
+    border: none;
+    color: white;
+}
+
+    .btn-success:hover {
+        background-color: #e14a4a;
+    }
