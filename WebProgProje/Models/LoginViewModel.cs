@@ -4,9 +4,11 @@ namespace WebProgramlamaProje.Models
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Lütfen email adresi giriniz!")]
+        [EmailAddress(ErrorMessage = "Lütfen geçerli bir email giriniz!")]
         public string Email { get; set; }
-        [Required]
+        
+        [Required(ErrorMessage = "Lütfen şifrenizi giriniz!")]
         public string Password { get; set; }
     }
 }
