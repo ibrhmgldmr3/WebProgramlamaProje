@@ -7,6 +7,8 @@
         public Calisan ?Calisan { get; set; }
         public int ?IslemId { get; set; }
         public Islem ?Islem { get; set; }
+        public int? SalonId { get; set; }
+        public Salon? Salon { get; set; }
 
         // Kullanıcı ile ilişki
         public int ?KullaniciId { get; set; }
