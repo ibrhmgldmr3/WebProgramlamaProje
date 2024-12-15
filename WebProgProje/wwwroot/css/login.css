@@ -1,14 +1,19 @@
+.form-div {
+    display: flex; /* Flexbox kullanýmý */
+    justify-content: center; /* Yatayda ortalama */
+    align-items: center; /* Dikeyde ortalama */
+    height: 100vh; /* Tüm sayfa yüksekliði */
+    width: 100%; /* Sayfanýn tam geniþliði */
+}
+
 form {
     max-width: 400px; /* Formun maksimum geniþliði */
-    width: 100%; /* Formun geniþliðini %100 yap */
+    width: 90%; /* Dinamik geniþlik, ekran boyutuna uyum saðlar */
     padding: 20px;
     background-color: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    position: absolute; /* Pozisyonu mutlak yap */
-    top: 50%; /* Dikeyde %50 uzaklýk */
-    left: 50%; /* Yatayda %50 uzaklýk */
-    transform: translate(-50%, -50%); /* Kendi boyutunu referans alarak tam ortalar */
+    /* Pozisyon ve transform kullanýlmaz, çünkü Flexbox ile ortalýyoruz */
 }
 
 /* Baþlýk stili */
@@ -24,7 +29,9 @@ label {
 }
 
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+input[type="tel"],
+input[type="text"] {
     width: 100%;
     padding: 12px;
     margin-top: 5px;
