@@ -17,10 +17,28 @@ namespace WebProgProje.Controllers
         {
             _context = context;
         }
+        private string GetUserRole()
+        {
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            if (userEmail != null)
+            {
+                var user = _context.Kullanicilar.SingleOrDefault(u => u.Email == userEmail);
+                if (user != null)
+                {
+                    return user.Role;
+                }
+            }
+            return null;
+        }
 
         // GET: Kullanicis
         public async Task<IActionResult> Index()
         {
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
+            {
+                return Unauthorized();
+            }
             return View(await _context.Kullanicilar.ToListAsync());
         }
 
@@ -67,7 +85,7 @@ namespace WebProgProje.Controllers
         {
             if (ModelState.IsValid)
             {
-                kullanici.Role = "Müşteri"; // Role alanını koda gömülü olarak ayarlayın
+                kullanici.Role = "Member"; // Role alanını koda gömülü olarak ayarlayın
                 _context.Add(kullanici);
                 await _context.SaveChangesAsync();
                 TempData["Message"] = kullanici.Email + ' ' + kullanici.FullName + " kaydınız başarıyla tamamlandı!!";
