@@ -12,12 +12,11 @@ namespace WebProgProje.Controllers
     public class IslemsController : Controller
     {
         private readonly SalonDbContext _context;
-        private string userRole;
+  
 
         public IslemsController(SalonDbContext context)
         {
             _context = context;
-            userRole = GetUserRole();
         }
 
         // GET: Islems
@@ -142,7 +141,7 @@ namespace WebProgProje.Controllers
         // GET: Islems/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-
+            var userRole = GetUserRole();
             if (userRole != "Admin")
             {
                 return Unauthorized();
