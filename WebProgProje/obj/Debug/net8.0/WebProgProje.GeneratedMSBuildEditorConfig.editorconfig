@@ -17,147 +17,149 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WebProgProje
 build_property.RootNamespace = WebProgProje
-build_property.ProjectDir = C:\Users\Stark\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje\
+build_property.ProjectDir = C:\Users\relax\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Stark\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje
+build_property.MSBuildProjectDirectory = C:\Users\relax\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje
 build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/AIResults/Create.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/AIResults/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUlSZXN1bHRzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/AIResults/Delete.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/AIResults/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUlSZXN1bHRzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/AIResults/Details.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/AIResults/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUlSZXN1bHRzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/AIResults/Edit.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/AIResults/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUlSZXN1bHRzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/AIResults/Index.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/AIResults/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQUlSZXN1bHRzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Calisans/Create.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Calisans/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FsaXNhbnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Calisans/Delete.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Calisans/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FsaXNhbnNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Calisans/Details.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Calisans/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FsaXNhbnNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Calisans/Edit.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Calisans/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FsaXNhbnNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Calisans/Index.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Calisans/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FsaXNhbnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Home/Index.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Home/Privacy.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Index.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Islems/Create.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Islems/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXNsZW1zXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Islems/Delete.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Islems/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXNsZW1zXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Islems/Details.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Islems/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXNsZW1zXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Islems/Edit.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Islems/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXNsZW1zXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Islems/Index.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Islems/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXNsZW1zXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Kullanicis/Create.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Kullanicis/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Kullanicis/Delete.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Kullanicis/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Kullanicis/Details.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Kullanicis/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Kullanicis/Edit.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Kullanicis/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Kullanicis/Index.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Kullanicis/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Kullanicis/Login.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Kullanicis/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS3VsbGFuaWNpc1xMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Randevus/Create.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Randevus/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFuZGV2dXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Randevus/Delete.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Randevus/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFuZGV2dXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Randevus/Details.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Randevus/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFuZGV2dXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Randevus/Edit.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Randevus/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFuZGV2dXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Randevus/Index.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Randevus/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmFuZGV2dXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Shared/Error.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/_ViewImports.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/_ViewStart.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stark/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Shared/_Layout.cshtml]
+[C:/Users/relax/source/repos/ibrhmgldmr3/WebProgramlamaProje/WebProgProje/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-72yf51uvtf
