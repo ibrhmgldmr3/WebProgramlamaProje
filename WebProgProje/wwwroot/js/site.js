@@ -20,3 +20,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Sayfa yüklendiğinde preloader'ı kaldır
+    const preloader = document.getElementById("preloader-active");
+    setTimeout(() => {
+        preloader.style.display = "none";
+    }, 1000); // 1 saniye sonra gizle
+});
