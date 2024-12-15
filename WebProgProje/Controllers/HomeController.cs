@@ -29,6 +29,16 @@ namespace WebProgProje.Controllers
             return View();
         }
 
+        public IActionResult Iletisim()
+        {
+            return View();
+        }
+
+        public IActionResult Hizmetlerimiz()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
