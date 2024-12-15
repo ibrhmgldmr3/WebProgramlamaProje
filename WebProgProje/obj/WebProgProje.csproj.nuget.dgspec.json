@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj": {}
+    "C:\\Users\\relax\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj": {
+    "C:\\Users\\relax\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj",
+        "projectUniqueName": "C:\\Users\\relax\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj",
         "projectName": "WebProgProje",
-        "projectPath": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj",
-        "packagesPath": "C:\\Users\\Stark\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\obj\\",
+        "projectPath": "C:\\Users\\relax\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj",
+        "packagesPath": "C:\\Users\\relax\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\relax\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Stark\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\relax\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -44,7 +44,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -106,7 +107,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
