@@ -1,55 +1,28 @@
 ﻿@model WebProgramlamaProje.Models.LoginViewModel
 
-<<<<<<< HEAD
-<div class="login-container">
-    <div class="login-card">
-        <div class="login-header">
-            <h3>Giriş Yap</h3>
-=======
-
 <div class="form-div">
-<form asp-action="Login" method="post">
+    <form asp-action="Login" method="post">
 
-    <h3>Giriş Yap</h3>
-    <fieldset>
-        <div>
-            <label for="exampleInputEmail1" class="form-label mt-4">Email</label>
-            <input asp-for="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email@example.com">
-            <span asp-validation-for="Email" class="text-danger"></span>
->>>>>>> 5f6f72f4eed5231e0bd6ce9256672b0096f2c6f4
-        </div>
-        <div class="login-body">
-            <form method="post">
-                <div class="form-group">
-                    <label for="exampleInputEmail1" class="form-label">Email</label>
-                    <input asp-for="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email@example.com">
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="form-group mt-3">
-                    <label for="exampleInputPassword1" class="form-label">Şifre</label>
-                    <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" autocomplete="off">
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="form-group mt-4 text-center">
-                    <button type="submit" class="btn btn-primary">Giriş Yap</button>
-                    <button type="button" class="btn btn-success">Kayıt Ol</button>
-                </div>
-            </form>
-        </div>
-<<<<<<< HEAD
-    </div>
+        <h3>Giriş Yap</h3>
+        <fieldset>
+            <div class="form-group">
+                <label for="exampleInputEmail1" class="form-label">Email</label>
+                <input asp-for="Email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="email@example.com">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <label for="exampleInputPassword1" class="form-label">Şifre</label>
+                <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" autocomplete="off">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">Giriş Yap</button>
+                <a asp-action="Create" class="btn btn-success">Kayıt Ol</a>
+            </div>
+        </fieldset>
+    </form>
 </div>
 
-=======
-
-        <div class="button-group">
-            <button type="submit" class="btn btn-primary">Giriş Yap</button>
-            <a asp-action="Create" class="btn btn-success">Kayıt Ol</a>
-        </div>
-    </fieldset>
-</form>
-</div>
->>>>>>> 5f6f72f4eed5231e0bd6ce9256672b0096f2c6f4
 @section Styles {
     <link rel="stylesheet" href="~/css/login.css" />
 }
