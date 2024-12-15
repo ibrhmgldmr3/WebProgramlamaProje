@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj": {}
+    "C:\\Users\\Stark\\Source\\Repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj": {
+    "C:\\Users\\Stark\\Source\\Repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj",
+        "projectUniqueName": "C:\\Users\\Stark\\Source\\Repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj",
         "projectName": "WebProgProje",
-        "projectPath": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj",
+        "projectPath": "C:\\Users\\Stark\\Source\\Repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\WebProgProje.csproj",
         "packagesPath": "C:\\Users\\Stark\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Stark\\source\\repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\obj\\",
+        "outputPath": "C:\\Users\\Stark\\Source\\Repos\\ibrhmgldmr3\\WebProgramlamaProje\\WebProgProje\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

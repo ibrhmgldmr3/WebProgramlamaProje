@@ -1,6 +1,8 @@
 ﻿@model WebProgramlamaProje.Models.LoginViewModel
 
-<form>
+
+<div class="form-div">
+<form asp-action="Login" method="post">
 
     <h3>Giriş Yap</h3>
     <fieldset>
@@ -15,18 +17,16 @@
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
 
-        <!-- Buton grubu -->
         <div class="button-group">
             <button type="submit" class="btn btn-primary">Giriş Yap</button>
-            <button type="button" class="btn btn-success">Kayıt Ol</button>
+            <a asp-action="Create" class="btn btn-success">Kayıt Ol</a>
         </div>
     </fieldset>
 </form>
-
+</div>
 @section Styles {
     <link rel="stylesheet" href="~/css/login.css" />
 }
-
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
