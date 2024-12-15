@@ -12,18 +12,66 @@ namespace WebProgProje.Controllers
     public class RandevusController : Controller
     {
         private readonly SalonDbContext _context;
-        private string userRole;   
+        private string? GetUserRole()
+        {
+            if (HttpContext.Session == null || !HttpContext.Session.IsAvailable)
+            {
+                return null;
+            }
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            if (userEmail != null)
+            {
+                var user = _context.Kullanicilar.SingleOrDefault(u => u.Email == userEmail);
+                if (user != null)
+                {
+                    return user.Role;
+                }
+            }
+            return null;
+        }
+        private int? GetUserId()
+        {
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            if (userEmail != null)
+            {
+                var user = _context.Kullanicilar.SingleOrDefault(u => u.Email == userEmail);
+                if (user != null)
+                {
+                    return user.KullaniciId;
+                }
+            }
+            return null;
+        }
         public RandevusController(SalonDbContext context)
         {
-
             _context = context;
         }
 
         // GET: Randevus
         public async Task<IActionResult> Index()
         {
-            var salonDbContext = _context.Randevular.Include(r => r.Calisan).Include(r => r.Islem).Include(r => r.Kullanici);
-            return View(await salonDbContext.ToListAsync());
+            var userRole = GetUserRole();
+            var userId = GetUserId();
+
+            IQueryable<Randevu> randevular = _context.Randevular.Include(r => r.Calisan).Include(r => r.Islem).Include(r => r.Kullanici);
+
+            if (userRole == "Admin")
+            {
+                // Admin tüm randevuları görebilir
+                randevular = randevular;
+            }
+            else if (userRole == "Musteri")
+            {
+                // Müşteri sadece kendi randevularını görebilir
+                randevular = randevular.Where(r => r.KullaniciId == userId);
+            }
+            else if (userRole == "Calisan")
+            {
+                // Çalışan sadece kendi randevularını görebilir
+                randevular = randevular.Where(r => r.CalisanId == userId);
+            }
+
+            return View(await randevular.ToListAsync());
         }
 
         // GET: Randevus/Details/5
