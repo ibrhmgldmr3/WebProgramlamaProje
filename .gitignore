@@ -14,3 +14,8 @@
 /WebProgProje/obj/Debug/net8.0/WebProgProje.AssemblyInfo.cs
 /WebProgProje/obj/Debug/net8.0/WebProgProje.AssemblyInfoInputs.cache
 /WebProgProje/obj/Debug/net8.0/WebProgProje.GeneratedMSBuildEditorConfig.editorconfig
+/WebProgProje/bin/Debug/net8.0/WebProgProje.dll
+/WebProgProje/bin/Debug/net8.0/WebProgProje.exe
+/WebProgProje/bin/Debug/net8.0/WebProgProje.pdb
+/WebProgProje/obj/Debug/net8.0/staticwebassets/msbuild.WebProgProje.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+/WebProgProje/obj/Debug/net8.0/staticwebassets/msbuild.WebProgProje.Microsoft.AspNetCore.StaticWebAssets.props

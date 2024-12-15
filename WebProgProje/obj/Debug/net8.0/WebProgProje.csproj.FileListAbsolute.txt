@@ -1134,10 +1134,10 @@ C:\Users\relax\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje\obj\Deb
 C:\Users\relax\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.WebProgProje.props
 C:\Users\relax\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.WebProgProje.props
 C:\Users\relax\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Users\relax\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\relax\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje\obj\Debug\net8.0\WebProgP.20CD5163.Up2Date
 C:\Users\relax\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje\obj\Debug\net8.0\WebProgProje.dll
 C:\Users\relax\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje\obj\Debug\net8.0\refint\WebProgProje.dll
 C:\Users\relax\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje\obj\Debug\net8.0\WebProgProje.pdb
 C:\Users\relax\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje\obj\Debug\net8.0\WebProgProje.genruntimeconfig.cache
 C:\Users\relax\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje\obj\Debug\net8.0\ref\WebProgProje.dll
+C:\Users\relax\source\repos\ibrhmgldmr3\WebProgramlamaProje\WebProgProje\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
