@@ -1,0 +1,169 @@
+/* Ana container için genel düzenleme */
+.stock-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 50vh; /* Yükseklik deðeri, tüm ekranlarda daha küçük baþlatýlabilir */
+    width: 100%;
+    z-index: 10;
+}
+
+    /* Yazý için düzenlemeler */
+    .stock-text h2 {
+        font-size: 30px; /* Varsayýlan yazý boyutu */
+        font-weight: 700;
+        font-family: "Oswald", sans-serif;
+        color: #fff;
+        margin: 0;
+        line-height: 1.5;
+        text-transform: uppercase;
+        position: absolute;
+        text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.8);
+        padding: 10px 20px;
+        border-radius: 5px;
+        z-index: 10; /* Yazýyý ön plana çýkarýr */
+    }
+
+/* Ekran boyutlarýna göre yazý boyutlarýný ve yükseklikleri küçültme */
+@media only screen and (min-width: 1200px) {
+    .stock-text {
+        height: 85vh; /* Büyük ekranlarda yükseklik daha fazla */
+    }
+
+        .stock-text h2 {
+            font-size: 45px; /* Büyük ekranlarda yazý boyutunu artýr */
+        }
+}
+
+@media only screen and (max-width: 1199px) and (min-width: 992px) {
+    .stock-text {
+        height: 60vh; /* Orta boyutlu ekranlar için yükseklik */
+    }
+
+        .stock-text h2 {
+            font-size: 35px; /* Orta boyutlu ekranlar için yazý boyutu */
+        }
+}
+
+@media only screen and (max-width: 991px) and (min-width: 768px) {
+    .stock-text {
+        height: 55vh; /* Küçük ekranlarda yükseklik */
+    }
+
+        .stock-text h2 {
+            font-size: 28px; /* Küçük ekranlarda yazý boyutu */
+        }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 576px) {
+    .stock-text {
+        height: 35vh; /* Daha küçük ekranlar için yükseklik */
+    }
+
+        .stock-text h2 {
+            font-size: 22px; /* Daha küçük ekranlarda yazý boyutu */
+        }
+}
+
+@media only screen and (max-width: 575px) {
+    .stock-text {
+        height: 30vh; /* En küçük ekranlar için yükseklik */
+    }
+
+        .stock-text h2 {
+            font-size: 12px; /* En küçük ekranlar için yazý boyutu */
+        }
+}
+
+@media only screen and (max-width: 375px) and (min-width: 321px) {
+    .stock-text {
+        height: 20vh; /* En küçük ekranlar için yükseklik */
+    }
+
+        .stock-text h2 {
+            font-size: 12px; /* En küçük ekranlar için yazý boyutu */
+        }
+}
+
+@media only screen and (max-width: 425px) and (min-width: 375px) {
+    .stock-text {
+        height: 25vh; /* En küçük ekranlar için yükseklik */
+    }
+
+        .stock-text h2 {
+            font-size: 12px; /* En küçük ekranlar için yazý boyutu */
+        }
+}
+
+@media only screen and (max-width: 320px) {
+    .stock-text {
+        height: 15vh; /* En küçük ekranlar için yükseklik */
+    }
+
+        .stock-text h2 {
+            font-size: 12px; /* En küçük ekranlar için yazý boyutu */
+        }
+}
+
+/* Yazýnýn baþlangýç ve animasyon özellikleri */
+.stock-text h2:nth-child(1) {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+    -webkit-text-fill-color: transparent;
+}
+
+.stock-text h2:nth-child(2) {
+    color: rgba(255, 255, 255, 1);
+    -webkit-animation: animate 4s ease-in-out infinite;
+    animation: animate 4s ease-in-out infinite;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+@keyframes animate {
+    0%, 100% {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+    }
+
+    50% {
+        color: rgba(255, 255, 255, 1);
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 1);
+    }
+
+    100% {
+        color: rgba(255, 255, 255, 1);
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 1);
+    }
+}
+
+/* Carousel image wrapper düzenlemeleri */
+.carousel-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Tüm ekran yüksekliði */
+    overflow: hidden;
+}
+    
+
+    .carousel-image-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+    }
+
+.carousel-image {
+    width: 100%;
+    height: 100%; /* Yüksekliði tam ekran kaplar */
+    object-fit: cover; /* Resmi düzgün ölçeklendirme */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+    

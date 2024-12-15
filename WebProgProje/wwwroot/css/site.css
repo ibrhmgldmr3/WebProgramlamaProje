@@ -32,3 +32,73 @@ body {
     background-color: rgba(55, 89, 124, 0.1); /* Hover arka plan rengi */
     border-radius: 4px; /* Köþe yuvarlama */
 }
+
+/* Preloader Genel Ayarlarý */
+#preloader-active {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9); /* Beyaz arka plan (þeffaflýk verildi) */
+    z-index: 9999; /* Tüm içeriklerin üstünde görünmesi için */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Preloader Ýçerik */
+.preloader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    position: relative;
+}
+
+/* Dönen Çember Animasyonu */
+.preloader-circle {
+    width: 80px;
+    height: 80px;
+    border: 4px solid rgba(0, 0, 0, 0.2); /* Çember dýþ kenarý */
+    border-top: 4px solid #136F63; /* Çember üst kenarý (renkli dönen kýsým) */
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite; /* Sürekli dönme efekti */
+}
+
+/* Yükleme Ýkonu Ortada */
+.preloader-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 48px; /* Maksimum geniþlik 48px */
+    max-height: 48px; /* Maksimum yükseklik 48px */
+    width: auto; /* Geniþlik orantýlý olarak ayarlanacak */
+    height: auto; /* Yükseklik orantýlý olarak ayarlanacak */
+}
+
+
+/* Yükleme Ýkonu Ortada */
+.preloader-img img {
+    width: 48px; /* Resmi 48px geniþliðe küçült */
+    height: 48px; /* Resmi 48px yüksekliðe küçült */
+    object-fit: contain; /* Oranlarýný bozmadan küçült */
+}
+
+/* Animasyon */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.footer
+{
+    text-align: center;
+}
