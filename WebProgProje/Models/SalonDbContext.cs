@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebProgramlamaProje.Models;
+using WebProgProje.Models;
 
 public class SalonDbContext : DbContext
 {
@@ -119,6 +120,8 @@ public class SalonDbContext : DbContext
         });
 
     }
+
+public DbSet<WebProgProje.Models.Uzmanlik> Uzmanlik { get; set; } = default!;
 }
 
 // Entity sınıfları yukarıdaki kodun aynısıdır.
