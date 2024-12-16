@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@inject KullaniciService KullaniciService
+
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -33,17 +36,37 @@
                             <a class="nav-link text-dark" href="/AIResults/Create">Saç Önerisi Al</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="/Randevus/Create">Randevu Al</a>
+                            <a class="nav-link text-dark" href="/Randevus/RandevuAl">Randevu Al</a>
                         </li>
-                        <li class="nav-item ms-auto">
-                            <a class="nav-link text-dark" href="/Kullanicis/Login">Giriş Yap</a>
-                        </li>
+                        @{
+                            var userEmail = Context.Session.GetString("UserEmail");
+                            var userRole = Context.Session.GetString("UserRole");
+
+                            if (!string.IsNullOrEmpty(userEmail))
+                            {
+                                if (userRole == "Admin")
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" href="/Home/Admin">Admin Paneli</a>
+                                    </li>
+                                }
+                                <li class="nav-item ms-auto">
+                                    <a class="nav-link text-dark" href="/Kullanicis/Logout">Çıkış Yap</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item ms-auto">
+                                    <a class="nav-link text-dark" href="/Kullanicis/Login">Giriş Yap</a>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -55,7 +78,7 @@
             &copy; 2024 - S&I Saloon
         </div>
     </footer>
-    
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

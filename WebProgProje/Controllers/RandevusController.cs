@@ -60,12 +60,12 @@ namespace WebProgProje.Controllers
                 // Admin tüm randevuları görebilir
                 randevular = randevular;
             }
-            else if (userRole == "Musteri")
+            if (userRole == "Member")
             {
                 // Müşteri sadece kendi randevularını görebilir
                 randevular = randevular.Where(r => r.KullaniciId == userId);
             }
-            else if (userRole == "Calisan")
+            if (userRole == "Employee")
             {
                 // Çalışan sadece kendi randevularını görebilir
                 randevular = randevular.Where(r => r.CalisanId == userId);
@@ -73,6 +73,7 @@ namespace WebProgProje.Controllers
 
             return View(await randevular.ToListAsync());
         }
+
 
         // GET: Randevus/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -96,32 +97,36 @@ namespace WebProgProje.Controllers
         }
 
         // GET: Randevus/Create
-        public IActionResult Create()
+        // GET: Randevus/Create
+        public IActionResult RandevuAl()
         {
-            ViewData["CalisanId"] = new SelectList(_context.Calisanlar, "CalisanId", "Uzmanlik");
+            ViewData["CalisanId"] = new SelectList(_context.Calisanlar, "CalisanId", "Ad");
             ViewData["IslemId"] = new SelectList(_context.Islemler, "IslemId", "Ad");
-            ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "Email");
             return View();
         }
 
         // POST: Randevus/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RandevuId,CalisanId,IslemId,KullaniciId,Tarih,Saat,OnaylandiMi")] Randevu randevu)
+        public async Task<IActionResult> RandevuAl([Bind("RandevuId,CalisanId,IslemId,Tarih,Saat,OnaylandiMi")] Randevu randevu)
         {
+            if (randevu.Tarih < DateOnly.FromDateTime(DateTime.Now))
+            {
+                ModelState.AddModelError("Tarih", "Randevu tarihi bugünden önce olamaz.");
+            }
+
             if (ModelState.IsValid)
             {
+                randevu.KullaniciId = GetUserId().Value;
                 _context.Add(randevu);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CalisanId"] = new SelectList(_context.Calisanlar, "CalisanId", "Uzmanlik", randevu.CalisanId);
+            ViewData["CalisanId"] = new SelectList(_context.Calisanlar, "CalisanId", "Ad", randevu.CalisanId);
             ViewData["IslemId"] = new SelectList(_context.Islemler, "IslemId", "Ad", randevu.IslemId);
-            ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "Email", randevu.KullaniciId);
             return View(randevu);
         }
+
 
         // GET: Randevus/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -136,7 +141,7 @@ namespace WebProgProje.Controllers
             {
                 return NotFound();
             }
-            ViewData["CalisanId"] = new SelectList(_context.Calisanlar, "CalisanId", "Uzmanlik", randevu.CalisanId);
+            ViewData["CalisanId"] = new SelectList(_context.Calisanlar, "CalisanId", "Ad", randevu.CalisanId);
             ViewData["IslemId"] = new SelectList(_context.Islemler, "IslemId", "Ad", randevu.IslemId);
             ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "Email", randevu.KullaniciId);
             return View(randevu);
@@ -174,7 +179,7 @@ namespace WebProgProje.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CalisanId"] = new SelectList(_context.Calisanlar, "CalisanId", "Uzmanlik", randevu.CalisanId);
+            ViewData["CalisanId"] = new SelectList(_context.Calisanlar, "CalisanId", "Ad", randevu.CalisanId);
             ViewData["IslemId"] = new SelectList(_context.Islemler, "IslemId", "Ad", randevu.IslemId);
             ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "Email", randevu.KullaniciId);
             return View(randevu);
@@ -219,6 +224,19 @@ namespace WebProgProje.Controllers
         private bool RandevuExists(int id)
         {
             return _context.Randevular.Any(e => e.RandevuId == id);
+        }
+        public JsonResult GetCalisanUygunluk(int calisanId)
+        {
+            var uygunluklar = _context.CalisanUygunluklar
+                .Where(cu => cu.CalisanId == calisanId)
+                .Select(cu => new
+                {
+                    cu.Gun,
+                    cu.Baslangic,
+                    cu.Bitis
+                }).ToList();
+
+            return Json(uygunluklar);
         }
     }
 }
