@@ -19,17 +19,9 @@ namespace WebProgProje.Controllers
         }
         private string GetUserRole()
         {
-            var userEmail = HttpContext.Session.GetString("UserEmail");
-            if (userEmail != null)
-            {
-                var user = _context.Kullanicilar.SingleOrDefault(u => u.Email == userEmail);
-                if (user != null)
-                {
-                    return user.Role;
-                }
-            }
-            return null;
+            return HttpContext.Session.GetString("UserRole");
         }
+
 
         // GET: Kullanicis
         public async Task<IActionResult> Index()
@@ -61,7 +53,7 @@ namespace WebProgProje.Controllers
         }
 
         // GET: Kullanicis/Create
-        public IActionResult Create()
+        public IActionResult Kaydolma()
         {
             return View();
         }
@@ -81,7 +73,7 @@ namespace WebProgProje.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Email,PasswordHash,FullName,PhoneNumber")] Kullanici kullanici)
+        public async Task<IActionResult> Kaydolma([Bind("Email,PasswordHash,FullName,PhoneNumber")] Kullanici kullanici)
         {
             if (ModelState.IsValid)
             {
@@ -193,26 +185,36 @@ namespace WebProgProje.Controllers
         }
 
         [HttpPost]
+        [HttpPost]
         public IActionResult Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = AuthenticateUser(model.Email, model.Password);
-                if (user != null)
+                if (user != null&& user.Role != null)
                 {
-                    // Kullanıcı bilgilerini session'a kaydet
-                    HttpContext.Session.SetString("UserEmail", user.Email);
-                    HttpContext.Session.SetString("UserFullName", user.FullName);
+                        // Kullanıcı bilgilerini session'a kaydet
+                        HttpContext.Session.SetString("UserEmail", user.Email);
+                        HttpContext.Session.SetString("UserRole", user.Role);
 
-                    // Ana sayfaya yönlendir
-                    return RedirectToAction("Index", "Home");
+                        // Ana sayfaya yönlendir
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Geçersiz kullanıcı adı veya şifre.");
+                    }
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Geçersiz kullanıcı adı veya şifre.");
-                }
-            }
             return View(model);
+        }
+
+        public IActionResult LogOut()
+        {
+            // Session bilgilerini sıfırla
+            HttpContext.Session.Clear();
+
+            // Home/Index sayfasına yönlendir
+            return RedirectToAction("Index", "Home");
         }
 
         private Kullanici AuthenticateUser(string email, string password)
@@ -221,6 +223,7 @@ namespace WebProgProje.Controllers
             var user = _context.Kullanicilar.SingleOrDefault(u => u.Email == email && u.PasswordHash == password);
             return user;
         }
+
     }
 }
 

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WebProgramlamaProje.Models.CalisanUygunluk>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Calisan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gun)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Baslangic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bitis)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Calisan.Uzmanlik)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gun)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Baslangic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bitis)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CalisanUygunlukId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CalisanUygunlukId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CalisanUygunlukId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

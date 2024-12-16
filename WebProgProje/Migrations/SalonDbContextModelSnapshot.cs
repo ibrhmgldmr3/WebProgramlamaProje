@@ -114,6 +114,9 @@ namespace WebProgProje.Migrations
                     b.Property<int?>("CalisanId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Gun")
+                        .HasColumnType("int");
+
                     b.HasKey("CalisanUygunlukId");
 
                     b.HasIndex("CalisanId");
