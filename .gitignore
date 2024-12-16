@@ -19,3 +19,12 @@
 /WebProgProje/bin/Debug/net8.0/WebProgProje.pdb
 /WebProgProje/obj/Debug/net8.0/staticwebassets/msbuild.WebProgProje.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
 /WebProgProje/obj/Debug/net8.0/staticwebassets/msbuild.WebProgProje.Microsoft.AspNetCore.StaticWebAssets.props
+/WebProgProje/bin/Debug/net8.0/WebProgProje.staticwebassets.runtime.json
+/.gitignore
+/WebProgProje/obj/Debug/net8.0/ref/WebProgProje.dll
+/WebProgProje/obj/Debug/net8.0/refint/WebProgProje.dll
+/WebProgProje/obj/Debug/net8.0/apphost.exe
+/WebProgProje/obj/Debug/net8.0/WebProgProje.csproj.CoreCompileInputs.cache
+/WebProgProje/obj/Debug/net8.0/WebProgProje.dll
+/WebProgProje/obj/Debug/net8.0/WebProgProje.pdb
+/WebProgProje/obj/Debug/net8.0/WebProgProje.sourcelink.json
