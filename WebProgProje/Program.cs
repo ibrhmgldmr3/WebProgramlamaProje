@@ -44,6 +44,6 @@ app.MapControllerRoute(
     defaults: new { controller = "Logout", action = "Index" });
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Privacy}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

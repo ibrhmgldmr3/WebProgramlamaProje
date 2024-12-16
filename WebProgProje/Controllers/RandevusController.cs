@@ -29,6 +29,19 @@ namespace WebProgProje.Controllers
             }
             return null;
         }
+        public JsonResult GetCalisanUygunluk(int calisanId)
+        {
+            var uygunluklar = _context.CalisanUygunluklar
+                .Where(cu => cu.CalisanId == calisanId)
+                .Select(cu => new
+                {
+                    cu.Gun,
+                    cu.Baslangic,
+                    cu.Bitis
+                }).ToList();
+
+            return Json(uygunluklar);
+        }
         private int? GetUserId()
         {
             var userEmail = HttpContext.Session.GetString("UserEmail");
@@ -108,11 +121,45 @@ namespace WebProgProje.Controllers
         // POST: Randevus/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> RandevuAl([Bind("RandevuId,CalisanId,IslemId,Tarih,Saat,OnaylandiMi")] Randevu randevu)
         {
             if (randevu.Tarih < DateOnly.FromDateTime(DateTime.Now))
             {
                 ModelState.AddModelError("Tarih", "Randevu tarihi bugünden önce olamaz.");
+            }
+
+            var calisanUygunluk = await _context.CalisanUygunluklar
+                .Where(cu => cu.CalisanId == randevu.CalisanId && cu.Gun == randevu.Tarih.DayOfWeek)
+                .FirstOrDefaultAsync();
+
+            if (calisanUygunluk == null)
+            {
+                ModelState.AddModelError("CalisanId", "Seçilen çalışan bu gün çalışmıyor.");
+            }
+            else if (randevu.Saat < calisanUygunluk.Baslangic || randevu.Saat > calisanUygunluk.Bitis)
+            {
+                ModelState.AddModelError("Saat", "Seçilen saat çalışanın çalışma saatleri dışında.");
+            }
+            else
+            {
+                var calisanRandevular = await _context.Randevular
+                    .Where(r => r.CalisanId == randevu.CalisanId && r.Tarih == randevu.Tarih)
+                    .ToListAsync();
+
+                foreach (var mevcutRandevu in calisanRandevular)
+                {
+                    var islemSuresi = await _context.Islemler
+                        .Where(i => i.IslemId == mevcutRandevu.IslemId)
+                        .Select(i => i.Sure)
+                        .FirstOrDefaultAsync();
+
+                    if (mevcutRandevu.Saat <= randevu.Saat && randevu.Saat < mevcutRandevu.Saat.Add(islemSuresi) && mevcutRandevu.Tarih == randevu.Tarih)
+                    {
+                        ModelState.AddModelError("Saat", "Seçilen saatte çalışan başka bir işlem yapıyor.");
+                        break;
+                    }
+                }
             }
 
             if (ModelState.IsValid)
@@ -126,7 +173,6 @@ namespace WebProgProje.Controllers
             ViewData["IslemId"] = new SelectList(_context.Islemler, "IslemId", "Ad", randevu.IslemId);
             return View(randevu);
         }
-
 
         // GET: Randevus/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -225,18 +271,6 @@ namespace WebProgProje.Controllers
         {
             return _context.Randevular.Any(e => e.RandevuId == id);
         }
-        public JsonResult GetCalisanUygunluk(int calisanId)
-        {
-            var uygunluklar = _context.CalisanUygunluklar
-                .Where(cu => cu.CalisanId == calisanId)
-                .Select(cu => new
-                {
-                    cu.Gun,
-                    cu.Baslangic,
-                    cu.Bitis
-                }).ToList();
 
-            return Json(uygunluklar);
-        }
     }
 }
