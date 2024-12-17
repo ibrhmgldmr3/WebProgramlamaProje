@@ -1,4 +1,7 @@
-﻿@model WebProgramlamaProje.Models.LoginViewModel
+﻿@{
+    Layout = "../Shared/_NewLayout.cshtml";
+}
+@model WebProgramlamaProje.Models.LoginViewModel
 
 <div class="form-div">
     <form asp-action="Login" method="post">
@@ -24,7 +27,7 @@
 </div>
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/login.css" />
+    <link rel="stylesheet" href="~/css/login.css"/>
 }
 
 @section Scripts {

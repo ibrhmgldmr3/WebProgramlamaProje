@@ -21,7 +21,7 @@ namespace WebProgProje.Controllers
         // GET: Uzmanliks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Uzmanlik.ToListAsync());
+            return View(await _context.Uzmanliklar.ToListAsync());
         }
 
         // GET: Uzmanliks/Details/5
@@ -32,7 +32,7 @@ namespace WebProgProje.Controllers
                 return NotFound();
             }
 
-            var uzmanlik = await _context.Uzmanlik
+            var uzmanlik = await _context.Uzmanliklar
                 .FirstOrDefaultAsync(m => m.UzmanlikId == id);
             if (uzmanlik == null)
             {
@@ -72,7 +72,7 @@ namespace WebProgProje.Controllers
                 return NotFound();
             }
 
-            var uzmanlik = await _context.Uzmanlik.FindAsync(id);
+            var uzmanlik = await _context.Uzmanliklar.FindAsync(id);
             if (uzmanlik == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace WebProgProje.Controllers
                 return NotFound();
             }
 
-            var uzmanlik = await _context.Uzmanlik
+            var uzmanlik = await _context.Uzmanliklar
                 .FirstOrDefaultAsync(m => m.UzmanlikId == id);
             if (uzmanlik == null)
             {
@@ -138,10 +138,10 @@ namespace WebProgProje.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var uzmanlik = await _context.Uzmanlik.FindAsync(id);
+            var uzmanlik = await _context.Uzmanliklar.FindAsync(id);
             if (uzmanlik != null)
             {
-                _context.Uzmanlik.Remove(uzmanlik);
+                _context.Uzmanliklar.Remove(uzmanlik);
             }
 
             await _context.SaveChangesAsync();
@@ -150,7 +150,7 @@ namespace WebProgProje.Controllers
 
         private bool UzmanlikExists(int id)
         {
-            return _context.Uzmanlik.Any(e => e.UzmanlikId == id);
+            return _context.Uzmanliklar.Any(e => e.UzmanlikId == id);
         }
     }
 }

@@ -7,7 +7,8 @@ namespace WebProgProje.Models
         public int UzmanlikId { get; set; }
         public string Ad { get; set; }
 
-        public List<Islem> Islemler = new List<Islem>();
-
+        // Bir uzmanlık birden fazla çalışana sahip olabilir
+        public List<Calisan> Calisanlar { get; set; } = new List<Calisan>();
     }
+
 }
