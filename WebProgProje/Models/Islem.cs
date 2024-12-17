@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WebProgramlamaProje.Models;
+using WebProgProje.Models;
 
 namespace WebProgramlamaProje.Models
 {
