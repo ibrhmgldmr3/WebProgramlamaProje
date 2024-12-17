@@ -1,5 +1,4 @@
-.main-img img
-{
-    width:100%;
-    height: auto;
+.smaller-text {
+    font-size: 24px; /* Boyutu ayarlayýn */
+    line-height: 1.4; /* Satýr yüksekliðini ayarlayýn */
 }

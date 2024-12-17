@@ -28,3 +28,9 @@ document.addEventListener("DOMContentLoaded", function () {
         preloader.style.display = "none";
     }, 1000); // 1 saniye sonra gizle
 });
+
+
+function toggleMenu() {
+    const navbarMenu = document.getElementById('navbarMenu');
+    navbarMenu.classList.toggle('show');
+}

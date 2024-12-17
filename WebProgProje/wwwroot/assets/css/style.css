@@ -1369,7 +1369,7 @@ General Styles - Owlcarousel
 	Header
 --------------------------------------------------------------*/
 .home-section {
-    position: absolute; /* Mutlak konumlandýrma */
+    position: fixed; /* Mutlak konumlandýrma */
     top: 0; /* Üst kenara sýfýrlar */
     left: 0; /* Sol kenara sýfýrlar */
     right: 0; /* Sað kenara sýfýrlar */
@@ -1377,9 +1377,8 @@ General Styles - Owlcarousel
     background-color: #fff;
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: cover; /* Görseli ekrana orantýlý yayar */
+    background-size:contain; /* Görseli ekrana orantýlý yayar */
     width: 100%; /* Geniþlik %100 */
-    height: 100vh; /* Yükseklik tam ekran */
     z-index: 0;
 }
 
@@ -2929,4 +2928,148 @@ Google map
   .works-grid-5 .work-item {
     width: 100%;
   }
+}
+
+
+/* Preloader Genel Ayarlarý */
+#preloader-active {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9); /* Beyaz arka plan (þeffaflýk verildi) */
+    z-index: 9999; /* Tüm içeriklerin üstünde görünmesi için */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Preloader Ýçerik */
+.preloader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    position: relative;
+}
+
+/* Dönen Çember Animasyonu */
+.preloader-circle {
+    width: 80px;
+    height: 80px;
+    border: 4px solid rgba(0, 0, 0, 0.2); /* Çember dýþ kenarý */
+    border-top: 4px solid #136F63; /* Çember üst kenarý (renkli dönen kýsým) */
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite; /* Sürekli dönme efekti */
+}
+
+/* Yükleme Ýkonu Ortada */
+.preloader-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 48px; /* Maksimum geniþlik 48px */
+    max-height: 48px; /* Maksimum yükseklik 48px */
+    width: auto; /* Geniþlik orantýlý olarak ayarlanacak */
+    height: auto; /* Yükseklik orantýlý olarak ayarlanacak */
+}
+
+
+/* Yükleme Ýkonu Ortada */
+.preloader-img img {
+    width: 48px; /* Resmi 48px geniþliðe küçült */
+    height: 48px; /* Resmi 48px yüksekliðe küçült */
+    object-fit: contain; /* Oranlarýný bozmadan küçült */
+}
+
+/* Animasyon */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Navbar genel stil */
+.navbar-custom {
+    background-color: rgba(255, 255, 255, 0); /* Þeffaf */
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+    .navbar-custom.navbar-fixed-top {
+        background-color: rgba(10, 10, 10, 0.9); /* Arka plan küçük ekranlar için */
+    }
+
+    .navbar-custom .navbar-brand {
+        color: #fff;
+        font-size: 22px;
+    }
+
+
+    .navbar-custom .navbar-toggle {
+        border: none;
+        background-color: transparent;
+    }
+
+        .navbar-custom .navbar-toggle .icon-bar {
+            background-color: #fff;
+        }
+
+    .navbar-custom .nav > li > a {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+     
+
+/* Responsive düzenlemeler */
+@media (max-width: 767px) {
+    .navbar-custom {
+        background-color: rgba(10, 10, 10, 0.9); /* Gri arka plan */
+    }
+
+        .navbar-custom .nav > li > a {
+            color: #fff;
+            text-align: center;
+        }
+
+        .navbar-custom .navbar-collapse {
+            background-color: rgba(10, 10, 10, 0.9); /* Menü açýldýðýnda gri arka plan */
+        }
+}
+
+@media (min-width: 767px) {
+    .navbar-custom {
+        background-color: transparent !important; /* Büyük ekranlarda þeffaf */
+    }
+
+}
+
+@media (max-width: 991px) {
+    .navbar-custom .navbar-brand {
+        font-size: 18px;
+
+    }
+
+    .navbar-custom .nav > li > a {
+        text-align: center;
+        padding: 10px;
+    }
+
+}
+
+@media (min-width: 1024px) {
+    .navbar-custom .navbar-brand {
+        padding-left: 25;
+        text-align: left;
+        position: absolute; /* Navbar container'da sola dayanmasýný saðlar */
+        left: 15px; /* Varsayýlan bootstrap padding */
+    }
+
 }

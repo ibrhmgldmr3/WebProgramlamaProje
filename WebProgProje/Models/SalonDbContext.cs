@@ -16,7 +16,6 @@ public class SalonDbContext : DbContext
     public DbSet<AIResult> AIResults { get; set; }
 
     public DbSet<Uzmanlik> Uzmanliklar { get; set; }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -139,7 +138,7 @@ public class SalonDbContext : DbContext
             .OnDelete(DeleteBehavior.Restrict);  // Silme işlemini kısıtla (isteğe bağlı)
     }
 
-    public DbSet<WebProgramlamaProje.Models.Uzmanlik> Uzmanlik { get; set; } = default!;
+
 }
 
 // Entity sınıfları yukarıdaki kodun aynısıdır.
