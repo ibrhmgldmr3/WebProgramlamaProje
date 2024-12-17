@@ -1,15 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using WebProgramlamaProje.Models;
 
-namespace WebProgramlamaProje.Models
+namespace WebProgProje.Models
 {
     public class Uzmanlik
     {
         public int UzmanlikId { get; set; }
-
-        [Display(Name = "Uzmanlık Adı")]
         public string Ad { get; set; }
 
-        public List<Islem>? Islemler { get; set; } // Uzmanlığın işlemleri
-        public List<Calisan>? Calisanlar { get; set; } // Uzmanlığa bağlı çalışanlar
+        // Bir uzmanlık birden fazla çalışana sahip olabilir
+        public List<Calisan> Calisanlar { get; set; } = new List<Calisan>();
     }
+
 }

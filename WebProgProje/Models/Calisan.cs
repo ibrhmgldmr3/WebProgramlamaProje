@@ -23,6 +23,8 @@ namespace WebProgramlamaProje.Models
         public TimeSpan CalismaSaatiCikis { get; set; }
         public List<CalisanUygunluk>? CalisanUygunluklar { get; set; }
         public List<Randevu>? Randevular { get; set; }
+
+
     }
 
 
