@@ -15,6 +15,7 @@ public class SalonDbContext : DbContext
     public DbSet<Randevu> Randevular { get; set; }
     public DbSet<AIResult> AIResults { get; set; }
 
+    public DbSet<Uzmanlik> Uzmanliklar { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -46,17 +47,27 @@ public class SalonDbContext : DbContext
         modelBuilder.Entity<Calisan>(entity =>
         {
             entity.HasKey(e => e.CalisanId);
+
+            // Calisan ve Kullanici arasındaki ilişki
             entity.HasOne(e => e.Kullanici)
-                .WithMany()
-                .HasForeignKey(e => e.KullaniciId)
-                .OnDelete(DeleteBehavior.Restrict);
+                  .WithMany()
+                  .HasForeignKey(e => e.KullaniciId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
+            // Calisan ve Salon arasındaki ilişki
             entity.HasOne(e => e.Salon)
-                .WithMany()
-                .HasForeignKey(e => e.SalonId)
-                .OnDelete(DeleteBehavior.Restrict);
+                  .WithMany()
+                  .HasForeignKey(e => e.SalonId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
-            entity.Property(e => e.Uzmanlik).IsRequired();
+            // Calisan ve Uzmanlik arasındaki ilişki
+            entity.HasOne(e => e.Uzmanlik)  // Calisan'ın bir Uzmanlik ile ilişkisi
+                  .WithMany()                // Bir Uzmanlik birden fazla Calisan'a sahip olabilir
+                  .HasForeignKey(e => e.UzmanlikId) // UzmanlikId, Calisan'daki yabancı anahtar
+                  .OnDelete(DeleteBehavior.Restrict);
+
+            // UzmanlikId'nin zorunlu olduğunu belirtiyoruz
+            entity.Property(e => e.UzmanlikId).IsRequired();
         });
 
         // Islem
@@ -119,9 +130,15 @@ public class SalonDbContext : DbContext
             entity.Property(e => e.CreatedAt).IsRequired();
         });
 
+        // Calisan ve Uzmanlik arasındaki ilişkiyi belirliyoruz
+        modelBuilder.Entity<Calisan>()
+            .HasOne(c => c.Uzmanlik)
+            .WithMany()  // Bir uzmanlık birden fazla çalışanla ilişkilendirilebilir
+            .HasForeignKey(c => c.UzmanlikId)
+            .OnDelete(DeleteBehavior.Restrict);  // Silme işlemini kısıtla (isteğe bağlı)
     }
 
-public DbSet<WebProgProje.Models.Uzmanlik> Uzmanlik { get; set; } = default!;
+
 }
 
 // Entity sınıfları yukarıdaki kodun aynısıdır.
