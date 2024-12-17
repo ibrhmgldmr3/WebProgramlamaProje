@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebProgramlamaProje.Models;
 
-namespace WebProgProje.Controllers
+namespace WebProgramlamaProje.Controllers
 {
     public class CalisansController : Controller
     {
@@ -41,8 +41,8 @@ namespace WebProgProje.Controllers
             }
             var salonDbContext = _context.Calisanlar.Include(c => c.Kullanici).Include(c => c.Salon);
             return View(await salonDbContext.ToListAsync());
-        
-        
+
+
         }
 
         // GET: Calisans/Details/5
@@ -74,46 +74,36 @@ namespace WebProgProje.Controllers
         }
 
         // GET: Calisans/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
                 return Unauthorized();
             }
-            ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "Email");
+            ViewData["UzmanlikId"] = new SelectList(_context.Uzmanliklar, "UzmanlikId", "Ad");  // Uzmanlıkları listele
             ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Adres");
             return View();
         }
 
-        // POST: Calisans/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CalisanId,KullaniciId,Ad,Soyad,Uzmanlik")] Calisan calisan)
+        public async Task<IActionResult> Create([Bind("CalisanId,KullaniciId,Ad,Soyad,UzmanlikId")] Calisan calisan)
         {
             if (ModelState.IsValid)
             {
-                // Kullanici bilgilerini yükle
-                calisan.Kullanici = await _context.Kullanicilar.FindAsync(calisan.KullaniciId);
+                calisan.Uzmanlik = await _context.Uzmanliklar.FindAsync(calisan.UzmanlikId);  // Uzmanlık bilgilerini al
                 calisan.Salon = await _context.Salonlar.FindAsync(calisan.SalonId);
                 _context.Add(calisan);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            foreach (var state in ModelState)
-            {
-                foreach (var error in state.Value.Errors)
-                {
-                    Console.WriteLine($"Key: {state.Key}, Error: {error.ErrorMessage}");
-                }
-            }
-
-            ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "Email", calisan.KullaniciId);
+            ViewData["UzmanlikId"] = new SelectList(_context.Uzmanliklar, "UzmanlikId", "Ad", calisan.UzmanlikId);
             ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Adres", calisan.SalonId);
             return View(calisan);
         }
+
+
 
 
         // GET: Calisans/Edit/5
@@ -220,5 +210,6 @@ namespace WebProgProje.Controllers
         {
             return _context.Calisanlar.Any(e => e.CalisanId == id);
         }
+
     }
 }

@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebProgramlamaProje.Models;
 
-namespace WebProgProje.Controllers
+namespace WebProgramlamaProje.Controllers
 {
     public class IslemsController : Controller
     {
         private readonly SalonDbContext _context;
-  
+
 
         public IslemsController(SalonDbContext context)
         {
@@ -63,28 +63,32 @@ namespace WebProgProje.Controllers
             {
                 return Unauthorized();
             }
+            ViewData["UzmanlikId"] = new SelectList(_context.Uzmanliklar, "UzmanlikId", "Ad");  // Uzmanlıkları listele
             return View();
         }
 
-        public IActionResult Hizmetlerimiz() 
-        {
-            return View();
-        }
-
-        // POST: Islems/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IslemId,Ad,Sure,Ucret")] Islem islem)
+        public async Task<IActionResult> Create([Bind("IslemId,Ad,Sure,Ucret,Uzmanliklar")] Islem islem, int[] Uzmanliklar)
         {
             if (ModelState.IsValid)
             {
+                foreach (var uzmanlikId in Uzmanliklar)
+                {
+                    var uzmanlik = await _context.Uzmanliklar.FindAsync(uzmanlikId);
+                    islem.Uzmanliklar.Add(uzmanlik);  // İşlemle ilişkilendirilen uzmanlıkları ekle
+                }
                 _context.Add(islem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(islem);
+        }
+
+
+        public IActionResult Hizmetlerimiz()
+        {
+            return View();
         }
 
         // GET: Islems/Edit/5
@@ -187,4 +191,3 @@ namespace WebProgProje.Controllers
         }
     }
 }
-

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebProgProje.Models;
 using WebProgramlamaProje.Models;
 
 public class SalonDbContext : DbContext
@@ -13,6 +14,7 @@ public class SalonDbContext : DbContext
     public DbSet<CalisanUygunluk> CalisanUygunluklar { get; set; }
     public DbSet<Randevu> Randevular { get; set; }
     public DbSet<AIResult> AIResults { get; set; }
+    public DbSet<Uzmanlik> Uzmanliklar { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -45,17 +47,27 @@ public class SalonDbContext : DbContext
         modelBuilder.Entity<Calisan>(entity =>
         {
             entity.HasKey(e => e.CalisanId);
+
+            // Calisan ve Kullanici arasındaki ilişki
             entity.HasOne(e => e.Kullanici)
-                .WithMany()
-                .HasForeignKey(e => e.KullaniciId)
-                .OnDelete(DeleteBehavior.Restrict);
+                  .WithMany()
+                  .HasForeignKey(e => e.KullaniciId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
+            // Calisan ve Salon arasındaki ilişki
             entity.HasOne(e => e.Salon)
-                .WithMany()
-                .HasForeignKey(e => e.SalonId)
-                .OnDelete(DeleteBehavior.Restrict);
+                  .WithMany()
+                  .HasForeignKey(e => e.SalonId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
-            entity.Property(e => e.Uzmanlik).IsRequired();
+            // Calisan ve Uzmanlik arasındaki ilişki
+            entity.HasOne(e => e.Uzmanlik)
+                  .WithMany(u => u.Calisanlar)
+                  .HasForeignKey(e => e.UzmanlikId)
+                  .OnDelete(DeleteBehavior.Restrict);
+
+            // UzmanlikId'nin zorunlu olduğunu belirtiyoruz
+            entity.Property(e => e.UzmanlikId).IsRequired();
         });
 
         // Islem
@@ -72,7 +84,7 @@ public class SalonDbContext : DbContext
         {
             entity.HasKey(e => e.CalisanUygunlukId);
             entity.HasOne(e => e.Calisan)
-                .WithMany()
+                .WithMany(c => c.CalisanUygunluklar)
                 .HasForeignKey(e => e.CalisanId)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -86,17 +98,17 @@ public class SalonDbContext : DbContext
             entity.HasKey(r => r.RandevuId);
 
             entity.HasOne(r => r.Calisan)
-                .WithMany()
+                .WithMany(c => c.Randevular)
                 .HasForeignKey(r => r.CalisanId)
-                .OnDelete(DeleteBehavior.Restrict); // Cascade kaldırıldı
+                .OnDelete(DeleteBehavior.Restrict);
 
             entity.HasOne(r => r.Islem)
                 .WithMany()
                 .HasForeignKey(r => r.IslemId)
-                .OnDelete(DeleteBehavior.Restrict); // Cascade kaldırıldı
+                .OnDelete(DeleteBehavior.Restrict);
 
             entity.HasOne(r => r.Kullanici)
-                .WithMany()
+                .WithMany(k => k.Randevular)
                 .HasForeignKey(r => r.KullaniciId)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -110,15 +122,12 @@ public class SalonDbContext : DbContext
         {
             entity.HasKey(e => e.AIResultId);
             entity.HasOne(e => e.Kullanici)
-                .WithMany()
+                .WithMany(k => k.AIResults)
                 .HasForeignKey(e => e.KullaniciId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.Property(e => e.SuggestedColor).IsRequired().HasMaxLength(50);
             entity.Property(e => e.CreatedAt).IsRequired();
         });
-
     }
 }
-
-// Entity sınıfları yukarıdaki kodun aynısıdır.

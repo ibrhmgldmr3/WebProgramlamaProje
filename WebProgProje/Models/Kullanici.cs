@@ -38,7 +38,7 @@ namespace WebProgramlamaProje.Models
         // public List<Islem> YaptirdiğiIslemlemler { get; set; } = new List<Islem>();
 
         // Kullanıcının yapay zeka sonuçları
-        //public List<AIResult> AIResult { get; set; } = new List<AIResult>();
+        public List<AIResult> AIResults { get; set; } = new List<AIResult>();
     }
 
 }

@@ -38,11 +38,25 @@
                 <input asp-for="Saat" class="form-control" />
                 <span asp-validation-for="Saat" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="OnaylandiMi" /> @Html.DisplayNameFor(model => model.OnaylandiMi)
-                </label>
-            </div>
+            @{
+                var userEmail = Context.Session.GetString("UserEmail");
+                var userRole = Context.Session.GetString("UserRole");
+
+                if (!string.IsNullOrEmpty(userEmail))
+                {
+                    if (userRole == "Admin")
+                    {
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="OnaylandiMi" /> @Html.DisplayNameFor(model => model.OnaylandiMi)
+                            </label>
+                        </div>
+                }
+  
+				
+            }
+            }
+            
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

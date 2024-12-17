@@ -6,8 +6,8 @@ namespace WebProgramlamaProje.Models
     {
         public int CalisanUygunlukId { get; set; }
         [Display(Name = "Çalışan")]
-        public int ?CalisanId { get; set; }
-        public Calisan ?Calisan { get; set; }
+        public int? CalisanId { get; set; }
+        public Calisan? Calisan { get; set; }
         [Display(Name = "Gün")]
         public DayOfWeek Gun { get; set; }
         [Display(Name = "Başlangıç Saati")]
