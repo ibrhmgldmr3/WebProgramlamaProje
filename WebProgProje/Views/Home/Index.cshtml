@@ -1,55 +1,15 @@
 ﻿@{
-    ViewData["Title"] = "Ana Sayfa";
+    Layout = "../Shared/_NewLayout.cshtml";
 }
+<h1>@ViewData["Title"]</h1>
 
-<div class="slider-main">
-<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="10000">
-            <div class="carousel-caption">
-                <div class="stock-text">
-                    <h2>Görünüşünüzdeki Gücü Keşfedin!</h2>
-                    <h2>Görünüşünüzdeki Gücü Keşfedin!</h2>
-                </div>
-            </div>
-            <div class="carousel-image-wrapper">
-            <img src="/img/dukkan1.png" class="d-block w-100 carousel-image" alt="...">
-            </div>
-        </div>
-        <div class="carousel-item" data-bs-interval="2000">
-            <div class="carousel-caption">
-                <div class="stock-text">
-                    <h2>Görünüşünüzdeki Gücü Keşfedin!</h2>
-                    <h2>Görünüşünüzdeki Gücü Keşfedin!</h2>
-                </div>
-            </div>
-            <div class="carousel-image-wrapper">
-                <img src="/img/dukkan2.png" class="d-block w-100 carousel-image" alt="...">
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="carousel-caption">
-                <div class="stock-text">
-                    <h2>Görünüşünüzdeki Gücü Keşfedin!</h2>
-                    <h2>Görünüşünüzdeki Gücü Keşfedin!</h2>
-                </div>
-            </div>
-            <div class="carousel-image-wrapper">
-                <img src="/img/dukkan3.png" class="d-block w-100 carousel-image" alt="...">
-            </div>
+<section class="home-section home-parallax home-fade home-full-height bg-dark-60 agency-page-header" id="home" data-background="../img/sakaltirasi1.png">
+    <div class="titan-caption">
+        <div class="caption-content">
+            <div class="font-alt mb-30 titan-title-size-1">Grow your awesome idea</div>
+            <div class="font-alt mb-40 titan-title-size-3">
+                Make business <span class="rotate">easy | simple | flexible</span>
+            </div><a class="section-scroll btn btn-border-w btn-circle" href="#about">Learn More</a>
         </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
-</div>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, fugiat placeat? Repellendus eum vitae, nihil iusto ratione illo ipsa error temporibus itaque facilis, rem explicabo libero minima assumenda quisquam, accusantium hic aspernatur sit. Officia dolores quia quo alias, quis commodi excepturi aliquam officiis minus omnis deleniti sed totam nulla modi quasi consectetur in distinctio soluta aliquid recusandae obcaecati? Assumenda vitae non cum magni maxime quidem beatae consequuntur impedit saepe? Dolorem, ad! Non eius corporis laborum nihil incidunt officiis, ipsum officia nesciunt aperiam reprehenderit voluptatem dignissimos corrupti? Error, velit, esse odio, corrupti blanditiis molestiae cumque nemo natus rerum sequi laboriosam placeat?</p>
-
-<p>Email: @ViewBag.UserEmail</p>
-<p>Ad Soyad: @ViewBag.UserFullName</p>
+</section>

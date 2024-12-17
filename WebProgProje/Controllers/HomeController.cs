@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebProgramlamaProje.Models;
 
-namespace WebProgProje.Controllers
+namespace WebProgramlamaProje.Controllers
 {
     public class HomeController : Controller
     {

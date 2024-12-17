@@ -9,7 +9,9 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
 
 //Veritabani baðlanti adresi
-var conn = "Server=(localdb)\\mssqllocaldb;Database=WebProgramlamaProje;Trusted_Connection=True";
+//var conn = "Server=(localdb)\\mssqllocaldb;Database=WebProgramlamaProje;Trusted_Connection=True";
+var conn = "Server=(localdb)\\mssqllocaldb;Database=Proje;Trusted_Connection=True";
+
 builder.Services.AddDbContext<SalonDbContext>(options =>
 {
     options.UseSqlServer(conn);
@@ -44,6 +46,6 @@ app.MapControllerRoute(
     defaults: new { controller = "Logout", action = "Index" });
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Privacy}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
