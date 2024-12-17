@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebProgProje.Models;
 using WebProgramlamaProje.Models;
+using WebProgProje.Models;
 
 public class SalonDbContext : DbContext
 {
@@ -130,4 +131,6 @@ public class SalonDbContext : DbContext
             entity.Property(e => e.CreatedAt).IsRequired();
         });
     }
+
+public DbSet<WebProgProje.Models.Uzmanlik> Uzmanlik { get; set; } = default!;
 }
