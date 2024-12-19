@@ -12,8 +12,20 @@ namespace WebProgProje.Controllers
     public class IslemsController : Controller
     {
         private readonly SalonDbContext _context;
-  
 
+        private string GetUserRole()
+        {
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            if (userEmail != null)
+            {
+                var user = _context.Kullanicilar.SingleOrDefault(u => u.Email == userEmail);
+                if (user != null)
+                {
+                    return user.Role;
+                }
+            }
+            return null;
+        }
         public IslemsController(SalonDbContext context)
         {
             _context = context;
@@ -22,12 +34,18 @@ namespace WebProgProje.Controllers
         // GET: Islems
         public async Task<IActionResult> Index()
         {
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
+            {
+                return Unauthorized();
+            }
             return View(await _context.Islemler.ToListAsync());
         }
 
         // GET: Islems/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -42,19 +60,7 @@ namespace WebProgProje.Controllers
 
             return View(islem);
         }
-        private string GetUserRole()
-        {
-            var userEmail = HttpContext.Session.GetString("UserEmail");
-            if (userEmail != null)
-            {
-                var user = _context.Kullanicilar.SingleOrDefault(u => u.Email == userEmail);
-                if (user != null)
-                {
-                    return user.Role;
-                }
-            }
-            return null;
-        }
+
         // GET: Islems/Create
         public IActionResult Create()
         {
@@ -63,32 +69,23 @@ namespace WebProgProje.Controllers
             {
                 return Unauthorized();
             }
-            ViewData["UzmanlikId"] = new SelectList(_context.Uzmanliklar, "UzmanlikId", "Ad");  // Uzmanlıkları listele
             return View();
         }
 
+        // POST: Islems/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IslemId,Ad,Sure,Ucret,Uzmanliklar")] Islem islem, int[] Uzmanliklar)
+        public async Task<IActionResult> Create([Bind("IslemId,Ad,Sure,Ucret")] Islem islem)
         {
             if (ModelState.IsValid)
             {
-                foreach (var uzmanlikId in Uzmanliklar)
-                {
-                    var uzmanlik = await _context.Uzmanliklar.FindAsync(uzmanlikId);
-                    islem.Uzmanliklar.Add(uzmanlik);  // İşlemle ilişkilendirilen uzmanlıkları ekle
-                }
                 _context.Add(islem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(islem);
-        }
-
-
-        public IActionResult Hizmetlerimiz()
-        {
-            return View();
         }
 
         // GET: Islems/Edit/5
@@ -191,4 +188,3 @@ namespace WebProgProje.Controllers
         }
     }
 }
-

@@ -2,7 +2,7 @@
 
 namespace WebProgramlamaProje.Models
 {
-    public class Salon 
+    public class Salon
     {
         public int SalonId { get; set; }
         public string Isim { get; set; }
@@ -11,7 +11,7 @@ namespace WebProgramlamaProje.Models
         public string Tip { get; set; } // "Kuaför" veya "Berber"
         public TimeSpan CalismaBaslangic { get; set; }
         public TimeSpan CalismaBitis { get; set; }
-        public List<Calisan> ?Calisanlar { get; set; } = new List<Calisan>();
+        public List<Calisan>? Calisanlar { get; set; } = new List<Calisan>();
 
 
 
