@@ -1,4 +1,4 @@
-﻿@model WebProgProje.Models.Uzmanlik
+﻿@model WebProgramlamaProje.Models.Uzmanlik
 
 @{
     ViewData["Title"] = "Details";
@@ -10,11 +10,22 @@
     <h4>Uzmanlik</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Ad)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Ad)
+        </dd>
+        <dt class="col-sm-2">
+            Yapılabilecek İşlemler
+        </dt>
+        <dd class="col-sm-10">
+            <ul>
+                @foreach (var islemUzmanlik in Model.IslemUzmanliklar)
+                {
+                    <li>@islemUzmanlik.Islem.Ad</li>
+                }
+            </ul>
         </dd>
     </dl>
 </div>

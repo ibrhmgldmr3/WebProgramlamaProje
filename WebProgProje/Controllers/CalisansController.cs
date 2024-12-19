@@ -26,6 +26,7 @@ namespace WebProgProje.Controllers
             }
             return null;
         }
+
         public CalisansController(SalonDbContext context)
         {
             _context = context;
@@ -39,10 +40,8 @@ namespace WebProgProje.Controllers
             {
                 return Unauthorized();
             }
-            var salonDbContext = _context.Calisanlar.Include(c => c.Kullanici).Include(c => c.Salon);
+            var salonDbContext = _context.Calisanlar.Include(c => c.Kullanici).Include(c => c.Salon).Include(c => c.Uzmanlik);
             return View(await salonDbContext.ToListAsync());
-        
-        
         }
 
         // GET: Calisans/Details/5
@@ -53,58 +52,62 @@ namespace WebProgProje.Controllers
             {
                 return Unauthorized();
             }
-            else
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-
-                var calisan = await _context.Calisanlar
-                    .Include(c => c.Kullanici)
-                    .Include(c => c.Salon)
-                    .FirstOrDefaultAsync(m => m.CalisanId == id);
-                if (calisan == null)
-                {
-                    return NotFound();
-                }
-
-                return View(calisan);
+                return NotFound();
             }
+
+            var calisan = await _context.Calisanlar
+                .Include(c => c.Kullanici)
+                .Include(c => c.Salon)
+                .Include(c => c.Uzmanlik)
+                .FirstOrDefaultAsync(m => m.CalisanId == id);
+            if (calisan == null)
+            {
+                return NotFound();
+            }
+
+            return View(calisan);
         }
 
         // GET: Calisans/Create
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
                 return Unauthorized();
             }
-            ViewData["UzmanlikId"] = new SelectList(_context.Uzmanliklar, "UzmanlikId", "Ad");  // Uzmanlıkları listele
-            ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Adres");
+            ViewData["UzmanlikId"] = new SelectList(_context.Uzmanliklar, "UzmanlikId", "Ad");
+            ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Isim");
+            ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "FullName");
             return View();
         }
 
+        // POST: Calisans/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CalisanId,KullaniciId,Ad,Soyad,UzmanlikId")] Calisan calisan)
+        public async Task<IActionResult> Create([Bind("CalisanId,KullaniciId,Ad,Soyad,UzmanlikId,SalonId")] Calisan calisan)
         {
-            if (ModelState.IsValid)
+            var kullanici = await _context.Kullanicilar.FindAsync(calisan.KullaniciId);
+            if (kullanici != null)
             {
-                calisan.Uzmanlik = await _context.Uzmanliklar.FindAsync(calisan.UzmanlikId);  // Uzmanlık bilgilerini al
-                calisan.Salon = await _context.Salonlar.FindAsync(calisan.SalonId);
-                _context.Add(calisan);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var fullNameParts = kullanici.FullName.Split(' ');
+                calisan.Ad = fullNameParts[0];
+                calisan.Soyad = fullNameParts.Length > 1 ? string.Join(' ', fullNameParts.Skip(1)) : string.Empty;
+
             }
+
+
+            _context.Add(calisan);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
             ViewData["UzmanlikId"] = new SelectList(_context.Uzmanliklar, "UzmanlikId", "Ad", calisan.UzmanlikId);
-            ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Adres", calisan.SalonId);
+            ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Isim", calisan.SalonId);
+            ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "FullName", calisan.KullaniciId);
             return View(calisan);
         }
-
-
-
 
         // GET: Calisans/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -124,17 +127,16 @@ namespace WebProgProje.Controllers
             {
                 return NotFound();
             }
-            ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "Email", calisan.KullaniciId);
-            ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Adres", calisan.SalonId);
+            ViewData["UzmanlikId"] = new SelectList(_context.Uzmanliklar, "UzmanlikId", "Ad", calisan.UzmanlikId);
+            ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Isim", calisan.SalonId);
+            ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "FullName", calisan.KullaniciId);
             return View(calisan);
         }
 
         // POST: Calisans/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CalisanId,KullaniciId,Ad,Soyad,Uzmanlik,SalonId")] Calisan calisan)
+        public async Task<IActionResult> Edit(int id, [Bind("CalisanId,KullaniciId,Ad,Soyad,UzmanlikId,SalonId,CalismaSaatiGiris,CalismaSaatiCikis")] Calisan calisan)
         {
             if (id != calisan.CalisanId)
             {
@@ -145,6 +147,11 @@ namespace WebProgProje.Controllers
             {
                 try
                 {
+                    var kullanici = await _context.Kullanicilar.FindAsync(calisan.KullaniciId);
+                    if (kullanici != null)
+                    {
+                        calisan.Ad = kullanici.FullName;
+                    }
                     _context.Update(calisan);
                     await _context.SaveChangesAsync();
                 }
@@ -161,8 +168,9 @@ namespace WebProgProje.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "Email", calisan.KullaniciId);
-            ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Adres", calisan.SalonId);
+            ViewData["UzmanlikId"] = new SelectList(_context.Uzmanliklar, "UzmanlikId", "Ad", calisan.UzmanlikId);
+            ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Isim", calisan.SalonId);
+            ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "FullName", calisan.KullaniciId);
             return View(calisan);
         }
 
@@ -182,6 +190,7 @@ namespace WebProgProje.Controllers
             var calisan = await _context.Calisanlar
                 .Include(c => c.Kullanici)
                 .Include(c => c.Salon)
+                .Include(c => c.Uzmanlik)
                 .FirstOrDefaultAsync(m => m.CalisanId == id);
             if (calisan == null)
             {
@@ -210,6 +219,9 @@ namespace WebProgProje.Controllers
         {
             return _context.Calisanlar.Any(e => e.CalisanId == id);
         }
-
     }
 }
+
+
+
+
