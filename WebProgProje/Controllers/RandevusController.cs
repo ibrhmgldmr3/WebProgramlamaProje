@@ -205,17 +205,6 @@ namespace WebProgramlamaProje.Controllers
                 return NotFound();
             }
 
-            var userRole = GetUserRole();
-            if (userRole == "Member")
-            {
-                // Member rolündeki kullanıcılar OnaylandiMi alanını düzenleyemez
-                var existingRandevu = await _context.Randevular.AsNoTracking().FirstOrDefaultAsync(r => r.RandevuId == id);
-                if (existingRandevu != null)
-                {
-                    randevu.OnaylandiMi = existingRandevu.OnaylandiMi;
-                }
-            }
-
             if (ModelState.IsValid)
             {
                 try
