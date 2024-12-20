@@ -4,17 +4,35 @@
     ViewData["Title"] = "Randevular";
 }
 
-<h2>Randevular</h2>
+<h1>Index</h1>
 
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(r => r.First().Calisan.Ad)</th>
-            <th>@Html.DisplayNameFor(r => r.First().Islem.Ad)</th>
-            <th>@Html.DisplayNameFor(r => r.First().Kullanici.Email)</th>
-            <th>@Html.DisplayNameFor(r => r.First().Tarih)</th>
-            <th>@Html.DisplayNameFor(r => r.First().Saat)</th>
-            <th>@Html.DisplayNameFor(r => r.First().OnaylandiMi)</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Calisan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Calisan.Uzmanlik)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Islem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kullanici)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tarih)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Saat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OnaylandiMi)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -22,18 +40,38 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Calisan?.Ad @item.Calisan?.Soyad</td>
-                <td>@item.Islem?.Ad</td>
-                <td>@item.Kullanici?.Email</td>
-                <td>@Html.DisplayFor(modelItem => item.Tarih)</td>
-                <td>@Html.DisplayFor(modelItem => item.Saat)</td>
-                <td>@Html.DisplayFor(modelItem => item.OnaylandiMi)</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.RandevuId">Düzenle</a> |
-                    <a asp-action="Details" asp-route-id="@item.RandevuId">Detaylar</a> |
-                    <a asp-action="Delete" asp-route-id="@item.RandevuId">Sil</a>
+                    @Html.DisplayFor(modelItem => item.Calisan.Ad) @Html.DisplayFor(modelItem => item.Calisan.Soyad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Calisan.Uzmanlik.Ad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Islem.Ad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salon.Adres)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kullanici.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tarih)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Saat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OnaylandiMi)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.RandevuId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.RandevuId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.RandevuId">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+
