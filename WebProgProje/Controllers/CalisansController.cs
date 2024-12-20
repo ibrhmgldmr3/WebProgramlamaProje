@@ -89,9 +89,18 @@ namespace WebProgProje.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CalisanId,KullaniciId,Ad,Soyad,UzmanlikId,SalonId")] Calisan calisan)
         {
+            var existingCalisan = await _context.Calisanlar
+                .FirstOrDefaultAsync(c => c.KullaniciId == calisan.KullaniciId);
+            if (existingCalisan != null)
+            {
+                ModelState.AddModelError("KullaniciId", "Bu kullanıcı zaten bir çalışan olarak kayıtlı.");
+            }
+
             var kullanici = await _context.Kullanicilar.FindAsync(calisan.KullaniciId);
             if (kullanici != null)
             {
+                if (kullanici.Role != "Admin")
+                    kullanici.Role = "Employee";
                 var fullNameParts = kullanici.FullName.Split(' ');
                 calisan.Ad = fullNameParts[0];
                 calisan.Soyad = fullNameParts.Length > 1 ? string.Join(' ', fullNameParts.Skip(1)) : string.Empty;
@@ -119,14 +128,15 @@ namespace WebProgProje.Controllers
                 return NotFound();
             }
 
-            var calisan = await _context.Calisanlar.FindAsync(id);
+            var calisan = await _context.Calisanlar
+                .Include(c => c.Kullanici)
+                .FirstOrDefaultAsync(m => m.CalisanId == id);
             if (calisan == null)
             {
                 return NotFound();
             }
             ViewData["UzmanlikId"] = new SelectList(_context.Uzmanliklar, "UzmanlikId", "Ad", calisan.UzmanlikId);
             ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Isim", calisan.SalonId);
-            ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "FullName", calisan.KullaniciId);
             return View(calisan);
         }
 
@@ -146,9 +156,8 @@ namespace WebProgProje.Controllers
                     var kullanici = await _context.Kullanicilar.FindAsync(calisan.KullaniciId);
                     if (kullanici != null)
                     {
-                        var fullNameParts = kullanici.FullName.Split(' ');
-                        calisan.Ad = fullNameParts[0];
-                        calisan.Soyad = fullNameParts.Length > 1 ? string.Join(' ', fullNameParts.Skip(1)) : string.Empty;
+                        kullanici.FullName = $"{calisan.Ad} {calisan.Soyad}";
+                        _context.Update(kullanici);
                     }
                     _context.Update(calisan);
                     await _context.SaveChangesAsync();
@@ -168,9 +177,9 @@ namespace WebProgProje.Controllers
             }
             ViewData["UzmanlikId"] = new SelectList(_context.Uzmanliklar, "UzmanlikId", "Ad", calisan.UzmanlikId);
             ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Isim", calisan.SalonId);
-            ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "FullName", calisan.KullaniciId);
             return View(calisan);
         }
+
 
         // GET: Calisans/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -206,10 +215,16 @@ namespace WebProgProje.Controllers
             var calisan = await _context.Calisanlar.FindAsync(id);
             if (calisan != null)
             {
+                var kullanici = await _context.Kullanicilar.FindAsync(calisan.KullaniciId);
+                if (kullanici != null && kullanici.Role != "Admin")
+                {
+                    kullanici.Role = "Member";
+                    _context.Update(kullanici);
+                }
                 _context.Calisanlar.Remove(calisan);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
