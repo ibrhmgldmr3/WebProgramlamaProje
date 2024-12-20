@@ -29,7 +29,7 @@ body {
 
 .navbar-nav .nav-link:hover {
     color: #37597C; /* Hover durumunda renk deðiþikliði */
-    background-color: rgba(55, 89, 124, 0.1); /* Hover arka plan rengi */
+    background-color: rgba(55, 89, 124, 0.8); /* Hover arka plan rengi */
     border-radius: 4px; /* Köþe yuvarlama */
 }
 
@@ -102,3 +102,4 @@ body {
 {
     text-align: center;
 }
+

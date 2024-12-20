@@ -3873,12 +3873,13 @@ textarea.form-control-lg {
   display: block;
 }
 
+
 .navbar {
   --bs-navbar-padding-x: 0;
   --bs-navbar-padding-y: 1.5rem;
-  --bs-navbar-color: rgba(0, 0, 0, 0.3);
+  --bs-navbar-color: rgba(0, 0, 0, 0.8);
   --bs-navbar-hover-color: #1a1a1a;
-  --bs-navbar-disabled-color: rgba(var(--bs-emphasis-color-rgb), 0.3);
+  --bs-navbar-disabled-color: rgba(var(--bs-emphasis-color-rgb), 0.8);
   --bs-navbar-active-color: #1a1a1a;
   --bs-navbar-brand-padding-y: 0.3125rem;
   --bs-navbar-brand-margin-end: 1rem;
@@ -11959,3 +11960,5 @@ th {
 .card .h6 {
   color: inherit;
 }
+
+

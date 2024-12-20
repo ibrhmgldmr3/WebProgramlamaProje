@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WebProgProje.Models;
 
 namespace WebProgramlamaProje.Models
 {
@@ -12,8 +11,6 @@ namespace WebProgramlamaProje.Models
         public decimal Ucret { get; set; }
 
         // İşlemin yapılabileceği uzmanlıklar
-        public List<Uzmanlik> Uzmanliklar { get; set; } = new List<Uzmanlik>();
+        public List<IslemUzmanlik> IslemUzmanliklar { get; set; } = new List<IslemUzmanlik>();
     }
-
-
 }

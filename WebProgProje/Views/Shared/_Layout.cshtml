@@ -7,13 +7,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - S&I Saloon </title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-slate.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/login.css" />
     <link rel="stylesheet" href="~/css/home.css" />
     <link rel="stylesheet" href="~/WebProgProje.styles.css" asp-append-version="true" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    @RenderSection("Styles", required: false)
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-slate.css" />
+	@RenderSection("Styles", required: false)
+    
 </head>
 <body>
     <!-- ? Preloader Start -->
@@ -28,9 +29,9 @@
         </div>
     </div>
     <!-- Preloader Start -->
-    
+
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">S<i class="fas fa-scissors"></i>I Saloon</a>
 
@@ -64,13 +65,19 @@
                                         <a class="nav-link text-dark" href="/Home/Admin">Admin Paneli</a>
                                     </li>
                                 }
-                                <li class="nav-item ms-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="/Kullanicis/Profil">Profil</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link text-dark" href="/Kullanicis/Logout">Çıkış Yap</a>
                                 </li>
                             }
                             else
                             {
-                                <li class="nav-item ms-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="/Kullanicis/Register">Kayıt Ol</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link text-dark" href="/Kullanicis/Login">Giriş Yap</a>
                                 </li>
                             }
@@ -80,6 +87,7 @@
             </div>
         </nav>
     </header>
+
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -111,3 +119,4 @@
     </script>
 </body>
 </html>
+

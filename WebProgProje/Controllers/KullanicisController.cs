@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +19,11 @@ namespace WebProgProje.Controllers
         {
             _context = context;
         }
+
         private string GetUserRole()
         {
             return HttpContext.Session.GetString("UserRole");
         }
-
 
         // GET: Kullanicis
         public async Task<IActionResult> Index()
@@ -53,7 +55,7 @@ namespace WebProgProje.Controllers
         }
 
         // GET: Kullanicis/Create
-        public IActionResult Create()
+        public IActionResult Kaydolma()
         {
             return View();
         }
@@ -67,19 +69,22 @@ namespace WebProgProje.Controllers
             }
         }
 
-
         // POST: Kullanicis/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Kaydolma([Bind("Email,PasswordHash,FullName,PhoneNumber")] Kullanici kullanici)
+        public async Task<IActionResult> Kaydolma([Bind("Email,PasswordHash,FullName,PhoneNumber")] Kullanici kullanici, IFormFile profilResmi)
         {
+            kullanici.Role = "Member";
             if (ModelState.IsValid)
             {
-                kullanici.Role = "Member"; // Role alanını koda gömülü olarak ayarlayın
+                if (profilResmi != null)
+                {
+                    kullanici.ProfilResmi = ConvertImageToByteArray(profilResmi);
+                }
+
                 _context.Add(kullanici);
                 await _context.SaveChangesAsync();
+                TempData["Message"] = kullanici.Email + ' ' + kullanici.FullName + " kaydınız başarıyla tamamlandı!!";
 
                 return RedirectToAction(nameof(Index));
             }
@@ -87,6 +92,7 @@ namespace WebProgProje.Controllers
 
             return View(kullanici);
         }
+
 
 
         // GET: Kullanicis/Edit/5
@@ -106,11 +112,9 @@ namespace WebProgProje.Controllers
         }
 
         // POST: Kullanicis/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("KullaniciId,Email,PasswordHash,Role,FullName,PhoneNumber")] Kullanici kullanici)
+        public async Task<IActionResult> Edit(int id, [Bind("KullaniciId,Email,PasswordHash,Role,FullName,PhoneNumber,ProfilResmi")] Kullanici kullanici, IFormFile profilResmi)
         {
             if (id != kullanici.KullaniciId)
             {
@@ -121,6 +125,10 @@ namespace WebProgProje.Controllers
             {
                 try
                 {
+                    if (profilResmi != null)
+                    {
+                        kullanici.ProfilResmi = ConvertImageToByteArray(profilResmi);
+                    }
                     _context.Update(kullanici);
                     await _context.SaveChangesAsync();
                 }
@@ -177,6 +185,7 @@ namespace WebProgProje.Controllers
         {
             return _context.Kullanicilar.Any(e => e.KullaniciId == id);
         }
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -184,26 +193,26 @@ namespace WebProgProje.Controllers
         }
 
         [HttpPost]
-        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = AuthenticateUser(model.Email, model.Password);
-                if (user != null&& user.Role != null)
+                if (user != null && user.Role != null)
                 {
-                        // Kullanıcı bilgilerini session'a kaydet
-                        HttpContext.Session.SetString("UserEmail", user.Email);
-                        HttpContext.Session.SetString("UserRole", user.Role);
+                    // Kullanıcı bilgilerini session'a kaydet
+                    HttpContext.Session.SetString("UserEmail", user.Email);
+                    HttpContext.Session.SetString("UserRole", user.Role);
 
-                        // Ana sayfaya yönlendir
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Geçersiz kullanıcı adı veya şifre.");
-                    }
+                    // Ana sayfaya yönlendir
+                    return RedirectToAction("Index", "Home");
                 }
+                else
+                {
+                    ModelState.AddModelError("", "Geçersiz kullanıcı adı veya şifre.");
+                }
+            }
             return View(model);
         }
 
@@ -219,10 +228,11 @@ namespace WebProgProje.Controllers
         private Kullanici AuthenticateUser(string email, string password)
         {
             // Bu metot, kullanıcıyı doğrulamak için veritabanı kontrolü yapar
-            var user = _context.Kullanicilar.SingleOrDefault(u => u.Email == email && u.PasswordHash == password);
-            return user;
+            return _context.Kullanicilar.SingleOrDefault(u => u.Email == email && u.PasswordHash == password);
         }
-
     }
 }
+
+
+
 

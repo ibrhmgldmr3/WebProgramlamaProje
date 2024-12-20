@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebProgramlamaProje.Models;
 
-namespace WebProgProje.Models
+namespace WebProgramlamaProje.Models
 {
     public class Salon
     {

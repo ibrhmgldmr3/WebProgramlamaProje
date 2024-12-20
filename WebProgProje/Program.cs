@@ -9,8 +9,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
 
 //Veritabani baðlanti adresi
-//var conn = "Server=(localdb)\\mssqllocaldb;Database=WebProgramlamaProje;Trusted_Connection=True";
-var conn = "Server=(localdb)\\mssqllocaldb;Database=Proje;Trusted_Connection=True";
+var conn = "Server=(localdb)\\mssqllocaldb;Database=WebProgramlamaProje;Trusted_Connection=True";
+//var conn = "Server=(localdb)\\mssqllocaldb;Database=ProgramlamaProje;Trusted_Connection=True";
 
 builder.Services.AddDbContext<SalonDbContext>(options =>
 {
