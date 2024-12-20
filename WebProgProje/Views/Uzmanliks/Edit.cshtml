@@ -1,0 +1,42 @@
+﻿@model WebProgramlamaProje.Models.Uzmanlik
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Uzmanlik</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UzmanlikId" />
+            <div class="form-group">
+                <label asp-for="Ad" class="control-label"></label>
+                <input asp-for="Ad" class="form-control" />
+                <span asp-validation-for="Ad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="SelectedIslemler" class="control-label">Yapılabilecek İşlemler</label>
+                <select asp-for="SelectedIslemler" class="form-control" multiple="multiple" asp-items="ViewBag.Islemler"></select>
+                <span asp-validation-for="SelectedIslemler" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

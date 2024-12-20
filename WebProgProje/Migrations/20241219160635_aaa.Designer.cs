@@ -5,14 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using WebProgramlamaProje.Models;
 
 #nullable disable
 
 namespace WebProgProje.Migrations
 {
     [DbContext(typeof(SalonDbContext))]
-    [Migration("20241216132812_d6")]
-    partial class d6
+    [Migration("20241219160635_aaa")]
+    partial class aaa
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,12 +67,6 @@ namespace WebProgProje.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("CalismaSaatiCikis")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("CalismaSaatiGiris")
-                        .HasColumnType("time");
-
                     b.Property<int?>("KullaniciId")
                         .HasColumnType("int");
 
@@ -85,9 +80,8 @@ namespace WebProgProje.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Uzmanlik")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UzmanlikId")
+                        .HasColumnType("int");
 
                     b.HasKey("CalisanId");
 
@@ -96,6 +90,8 @@ namespace WebProgProje.Migrations
                     b.HasIndex("SalonId");
 
                     b.HasIndex("SalonId1");
+
+                    b.HasIndex("UzmanlikId");
 
                     b.ToTable("Calisanlar");
                 });
@@ -117,17 +113,12 @@ namespace WebProgProje.Migrations
                     b.Property<int?>("CalisanId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CalisanId1")
-                        .HasColumnType("int");
-
                     b.Property<int>("Gun")
                         .HasColumnType("int");
 
                     b.HasKey("CalisanUygunlukId");
 
                     b.HasIndex("CalisanId");
-
-                    b.HasIndex("CalisanId1");
 
                     b.ToTable("CalisanUygunluklar");
                 });
@@ -155,6 +146,21 @@ namespace WebProgProje.Migrations
                     b.HasKey("IslemId");
 
                     b.ToTable("Islemler");
+                });
+
+            modelBuilder.Entity("WebProgramlamaProje.Models.IslemUzmanlik", b =>
+                {
+                    b.Property<int>("IslemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UzmanlikId")
+                        .HasColumnType("int");
+
+                    b.HasKey("IslemId", "UzmanlikId");
+
+                    b.HasIndex("UzmanlikId");
+
+                    b.ToTable("IslemUzmanliklar");
                 });
 
             modelBuilder.Entity("WebProgramlamaProje.Models.Kullanici", b =>
@@ -207,16 +213,10 @@ namespace WebProgProje.Migrations
                     b.Property<int?>("CalisanId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CalisanId1")
-                        .HasColumnType("int");
-
                     b.Property<int?>("IslemId")
                         .HasColumnType("int");
 
                     b.Property<int?>("KullaniciId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("KullaniciId1")
                         .HasColumnType("int");
 
                     b.Property<bool>("OnaylandiMi")
@@ -235,13 +235,9 @@ namespace WebProgProje.Migrations
 
                     b.HasIndex("CalisanId");
 
-                    b.HasIndex("CalisanId1");
-
                     b.HasIndex("IslemId");
 
                     b.HasIndex("KullaniciId");
-
-                    b.HasIndex("KullaniciId1");
 
                     b.HasIndex("SalonId");
 
@@ -285,10 +281,27 @@ namespace WebProgProje.Migrations
                     b.ToTable("Salonlar");
                 });
 
+            modelBuilder.Entity("WebProgramlamaProje.Models.Uzmanlik", b =>
+                {
+                    b.Property<int>("UzmanlikId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UzmanlikId"));
+
+                    b.Property<string>("Ad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UzmanlikId");
+
+                    b.ToTable("Uzmanliklar");
+                });
+
             modelBuilder.Entity("WebProgramlamaProje.Models.AIResult", b =>
                 {
                     b.HasOne("WebProgramlamaProje.Models.Kullanici", "Kullanici")
-                        .WithMany()
+                        .WithMany("AIResults")
                         .HasForeignKey("KullaniciId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -311,35 +324,54 @@ namespace WebProgProje.Migrations
                         .WithMany("Calisanlar")
                         .HasForeignKey("SalonId1");
 
+                    b.HasOne("WebProgramlamaProje.Models.Uzmanlik", "Uzmanlik")
+                        .WithMany("Calisanlar")
+                        .HasForeignKey("UzmanlikId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Kullanici");
 
                     b.Navigation("Salon");
+
+                    b.Navigation("Uzmanlik");
                 });
 
             modelBuilder.Entity("WebProgramlamaProje.Models.CalisanUygunluk", b =>
                 {
                     b.HasOne("WebProgramlamaProje.Models.Calisan", "Calisan")
-                        .WithMany()
+                        .WithMany("CalisanUygunluklar")
                         .HasForeignKey("CalisanId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("WebProgramlamaProje.Models.Calisan", null)
-                        .WithMany("CalisanUygunluklar")
-                        .HasForeignKey("CalisanId1");
-
                     b.Navigation("Calisan");
+                });
+
+            modelBuilder.Entity("WebProgramlamaProje.Models.IslemUzmanlik", b =>
+                {
+                    b.HasOne("WebProgramlamaProje.Models.Islem", "Islem")
+                        .WithMany("IslemUzmanliklar")
+                        .HasForeignKey("IslemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebProgramlamaProje.Models.Uzmanlik", "Uzmanlik")
+                        .WithMany("IslemUzmanliklar")
+                        .HasForeignKey("UzmanlikId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Islem");
+
+                    b.Navigation("Uzmanlik");
                 });
 
             modelBuilder.Entity("WebProgramlamaProje.Models.Randevu", b =>
                 {
                     b.HasOne("WebProgramlamaProje.Models.Calisan", "Calisan")
-                        .WithMany()
+                        .WithMany("Randevular")
                         .HasForeignKey("CalisanId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("WebProgramlamaProje.Models.Calisan", null)
-                        .WithMany("Randevular")
-                        .HasForeignKey("CalisanId1");
 
                     b.HasOne("WebProgramlamaProje.Models.Islem", "Islem")
                         .WithMany()
@@ -347,13 +379,9 @@ namespace WebProgProje.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("WebProgramlamaProje.Models.Kullanici", "Kullanici")
-                        .WithMany()
+                        .WithMany("Randevular")
                         .HasForeignKey("KullaniciId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("WebProgramlamaProje.Models.Kullanici", null)
-                        .WithMany("Randevular")
-                        .HasForeignKey("KullaniciId1");
 
                     b.HasOne("WebProgramlamaProje.Models.Salon", "Salon")
                         .WithMany()
@@ -375,14 +403,28 @@ namespace WebProgProje.Migrations
                     b.Navigation("Randevular");
                 });
 
+            modelBuilder.Entity("WebProgramlamaProje.Models.Islem", b =>
+                {
+                    b.Navigation("IslemUzmanliklar");
+                });
+
             modelBuilder.Entity("WebProgramlamaProje.Models.Kullanici", b =>
                 {
+                    b.Navigation("AIResults");
+
                     b.Navigation("Randevular");
                 });
 
             modelBuilder.Entity("WebProgramlamaProje.Models.Salon", b =>
                 {
                     b.Navigation("Calisanlar");
+                });
+
+            modelBuilder.Entity("WebProgramlamaProje.Models.Uzmanlik", b =>
+                {
+                    b.Navigation("Calisanlar");
+
+                    b.Navigation("IslemUzmanliklar");
                 });
 #pragma warning restore 612, 618
         }

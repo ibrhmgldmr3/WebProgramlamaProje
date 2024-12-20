@@ -9,34 +9,25 @@
 <h4>Calisan</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6 offset-md-3">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="CalisanId" />
             <div class="form-group">
                 <label asp-for="KullaniciId" class="control-label"></label>
-                <select asp-for="KullaniciId" class="form-control" asp-items="ViewBag.KullaniciId"></select>
-                <span asp-validation-for="KullaniciId" class="text-danger"></span>
+                <select asp-for="KullaniciId" class="form-control" asp-items="ViewBag.KullaniciId" id="KullaniciId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Ad" class="control-label"></label>
-                <input asp-for="Ad" class="form-control" />
-                <span asp-validation-for="Ad" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Soyad" class="control-label"></label>
-                <input asp-for="Soyad" class="form-control" />
-                <span asp-validation-for="Soyad" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Uzmanlik" class="control-label"></label>
-                <input asp-for="Uzmanlik" class="form-control" />
-                <span asp-validation-for="Uzmanlik" class="text-danger"></span>
+                <label asp-for="UzmanlikId" class="control-label"></label>
+                <select asp-for="UzmanlikId" class="form-control" asp-items="ViewBag.UzmanlikId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="SalonId" class="control-label"></label>
                 <select asp-for="SalonId" class="form-control" asp-items="ViewBag.SalonId"></select>
-                <span asp-validation-for="SalonId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Ad" class="form-control" />
+                <input type="hidden" asp-for="Soyad" class="form-control" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -50,5 +41,16 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById("KullaniciId").addEventListener("change", function () {
+            var kullaniciId = this.value;
+            fetch('/api/kullanicilar/' + kullaniciId)
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelector('input[name="Ad"]').value = data.ad;
+                    document.querySelector('input[name="Soyad"]').value = data.soyad;
+                });
+        });
+    </script>
 }

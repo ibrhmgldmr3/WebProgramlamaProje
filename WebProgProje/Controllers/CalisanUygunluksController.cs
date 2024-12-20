@@ -13,21 +13,45 @@ namespace WebProgramlamaProje.Controllers
     {
         private readonly SalonDbContext _context;
 
+        private string GetUserRole()
+        {
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            if (userEmail != null)
+            {
+                var user = _context.Kullanicilar.SingleOrDefault(u => u.Email == userEmail);
+                if (user != null)
+                {
+                    return user.Role;
+                }
+            }
+            return null;
+        }
+
         public CalisanUygunluksController(SalonDbContext context)
         {
             _context = context;
         }
 
-        // GET: CalisanUygunluks
+        // GET: CalisanUygunluk
         public async Task<IActionResult> Index()
         {
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
+            {
+                return Unauthorized();
+            }
             var salonDbContext = _context.CalisanUygunluklar.Include(c => c.Calisan);
             return View(await salonDbContext.ToListAsync());
         }
 
-        // GET: CalisanUygunluks/Details/5
+        // GET: CalisanUygunluk/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
+            {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -44,16 +68,19 @@ namespace WebProgramlamaProje.Controllers
             return View(calisanUygunluk);
         }
 
-        // GET: CalisanUygunluks/Create
+        // GET: CalisanUygunluk/Create
         public IActionResult Create()
         {
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
+            {
+                return Unauthorized();
+            }
             ViewData["CalisanId"] = new SelectList(_context.Calisanlar, "CalisanId", "Ad");
             return View();
         }
 
-        // POST: CalisanUygunluks/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: CalisanUygunluk/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CalisanUygunlukId,CalisanId,Gun,Baslangic,Bitis")] CalisanUygunluk calisanUygunluk)
@@ -68,9 +95,14 @@ namespace WebProgramlamaProje.Controllers
             return View(calisanUygunluk);
         }
 
-        // GET: CalisanUygunluks/Edit/5
+        // GET: CalisanUygunluk/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
+            {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -85,9 +117,7 @@ namespace WebProgramlamaProje.Controllers
             return View(calisanUygunluk);
         }
 
-        // POST: CalisanUygunluks/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: CalisanUygunluk/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CalisanUygunlukId,CalisanId,Gun,Baslangic,Bitis")] CalisanUygunluk calisanUygunluk)
@@ -121,9 +151,14 @@ namespace WebProgramlamaProje.Controllers
             return View(calisanUygunluk);
         }
 
-        // GET: CalisanUygunluks/Delete/5
+        // GET: CalisanUygunluk/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
+            {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -140,7 +175,7 @@ namespace WebProgramlamaProje.Controllers
             return View(calisanUygunluk);
         }
 
-        // POST: CalisanUygunluks/Delete/5
+        // POST: CalisanUygunluk/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -161,3 +196,4 @@ namespace WebProgramlamaProje.Controllers
         }
     }
 }
+
