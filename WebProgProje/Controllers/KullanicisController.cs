@@ -53,7 +53,7 @@ namespace WebProgProje.Controllers
         }
 
         // GET: Kullanicis/Create
-        public IActionResult Kaydolma()
+        public IActionResult Create()
         {
             return View();
         }
@@ -80,7 +80,6 @@ namespace WebProgProje.Controllers
                 kullanici.Role = "Member"; // Role alanını koda gömülü olarak ayarlayın
                 _context.Add(kullanici);
                 await _context.SaveChangesAsync();
-                TempData["Message"] = kullanici.Email + ' ' + kullanici.FullName + " kaydınız başarıyla tamamlandı!!";
 
                 return RedirectToAction(nameof(Index));
             }

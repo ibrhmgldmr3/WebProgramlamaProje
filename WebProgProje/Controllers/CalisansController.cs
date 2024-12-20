@@ -76,11 +76,8 @@ namespace WebProgramlamaProje.Controllers
         // GET: Calisans/Create
         public async Task<IActionResult> Create()
         {
-            var userRole = GetUserRole();
-            if (userRole != "Admin")
-            {
-                return Unauthorized();
-            }
+            ViewData["UzmanlikId"] = new SelectList(_context.Uzmanliklar, "UzmanlikId", "Ad");
+            ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Isim");
             ViewData["UzmanlikId"] = new SelectList(_context.Uzmanliklar, "UzmanlikId", "Ad");  // Uzmanlıkları listele
             ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Adres");
             return View();
