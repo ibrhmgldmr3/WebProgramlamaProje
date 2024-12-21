@@ -201,16 +201,21 @@ namespace WebProgProje.Controllers
             {
                 return NotFound();
             }
-            ViewData["CalisanId"] = new SelectList(_context.Calisanlar, "CalisanId", "CalisanId", randevu.CalisanId);
+
+            if (randevu.OnaylandiMi)
+            {
+                TempData["ErrorMessage"] = "Randevunuz çoktan onaylanmıştır, değişiklik yapamazsınız.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewData["CalisanId"] = new SelectList(_context.Calisanlar.Include(c => c.Kullanici), "CalisanId", "Kullanici.FullName", randevu.CalisanId);
             ViewData["IslemId"] = new SelectList(_context.Islemler, "IslemId", "Ad", randevu.IslemId);
             ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "Email", randevu.KullaniciId);
             ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Adres", randevu.SalonId);
             return View(randevu);
         }
+        
 
-        // POST: Randevus/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("RandevuId,CalisanId,IslemId,SalonId,KullaniciId,Tarih,Saat,OnaylandiMi")] Randevu randevu)
@@ -218,6 +223,12 @@ namespace WebProgProje.Controllers
             if (id != randevu.RandevuId)
             {
                 return NotFound();
+            }
+
+            var userRole = GetUserRole();
+            if ((userRole != "Employee" || userRole!="Admin") && randevu.OnaylandiMi != _context.Randevular.AsNoTracking().FirstOrDefault(r => r.RandevuId == id)?.OnaylandiMi)
+            {
+                ModelState.AddModelError("OnaylandiMi", "Randevunun onaylanma durumunu sadece çalışanlar değiştirebilir.");
             }
 
             if (ModelState.IsValid)
@@ -240,7 +251,7 @@ namespace WebProgProje.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CalisanId"] = new SelectList(_context.Calisanlar, "CalisanId", "CalisanId", randevu.CalisanId);
+            ViewData["CalisanId"] = new SelectList(_context.Calisanlar.Include(c => c.Kullanici), "CalisanId", "Kullanici.FullName", randevu.CalisanId);
             ViewData["IslemId"] = new SelectList(_context.Islemler, "IslemId", "Ad", randevu.IslemId);
             ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "Email", randevu.KullaniciId);
             ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Adres", randevu.SalonId);
@@ -266,10 +277,15 @@ namespace WebProgProje.Controllers
                 return NotFound();
             }
 
+            if (randevu.OnaylandiMi)
+            {
+                TempData["ErrorMessage"] = "Randevunuz çoktan onaylanmıştır, silemezsiniz.";
+                return RedirectToAction(nameof(Index));
+            }
+
             return View(randevu);
         }
 
-        // POST: Randevus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -277,10 +293,16 @@ namespace WebProgProje.Controllers
             var randevu = await _context.Randevular.FindAsync(id);
             if (randevu != null)
             {
+                if (randevu.OnaylandiMi)
+                {
+                    TempData["ErrorMessage"] = "Randevunuz çoktan onaylanmıştır, silemezsiniz.";
+                    return RedirectToAction(nameof(Index));
+                }
+
                 _context.Randevular.Remove(randevu);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
