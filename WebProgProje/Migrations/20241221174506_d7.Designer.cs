@@ -12,8 +12,8 @@ using WebProgramlamaProje.Models;
 namespace WebProgProje.Migrations
 {
     [DbContext(typeof(SalonDbContext))]
-    [Migration("20241219141851_d8")]
-    partial class d8
+    [Migration("20241221174506_d7")]
+    partial class d7
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,12 +66,6 @@ namespace WebProgProje.Migrations
                     b.Property<string>("Ad")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<TimeSpan>("CalismaSaatiCikis")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("CalismaSaatiGiris")
-                        .HasColumnType("time");
 
                     b.Property<int?>("KullaniciId")
                         .HasColumnType("int");
