@@ -8,7 +8,7 @@ using WebProgramlamaProje.Models;
 
 #nullable disable
 
-namespace WebProgramlamaProje.Migrations
+namespace WebProgProje.Migrations
 {
     [DbContext(typeof(SalonDbContext))]
     partial class SalonDbContextModelSnapshot : ModelSnapshot
