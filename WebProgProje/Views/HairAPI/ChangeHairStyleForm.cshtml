@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Saç Stili Değiştirici";
+}
+
+<h2>Saç Stili Değiştirici</h2>
+
+<form id="hairstyleForm">
+    <label for="image">Resim Yükleyin:</label>
+    <input type="file" id="image" accept="image/*" required onchange="convertImageToBase64()" />
+    <input type="hidden" id="base64Image" name="base64Image" />
+    <br />
+    <label for="hairType">Saç Tipi:</label>
+    <select id="hairType" name="hairType" required>
+        <option value="" disabled selected>Saç Tipi Seçin</option>
+        <option value="101">Kâküllü Saç</option>
+        <option value="201">Uzun Saç</option>
+        <option value="301">Kâküllü Uzun Saç</option>
+        <option value="401">Orta Saç Artırma</option>
+        <option value="402">Hafif Saç Artırma</option>
+        <option value="403">Yoğun Saç Artırma</option>
+        <option value="502">Hafif Dalgalı Saç</option>
+        <option value="503">Yoğun Dalgalı Saç</option>
+        <option value="603">Kısa Saç</option>
+        <option value="801">Sarışın</option>
+        <option value="901">Düz Saç</option>
+        <option value="1001">Yağsız Saç</option>
+        <option value="1101">Saç Çizgisi Doldurma</option>
+        <option value="1201">Düzgün Saç</option>
+        <option value="1301">Saç Boşluğu Doldurma</option>
+    </select>
+    <br />
+    <button type="button" onclick="submitForm()">Gönder</button>
+</form>
+
+<div id="result" style="margin-top: 20px;">
+    <!-- Sonuç buraya yüklenecek -->
+</div>
+
+<script>
+    function convertImageToBase64() {
+        const fileInput = document.getElementById('image');
+        const base64Input = document.getElementById('base64Image');
+        const file = fileInput.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                base64Input.value = e.target.result.split(',')[1]; // "data:image/png;base64," kısmını çıkarıyoruz
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function submitForm() {
+        const base64Image = document.getElementById('base64Image').value;
+        const hairType = document.getElementById('hairType').value;
+
+        if (!base64Image || !hairType) {
+            alert("Lütfen gerekli alanları doldurun.");
+            return;
+        }
+
+        fetch('/HairAPI/ChangeHairstyle', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                base64Image: base64Image,
+                hairType: hairType
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('result');
+                if (data.resultImage) {
+                    resultDiv.innerHTML = `
+                        <h3>Sonuç Resmi:</h3>
+                        <img src="data:image/jpeg;base64,${data.resultImage}" alt="Sonuç Resmi" style="max-width: 100%; height: auto;" />
+                    `;
+                } else if (data.error) {
+                    resultDiv.innerHTML = `<p style="color: red;">Hata: ${data.error}</p>`;
+                } else {
+                    resultDiv.innerHTML = `<p>Bir hata oluştu, lütfen tekrar deneyin.</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+                document.getElementById('result').innerHTML = `<p style="color: red;">Bir hata oluştu: ${error.message}</p>`;
+            });
+    }
+</script>
