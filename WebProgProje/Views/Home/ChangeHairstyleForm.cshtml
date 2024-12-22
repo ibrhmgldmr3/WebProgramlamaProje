@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Saç Stili Değiştirici";
+}
+
+<h2>Saç Stili Değiştirici</h2>
+
+<form asp-action="ChangeHairstyle" enctype="multipart/form-data" method="post">
+    <label for="image">Resim Yükleyin:</label>
+    <input type="file" id="image" name="image" accept="image/*" required />
+    <br />
+    <label for="hairType">Saç Tipi:</label>
+    <select id="hairType" name="hairType" required>
+        <option value="" disabled selected>Saç Tipi Seçin</option>
+        <option value="101">Kâküllü Saç</option>
+        <option value="201">Uzun Saç</option>
+        <option value="301">Kâküllü Uzun Saç</option>
+        <option value="401">Orta Saç Artırma</option>
+        <option value="402">Hafif Saç Artırma</option>
+        <option value="403">Yoğun Saç Artırma</option>
+        <option value="502">Hafif Dalgalı Saç</option>
+        <option value="503">Yoğun Dalgalı Saç</option>
+        <option value="603">Kısa Saç</option>
+        <option value="801">Sarışın</option>
+        <option value="901">Düz Saç</option>
+        <option value="1001">Yağsız Saç</option>
+        <option value="1101">Saç Çizgisi Doldurma</option>
+        <option value="1201">Düzgün Saç</option>
+        <option value="1301">Saç Boşluğu Doldurma</option>
+    </select>
+    <br />
+    <button type="submit">Gönder</button>
+</form>
+
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <p style="color: red;">@ViewBag.Message</p>
+}
+
+
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <p style="color: red;">@ViewBag.Message</p>
+}
