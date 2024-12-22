@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebProgramlamaProje.Models;
 
-namespace WebProgProje.Controllers
+namespace WebProgramlamaProje.Controllers
 {
     public class KullanicisController : Controller
     {
@@ -60,28 +60,15 @@ namespace WebProgProje.Controllers
             return View();
         }
 
-        public byte[] ConvertImageToByteArray(IFormFile image)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                image.CopyTo(memoryStream);
-                return memoryStream.ToArray();
-            }
-        }
-
         // POST: Kullanicis/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Kaydolma([Bind("Email,PasswordHash,FullName,PhoneNumber")] Kullanici kullanici, IFormFile profilResmi)
+        public async Task<IActionResult> Kaydolma([Bind("Email,PasswordHash,FullName,PhoneNumber,ProfilResmi")] Kullanici kullanici)
         {
+            kullanici.ProfilResmi = "";
             kullanici.Role = "Member";
             if (ModelState.IsValid)
             {
-                if (profilResmi != null)
-                {
-                    kullanici.ProfilResmi = ConvertImageToByteArray(profilResmi);
-                }
-
                 _context.Add(kullanici);
                 await _context.SaveChangesAsync();
                 TempData["Message"] = kullanici.Email + ' ' + kullanici.FullName + " kaydınız başarıyla tamamlandı!!";
@@ -92,8 +79,6 @@ namespace WebProgProje.Controllers
 
             return View(kullanici);
         }
-
-
 
         // GET: Kullanicis/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -114,7 +99,7 @@ namespace WebProgProje.Controllers
         // POST: Kullanicis/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("KullaniciId,Email,PasswordHash,Role,FullName,PhoneNumber,ProfilResmi")] Kullanici kullanici, IFormFile profilResmi)
+        public async Task<IActionResult> Edit(int id, [Bind("KullaniciId,Email,PasswordHash,Role,FullName,PhoneNumber,ProfilResmi")] Kullanici kullanici)
         {
             if (id != kullanici.KullaniciId)
             {
@@ -125,10 +110,7 @@ namespace WebProgProje.Controllers
             {
                 try
                 {
-                    if (profilResmi != null)
-                    {
-                        kullanici.ProfilResmi = ConvertImageToByteArray(profilResmi);
-                    }
+
                     _context.Update(kullanici);
                     await _context.SaveChangesAsync();
                 }

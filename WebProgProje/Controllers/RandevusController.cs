@@ -111,7 +111,7 @@ namespace WebProgProje.Controllers
             var userId = GetUserId();
             if (userId == null)
             {
-                return Unauthorized();
+                RedirectToAction("Login","Kullanicis");
             }
 
             ViewData["IslemId"] = new SelectList(_context.Islemler, "IslemId", "Ad");
@@ -188,34 +188,6 @@ namespace WebProgProje.Controllers
             return Json(calisanlar);
         }
 
-        // GET: Randevus/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var randevu = await _context.Randevular.FindAsync(id);
-            if (randevu == null)
-            {
-                return NotFound();
-            }
-
-            if (randevu.OnaylandiMi)
-            {
-                TempData["ErrorMessage"] = "Randevunuz çoktan onaylanmıştır, değişiklik yapamazsınız.";
-                return RedirectToAction(nameof(Index));
-            }
-
-            ViewData["CalisanId"] = new SelectList(_context.Calisanlar.Include(c => c.Kullanici), "CalisanId", "Kullanici.FullName", randevu.CalisanId);
-            ViewData["IslemId"] = new SelectList(_context.Islemler, "IslemId", "Ad", randevu.IslemId);
-            ViewData["KullaniciId"] = new SelectList(_context.Kullanicilar, "KullaniciId", "Email", randevu.KullaniciId);
-            ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Adres", randevu.SalonId);
-            return View(randevu);
-        }
-        
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("RandevuId,CalisanId,IslemId,SalonId,KullaniciId,Tarih,Saat,OnaylandiMi")] Randevu randevu)
@@ -226,9 +198,41 @@ namespace WebProgProje.Controllers
             }
 
             var userRole = GetUserRole();
-            if ((userRole != "Employee" || userRole!="Admin") && randevu.OnaylandiMi != _context.Randevular.AsNoTracking().FirstOrDefault(r => r.RandevuId == id)?.OnaylandiMi)
+            if (userRole != "Employee" && userRole != "Admin")
             {
-                ModelState.AddModelError("OnaylandiMi", "Randevunun onaylanma durumunu sadece çalışanlar değiştirebilir.");
+                var originalRandevu = await _context.Randevular.AsNoTracking().FirstOrDefaultAsync(r => r.RandevuId == id);
+                if (originalRandevu != null && randevu.OnaylandiMi != originalRandevu.OnaylandiMi)
+                {
+                    ModelState.AddModelError("OnaylandiMi", "Randevunun onaylanma durumunu sadece çalışanlar ve yöneticiler değiştirebilir.");
+                }
+            }
+
+            if (randevu.Tarih < DateOnly.FromDateTime(DateTime.Now))
+            {
+                ModelState.AddModelError("Tarih", "Randevu tarihi bugünden önce olamaz.");
+            }
+
+            var calisanUygunluk = await _context.CalisanUygunluklar
+                .Where(cu => cu.CalisanId == randevu.CalisanId && cu.Gun == randevu.Tarih.DayOfWeek)
+                .FirstOrDefaultAsync();
+
+            if (calisanUygunluk == null)
+            {
+                ModelState.AddModelError("CalisanId", "Seçilen çalışan bu gün çalışmıyor.");
+            }
+            else
+            {
+                var islem = await _context.Islemler.FindAsync(randevu.IslemId);
+                if (islem != null)
+                {
+                    var randevuBaslangic = randevu.Saat;
+                    var randevuBitis = randevu.Saat.Add(islem.Sure);
+
+                    if (randevuBaslangic < calisanUygunluk.Baslangic || randevuBitis > calisanUygunluk.Bitis)
+                    {
+                        ModelState.AddModelError("Saat", "Randevu saati çalışanın mesai saatleri dışında.");
+                    }
+                }
             }
 
             if (ModelState.IsValid)
