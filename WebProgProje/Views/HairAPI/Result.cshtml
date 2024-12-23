@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Sonuç";
+}
+
+<h2>Saç Stili Değiştirici - Sonuç</h2>
+
+@if (ViewBag.ResultImage is string resultImage && !string.IsNullOrEmpty(resultImage))
+{
+    <p>Sonuç başarıyla oluşturuldu:</p>
+    <img src="data:image/png;base64,@resultImage" alt="Sonuç Resmi" style="max-width: 100%; height: auto;" />
+}
+else if (ViewBag.Error is string error && !string.IsNullOrEmpty(error))
+{
+    <p style="color: red;">Hata: @error</p>
+}
+else
+{
+    <p>Bir hata oluştu, lütfen tekrar deneyin.</p>
+}
