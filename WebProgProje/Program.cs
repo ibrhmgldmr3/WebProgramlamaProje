@@ -14,7 +14,6 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-builder.Services.AddHttpClient<HairstyleChangerService>(); // HttpClient için servis
 builder.Services.Configure<FormOptions>(options =>
 {
     options.MultipartBodyLengthLimit = 104857600; // Maksimum dosya boyutu 100 MB
