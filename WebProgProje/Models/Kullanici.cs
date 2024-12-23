@@ -7,15 +7,15 @@ namespace WebProgramlamaProje.Models
     {
         public int KullaniciId { get; set; }
 
-        [Display(Name ="Email")]
+        [Display(Name = "Email")]
         [Required(ErrorMessage = "Lütfen email adresi giriniz!")]
         [EmailAddress(ErrorMessage = "Lütfen geçerli bir email giriniz!")]
         public string Email { get; set; }
-        
+
         [Display(Name = "Password")]
         [Required(ErrorMessage = "Lütfen şifrenizi giriniz!")]
         public string PasswordHash { get; set; }
-        public string ?Role { get; set; } // "Admin" "Musteri" "Calisan"
+        public string? Role { get; set; } // "Admin" "Musteri" "Calisan"
 
         [Display(Name = "Ad Soyad")]
         [Required(ErrorMessage = "Lütfen adınızı soyadınızı giriniz!")]
@@ -30,9 +30,9 @@ namespace WebProgramlamaProje.Models
         public string PhoneNumber { get; set; }
 
         // Kullanıcının randevuları
-        public List<Randevu> ?Randevular { get; set; } = new List<Randevu>();
+        public List<Randevu>? Randevular { get; set; } = new List<Randevu>();
 
-        public byte[]? ProfilResmi { get; set; }
+        public string? ProfilResmi { get; set; }
 
 
         // public List<Islem> YaptirdiğiIslemlemler { get; set; } = new List<Islem>();

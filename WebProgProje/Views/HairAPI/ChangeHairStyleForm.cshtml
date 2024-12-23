@@ -75,9 +75,9 @@
                 const resultDiv = document.getElementById('result');
                 if (data.resultImage) {
                     resultDiv.innerHTML = `
-                            <h3>Sonuç Resmi:</h3>
-                            <img src="data:image/jpeg;base64,${data.resultImage}" alt="Sonuç Resmi" style="max-width: 100%; height: auto;" />
-                        `;
+                        <h3>Sonuç Resmi:</h3>
+                        <img src="data:image/jpeg;base64,${data.resultImage}" alt="Sonuç Resmi" style="max-width: 100%; height: auto;" />
+                    `;
                 } else if (data.error) {
                     resultDiv.innerHTML = `<p style="color: red;">Hata: ${data.error}</p>`;
                 } else {

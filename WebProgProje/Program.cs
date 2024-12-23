@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
-using WebProgProje.Models;
+using WebProgramlamaProje.Controllers;
 using WebProgramlamaProje.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,10 +14,12 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+builder.Services.AddHttpClient<HairAPIController>(); // HttpClient için servis
 builder.Services.Configure<FormOptions>(options =>
 {
-    options.MultipartBodyLengthLimit = 104857600; // Maksimum dosya boyutu 100 MB
+    options.MultipartBodyLengthLimit = 104857600; // 100 MB
 });
+
 
 // **Veritabaný baðlantý ayarlarý**
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
@@ -60,6 +62,14 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=HairAPI}/{action=ChangeHairstyleForm}/{id?}");
+});
+
 
 // **Uygulamanýn çalýþtýrýlmasý**
 app.Run();
