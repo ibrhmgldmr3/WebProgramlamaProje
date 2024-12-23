@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebProgramlamaProje.Models;
 
-namespace WebProgProje.Controllers
+namespace WebProgramlamaProje.Controllers
 {
     public class CalisansController : Controller
     {

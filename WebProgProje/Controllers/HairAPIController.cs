@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 
-namespace WebProgProje.Controllers
+namespace WebProgramlamaProje.Controllers
 {
     public class HairAPIController : Controller
     {

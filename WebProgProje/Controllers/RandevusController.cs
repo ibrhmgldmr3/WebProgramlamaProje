@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebProgramlamaProje.Models;
 
-namespace WebProgProje.Controllers
+namespace WebProgramlamaProje.Controllers
 {
     public class RandevusController : Controller
     {
@@ -111,12 +111,12 @@ namespace WebProgProje.Controllers
             var userId = GetUserId();
             if (userId == null)
             {
-                RedirectToAction("Login","Kullanicis");
+                return RedirectToAction("Login", "Kullanicis");
             }
 
             ViewData["IslemId"] = new SelectList(_context.Islemler, "IslemId", "Ad");
             ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Isim");
-            ViewData["KullaniciId"] = userId; // Kullanıcı ID'sini doğrudan ViewData'ya ekleyin
+            ViewData["KullaniciId"] = userId;
             return View();
         }
 
@@ -265,6 +265,11 @@ namespace WebProgProje.Controllers
         // GET: Randevus/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            var userId = GetUserId();
+            if (userId == null)
+            {
+                RedirectToAction("Index","Home");
+            }
             if (id == null)
             {
                 return NotFound();
