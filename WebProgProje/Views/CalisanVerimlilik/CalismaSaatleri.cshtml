@@ -1,0 +1,23 @@
+﻿@model List<WebProgramlamaProje.Controllers.CalisanVerimlilikController.CalismaSaati>
+
+<h3>Çalışma Saatleri</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Gün</th>
+            <th>Başlangıç Saati</th>
+            <th>Bitiş Saati</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var saat in Model)
+        {
+            <tr>
+                <td>@saat.Gun</td>
+                <td>@saat.Baslangic</td>
+                <td>@saat.Bitis</td>
+            </tr>
+        }
+    </tbody>
+</table>

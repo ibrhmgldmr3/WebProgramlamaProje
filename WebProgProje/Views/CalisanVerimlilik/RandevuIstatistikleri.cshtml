@@ -1,0 +1,23 @@
+﻿@model List<WebProgramlamaProje.Controllers.CalisanVerimlilikController.RandevuIstatistik>
+
+<h3>Randevu İstatistikleri</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tarih</th>
+            <th>Toplam Randevu Sayısı</th>
+            <th>Toplam Kazanç</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var istatistik in Model)
+        {
+            <tr>
+                <td>@istatistik.Tarih.ToShortDateString()</td>
+                <td>@istatistik.ToplamRandevuSayisi</td>
+                <td>@istatistik.ToplamKazanc</td>
+            </tr>
+        }
+    </tbody>
+</table>
