@@ -1,0 +1,25 @@
+﻿@model List<WebProgramlamaProje.Controllers.CalisanVerimlilikController.CalisanVerimlilik>
+
+<h3>Çalışan Verimliliği</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Çalışan Adı</th>
+            <th>Çalışan Soyadı</th>
+            <th>Randevu Sayısı</th>
+            <th>Toplam Kazanç</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var verimlilik in Model)
+        {
+            <tr>
+                <td>@verimlilik.Ad</td>
+                <td>@verimlilik.Soyad</td>
+                <td>@verimlilik.RandevuSayisi</td>
+                <td>@verimlilik.ToplamKazanc</td>
+            </tr>
+        }
+    </tbody>
+</table>
