@@ -5,6 +5,8 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Çalışan Adı</th>
+            <th>Çalışan Soyadı</th>
             <th>Gün</th>
             <th>Başlangıç Saati</th>
             <th>Bitiş Saati</th>
@@ -14,6 +16,8 @@
         @foreach (var saat in Model)
         {
             <tr>
+                <td>@saat.Ad</td>
+                <td>@saat.Soyad</td>
                 <td>@saat.Gun</td>
                 <td>@saat.Baslangic</td>
                 <td>@saat.Bitis</td>
@@ -21,3 +25,4 @@
         }
     </tbody>
 </table>
+

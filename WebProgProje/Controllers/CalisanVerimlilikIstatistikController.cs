@@ -1,11 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
-using WebProgramlamaProje.Models;
-
 namespace WebProgramlamaProje.Controllers
 {
     public class CalisanVerimlilikController : Controller
@@ -16,7 +9,10 @@ namespace WebProgramlamaProje.Controllers
         {
             _httpClient = httpClient;
         }
-
+        public IActionResult Index()
+        {
+            return View();
+        }
         public async Task<IActionResult> Verimlilik()
         {
             var verimlilikList = await _httpClient.GetFromJsonAsync<List<CalisanVerimlilik>>("http://localhost:5237/api/CalisanVerimlilikIstatistik/verimlilik");
@@ -29,9 +25,9 @@ namespace WebProgramlamaProje.Controllers
             return View(gunlukKazancList);
         }
 
-        public async Task<IActionResult> SalonIslemIstatistikleri(int salonId)
+        public async Task<IActionResult> SalonIslemIstatistikleri()
         {
-            var istatistikler = await _httpClient.GetFromJsonAsync<List<IslemIstatistik>>($"http://localhost:5237/api/CalisanVerimlilikIstatistik/salon/{salonId}/islem-istatistikleri");
+            var istatistikler = await _httpClient.GetFromJsonAsync<List<IslemIstatistik>>("http://localhost:5237/api/CalisanVerimlilikIstatistik/salon/islem-istatistikleri");
             return View(istatistikler);
         }
 
@@ -41,12 +37,11 @@ namespace WebProgramlamaProje.Controllers
             return View(istatistikler);
         }
 
-        public async Task<IActionResult> CalismaSaatleri(int calisanId)
+        public async Task<IActionResult> CalismaSaatleri()
         {
-            var calismaSaatleri = await _httpClient.GetFromJsonAsync<List<CalismaSaati>>($"http://localhost:5237/api/CalisanVerimlilikIstatistik/calisan/{calisanId}/calisma-saatleri");
+            var calismaSaatleri = await _httpClient.GetFromJsonAsync<List<CalismaSaati>>("http://localhost:5237/api/CalisanVerimlilikIstatistik/calisan/calisma-saatleri");
             return View(calismaSaatleri);
         }
-
 
         public class CalisanVerimlilik
         {
@@ -81,9 +76,12 @@ namespace WebProgramlamaProje.Controllers
 
         public class CalismaSaati
         {
+            public string Ad { get; set; }
+            public string Soyad { get; set; }
             public DayOfWeek Gun { get; set; }
             public TimeSpan Baslangic { get; set; }
             public TimeSpan Bitis { get; set; }
         }
     }
+
 }
