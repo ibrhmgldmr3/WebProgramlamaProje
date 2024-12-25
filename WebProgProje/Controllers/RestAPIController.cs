@@ -53,15 +53,15 @@ namespace WebProgramlamaProje.Controllers
             return Ok(gunlukKazanc);
         }
 
-        [HttpGet("salon/{salonId}/islem-istatistikleri")]
-        public async Task<IActionResult> GetSalonIslemIstatistikleri(int salonId)
+        [HttpGet("salon/islem-istatistikleri")]
+        public async Task<IActionResult> GetSalonIslemIstatistikleri()
         {
             var istatistikler = await _context.Randevular
-                .Where(r => r.SalonId == salonId)
-                .GroupBy(r => r.Islem.Ad)
+                .GroupBy(r => new { r.Salon.Isim, r.Islem.Ad })
                 .Select(g => new
                 {
-                    IslemAdi = g.Key,
+                    SalonAdi = g.Key.Isim,
+                    IslemAdi = g.Key.Ad,
                     ToplamIslemSayisi = g.Count(),
                     ToplamKazanc = g.Sum(r => r.Islem.Ucret)
                 })
@@ -87,14 +87,23 @@ namespace WebProgramlamaProje.Controllers
             return Ok(istatistikler);
         }
 
-        [HttpGet("calisan/{calisanId}/calisma-saatleri")]
-        public async Task<IActionResult> GetCalisanCalismaSaatleri(int calisanId)
+        [HttpGet("calisan/calisma-saatleri")]
+        public async Task<IActionResult> GetCalisanCalismaSaatleri()
         {
             var calismaSaatleri = await _context.CalisanUygunluklar
-                .Where(cu => cu.CalisanId == calisanId)
+                .Include(cu => cu.Calisan)
+                .Select(cu => new
+                {
+                    cu.Calisan.Ad,
+                    cu.Calisan.Soyad,
+                    cu.Gun,
+                    cu.Baslangic,
+                    cu.Bitis
+                })
                 .ToListAsync();
 
             return Ok(calismaSaatleri);
         }
     }
 }
+
