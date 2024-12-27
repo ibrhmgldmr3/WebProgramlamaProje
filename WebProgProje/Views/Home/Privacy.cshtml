@@ -1,15 +1,179 @@
 ﻿@{
-    Layout = "../Shared/_NewLayout.cshtml";
+    Layout = "../shared/_NewLayout.cshtml";
 }
 <h1>@ViewData["Title"]</h1>
 
-<section class="home-section home-parallax home-fade home-full-height bg-dark-60 agency-page-header" id="home" data-background="../img/sakaltirasi1.png">
-    <div class="titan-caption">
-        <div class="caption-content">
-            <div class="font-alt mb-30 titan-title-size-1">Grow your awesome idea</div>
-            <div class="font-alt mb-40 titan-title-size-3">
-                Make business <span class="rotate">easy | simple | flexible</span>
-            </div><a class="section-scroll btn btn-border-w btn-circle" href="#about">Learn More</a>
+<div class="about-us-area pb-180">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Sol Resim Alanı -->
+            <div class="col-lg-6 col-md-12 about-us-image">
+                <div class="circle-container">
+                    <img src="/img/ceo.jpg" alt="Biz Kimiz">
+                </div>
+            </div>
+            <!-- Sağ Metin Alanı -->
+            <div class="col-lg-6 col-md-12 about-us-content">
+                <h2>Biz Kimiz?</h2>
+                <p>
+                    S&I markası, iki üniversite arkadaşı olan İbrahim Güldemir ve Süleyman Samet Kaya tarafından
+                    kurulmuş bir berber markasıdır. İbrahim ve Süleyman, yıllar boyunca berberlik sanatına olan
+                    tutkularını ve sektördeki deneyimlerini bir araya getirerek benzersiz bir hizmet anlayışı oluşturmuşlardır.
+                </p>
+                <p>
+                    Markanın adı olan "S&I", kurucularının adlarının baş harflerinden (Süleyman ve İbrahim)
+                    esinlenerek oluşturulmuştur. Bu isim, yalnızca bir marka adından daha fazlasını ifade eder:
+                    arkadaşlık, güven ve profesyonelliğin bir sembolüdür.
+                </p>
+                <p>
+                    S&I, modern stiller ve geleneksel teknikleri harmanlayan bir marka olarak kaliteli hizmet
+                    ve müşteri memnuniyetini öncelikli olarak benimsemiştir.
+                </p>
+            </div>
         </div>
     </div>
-</section>
+</div>
+
+
+
+
+<div class="team-area pb-180">
+    <div class="container-slider">
+        <div class="section-tittle text-center mb-100">
+            <h2>Çalışanlarımız</h2>
+        </div>
+        <div class="row team-active slider">
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-">
+                <div class="single-team mb-80 text-center">
+                    <div class="team-img">
+                        <img src="/img/kerem1.jpg" alt="">
+                    </div>
+                    <div class="team-caption">
+                        <span>master barber</span>
+                        <h3><a href="#">guy c. pulido bks</a></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-">
+                <div class="single-team mb-80 text-center">
+                    <div class="team-img">
+                        <img src="/img/kerem1.jpg" alt="">
+                    </div>
+                    <div class="team-caption">
+                        <span>color expert</span>
+                        <h3><a href="#">steve l. nolan</a></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-">
+                <div class="single-team mb-80 text-center">
+                    <div class="team-img">
+                        <img src="/img/kerem1.jpg" alt="">
+                    </div>
+                    <div class="team-caption">
+                        <span>master barber</span>
+                        <h3><a href="#">edgar p. mathis</a></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-">
+                <div class="single-team mb-80 text-center">
+                    <div class="team-img">
+                        <img src="/img/kerem1.jpg" alt="">
+                    </div>
+                    <div class="team-caption">
+                        <span>master barber</span>
+                        <h3><a href="#">guy c. pulido bks</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- best pricing area start -->
+<div class="best-pricing section-padding2 position-relative">
+    <div class="container">
+        <div class="row justify-content-end">
+            <div class="col-xl-7 col-lg-7">
+                <div class="section-tittle mb-50">
+
+                    <h2>Hizmet Paketlerimiz</h2>
+                </div>
+                <!-- pricing  -->
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="pricing-list">
+                            <ul>
+                                <li>Saç Kesimi. . . . . . . . . . . . . . . . . . . . . . .<span>₺250</span></li>
+                                <li>Çocuk Saç Kesimi. . . . . . . . . . . . . . . . <span>₺175</span></li>
+                                <li>Saç Stillendirme. . . . . . . . . . . . . . . . .<span>₺350</span></li>
+                                <li>Sakal Tıraşı. . . . . . . . . . . . . . . . . . . . . . .<span>₺150</span></li>
+                                <li>Sakal Şekillendirme. . . . . . . . . . . . . . .<span>₺300</span></li>
+                                <li>Saç Boyama. . . . . . . . . . . . . . . . . . . . . . . .<span>₺750</span></li>
+                                <li>Saç Yıkama. . . . . . . . . . . . . . . . . . . . . . . .<span>₺200</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="pricing-list">
+                            <ul>
+                                <li>Cilt Bakımı. . . . . . . . . . . . . . . . . . . . . . .<span>₺550</span></li>
+                                <li>Saç Bakımı. . . . . . . . . . . . . . . . . . . . . . . .<span>₺650</span></li>
+                                <li>Saç Ekimi. . . . . . . . . . . . . . . . . . . . . . . .<span>₺10000</span></li>
+                                <li>Masaj. . . . . . . . . . . . . . . . . . . . . . . . . . . . .<span>₺200</span></li>
+                                <li>Damat Tıraşı. . . . . . . . . . . . . . . .<span>Özel Fiyat</span></li>
+                                <li>Full Paket. . . . . . . . . . . . . . . . . . . . . . . .<span>₺2500</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- best pricing area end -->
+
+
+@section styles {
+    <link rel="stylesheet" href="~/css/hakkimizda.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <!-- add slick slider css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+}
+
+@section scripts {
+    <!-- add slick slider js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.slider').slick({
+                slidestoshow: 3,   // show 3 images at once
+                slidestoscroll: 1, // scroll 1 image at a time
+                autoplay: true,    // enable autoplay
+                autoplayspeed: 2000, // speed of autoplay (2 seconds)
+                dots: true,        // enable navigation dots
+                arrows: false,     // disable arrows (you can enable them if needed)
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidestoshow: 2,  // show 2 images on tablets
+                        }
+                    },
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidestoshow: 1,  // show 1 image on mobile
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}
