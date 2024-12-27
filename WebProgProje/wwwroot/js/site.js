@@ -34,3 +34,29 @@ function toggleMenu() {
     const navbarMenu = document.getElementById('navbarMenu');
     navbarMenu.classList.toggle('show');
 }
+
+
+$(document).ready(function () {
+    $('.slider').slick({
+        slidesToShow: 3,   // Show 3 images at once
+        slidesToScroll: 1, // Scroll 1 image at a time
+        autoplay: true,    // Enable autoplay
+        autoplaySpeed: 2000, // Speed of autoplay (2 seconds)
+        dots: true,        // Enable navigation dots
+        arrows: false,     // Disable arrows (you can enable them if needed)
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,  // Show 2 images on tablets
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,  // Show 1 image on mobile
+                }
+            }
+        ]
+    });
+    });

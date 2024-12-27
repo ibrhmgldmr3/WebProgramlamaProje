@@ -1,0 +1,333 @@
+﻿
+.team-area .single-team {
+    position: relative;
+    width: 100%;
+}
+
+.team-area .single-team .team-img {
+    overflow: hidden;
+}
+
+    .team-area .single-team .team-img img {
+        width: 80%; /* Adjusted width to make the image smaller */
+        height: auto; /* Maintain aspect ratio */
+        object-fit: cover; /* Crop images if they overflow */
+        transition: transform 0.6s ease-out;
+        border-radius: 10px;
+        margin: 0 auto; /* Center the images */
+    }
+
+
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .team-area .single-team .team-caption {
+        width: 256px;
+        padding-top: 32px;
+        bottom: -92px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .team-area .single-team .team-caption {
+        width: 260px;
+        padding-top: 32px;
+        bottom: -92px;
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+    .team-area .single-team .team-caption {
+        width: 220px;
+        padding-top: 25px;
+        bottom: -92px;
+    }
+}
+
+@media (max-width: 575px) {
+    .team-area .single-team .team-caption {
+        width: 235px;
+        padding-top: 25px;
+        bottom: -92px;
+    }
+}
+
+.team-area .single-team .team-caption {
+    background-image: url(../img/team_bg.png);
+    width: 100%;
+    height: 155px;
+    background-repeat: no-repeat;
+    background-position: center center; /* Centers the background image */
+    padding-top: 57px;
+    margin: 0 auto;
+    position: absolute;
+    bottom: -71px;
+    transition: 0.4s;
+    background-size: contain;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+    .team-area .single-team .team-caption::before {
+        position: absolute;
+        background-image: url(../img/team_bg2.png);
+        content: "";
+        width: 100%;
+        height: 155px;
+        background-repeat: no-repeat;
+        background-position: center center; /* Centers the background image */
+        transform: translateY(-53%);
+        margin: 0 auto;
+        padding-top: 57px;
+        left: 0;
+        right: 0;
+        padding:0;
+        bottom: -84px;
+        z-index: -1;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.4s;
+        
+    }
+
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .team-area .single-team .team-caption::before {
+        width: 256px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .team-area .single-team .team-caption::before {
+        width: 260px;
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+    .team-area .single-team .team-caption::before {
+        width: 220px;
+    }
+}
+
+@media (max-width: 575px) {
+    .team-area .single-team .team-caption::before {
+        width: 235px;
+    }
+}
+
+.team-area .single-team .team-caption span {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 300;
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.team-area .single-team .team-caption h3 a {
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 10px;
+    display: block;
+    text-transform: uppercase;
+}
+
+.team-area .single-team:hover .team-caption::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+.team-area .dot-style .slick-dots {
+    text-align: center;
+    bottom: -72px;
+    position: relative;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .team-area .dot-style .slick-dots {
+        bottom: -36px;
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+    .team-area .dot-style .slick-dots {
+        bottom: 0px;
+    }
+}
+
+@media (max-width: 575px) {
+    .team-area .dot-style .slick-dots {
+        bottom: -10px;
+    }
+}
+
+.team-area .dot-style .slick-dots li {
+    display: inline-block;
+}
+
+    .team-area .dot-style .slick-dots li button {
+        text-indent: -999999px;
+        padding: 0px;
+        height: 5px;
+        width: 20px;
+        margin: 0px 4px;
+        border: 0;
+        background: #bfbfbf;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .team-area .dot-style .slick-dots li.slick-active button {
+        background: #d19f68;
+        width: 35px;
+    }
+
+.single-team:hover .team-img img {
+    transform: scale(1.05);
+    border-radius: 20px;
+}
+
+/* Responsive adjustments for the slider */
+@media only screen and (min-width: 1024px) {
+    .team-area .slick-slide {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.team-area .slick-slide {
+    height: auto;/* Resmin yüksekliği (%80) + team-bg yüksekliği (155px) */
+    display: flex; /* Dikey ortalama için */
+    flex-direction: column; /* Alt elemanları üst üste yerleştir */
+    justify-content: center; /* Ortaya hizala */
+
+}
+
+
+.best-pricing {
+    background: #fffcf9
+}
+
+.container-slider {
+  
+    justify-content: center;
+    margin-top:50px;
+
+}
+
+.team-area .slick-slide .team-img {
+    flex-direction: column; /* Alt elemanları üst üste yerleştir */
+    justify-content: center; /* Ortaya hizala */
+    
+}
+
+
+
+.best-pricing .pricing-list ul li {
+    font-family: "Oswald",sans-serif;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: 500;
+    color: #010101;
+    margin-bottom: 18px
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .best-pricing .pricing-list ul li {
+        font-size: 14px
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+    .best-pricing .pricing-list ul li {
+        font-size: 13px
+    }
+}
+
+.best-pricing .pricing-list ul li span {
+    color: #d19f68 !important;
+    font-weight: 400;
+    font-size: 16px
+}
+
+
+.cut-details .single-cut {
+    margin-right: 50px;
+    padding-right: 50px
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    text-align:center;
+}
+/* Genel Alan */
+.about-us-area .row {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+}
+
+/* Resim Alanı */
+.about-us-image {
+    margin: 0;
+    padding: 0;
+}
+
+.circle-container {
+    display: block;
+    border-radius: 50%; /* Çember şekli */
+    overflow: hidden;
+    width: 300px; /* Resim genişliği */
+    height: 300px; /* Resim yüksekliği */
+    margin: 0 auto; /* Ortala */
+}
+
+    .circle-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Resmi çerçeveye sığdır */
+    }
+
+/* Yazı Alanı */
+.about-us-content {
+    margin: 0;
+    padding: 0 15px;
+    text-align: left;
+}
+
+    .about-us-content h2 {
+        font-size: 2rem;
+        color: #136F63;
+        margin-bottom: 15px;
+    }
+
+    .about-us-content p {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.6;
+        margin: 0 0 10px 0;
+    }
+
+/* Responsive Ayarlar */
+@media (max-width: 767px) {
+    .about-us-area .row {
+        flex-direction: column; /* Mobilde alt alta gelsin */
+        text-align: center;
+    }
+
+    .circle-container {
+        width: 200px;
+        height: 200px;
+    }
+
+    .about-us-content {
+        margin-top: 15px;
+        text-align: center; /* Yazıları ortala */
+    }
+}
+

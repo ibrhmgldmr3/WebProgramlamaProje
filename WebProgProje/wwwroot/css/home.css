@@ -1,4 +1,116 @@
-.smaller-text {
-    font-size: 24px; /* Boyutu ayarlayýn */
-    line-height: 1.4; /* Satýr yüksekliðini ayarlayýn */
+.hp-image {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Ekran yüksekliðini tamamen kapsar */
+}
+
+.hp-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.homepage-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Görüntüyü tam kapsama için */
+}
+
+.titan-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    z-index: 2;
+    width: 100%; /* Kenarlardan boþluk býrakmak için */
+    /*max-width: 800px;*/ /* Çok geniþ olmamasý için */
+    
+}
+
+.caption-content {
+    background: rgba(0, 0, 0, 0.5); /* Yarý saydam arka plan */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.icerik-baslik {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.module-medium
+{
+    padding:0;
+}
+
+/* Resim kapsayýcý stil */
+.content-box-image {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    border-radius: 20px; /* Çerçeve köþelerini yuvarlatma */
+}
+
+/* Hover olduðunda resim efekti */
+.content-box-image:hover {
+    transform: scale(1.1); /* Resmi daha belirgin büyütme */
+    filter: brightness(1.1); /* Parlaklýðý artýrma */
+}
+
+/* Hover olduðunda karartma efekti */
+.content-box-image:hover::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Daha koyu karartma efekti */
+    transition: background-color 0.3s ease;
+}
+
+/* Resim stili */
+.content-box-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 20px; /* Çerçeve yuvarlama */
+    transition: transform 0.3s ease;
+}
+
+/* Hover sýrasýnda baþlýk efekti */
+.content-box-title {
+    text-align: center;
+    margin-top: 15px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.content-box-title:hover {
+    color: #FF5733; /* Yazý rengini deðiþtir */
+    transform: scale(1.1); /* Yazýyý büyüt */
+}
+
+/* Hover sýrasýnda baþlýk arka planýna efekt eklemek */
+.content-box-title::before {
+    content: "";
+    display: block;
+    width: 50%;
+    height: 2px;
+    margin: 10px auto;
+    background-color: #FF5733;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.content-box-title:hover::before {
+    opacity: 1; /* Hover'da alt çizgi belirir */
 }
