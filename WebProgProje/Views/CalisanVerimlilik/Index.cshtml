@@ -1,0 +1,24 @@
+﻿@model WebProgramlamaProje.Controllers.CalisanVerimlilikController
+@{
+    ViewData["Title"] = "İstatistikler ve Veriler";
+}
+<h2>Çalışan Verimliliği</h2>
+
+<ul>
+    <li>
+        <a asp-controller="CalisanVerimlilik" asp-action="Verimlilik">Verimlilik</a>
+    </li>
+    <li>
+        <a asp-controller="CalisanVerimlilik" asp-action="GunlukKazanc">Günlük Kazanç</a>
+    </li>
+    <li>
+        <a asp-controller="CalisanVerimlilik" asp-action="SalonIslemIstatiskleri">Salon İşlem İstatistikleri</a>
+    </li>
+    <li>
+        <a asp-controller="CalisanVerimlilik" asp-action="RandevuIstatistikleri">Randevu İstatistikleri</a>
+    </li>
+    <li>
+        <a asp-controller="CalisanVerimlilik" asp-action="CalismaSaatleri">Çalışma Saatleri</a>
+    </li>
+</ul>
+

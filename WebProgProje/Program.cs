@@ -14,6 +14,8 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<HairAPIController>(); // HttpClient için servis
 builder.Services.Configure<FormOptions>(options =>
 {
