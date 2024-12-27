@@ -111,12 +111,12 @@ namespace WebProgramlamaProje.Controllers
             var userId = GetUserId();
             if (userId == null)
             {
-                return RedirectToAction("Login", "Kullanicis");
+                return RedirectToAction("Login", "Kullanici");
             }
 
             ViewData["IslemId"] = new SelectList(_context.Islemler, "IslemId", "Ad");
             ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Isim");
-            ViewData["KullaniciId"] = userId;
+            ViewData["KullaniciId"] = userId; // Kullanıcı ID'sini doğrudan ViewData'ya ekleyin
             return View();
         }
 
@@ -151,6 +151,25 @@ namespace WebProgramlamaProje.Controllers
                     {
                         ModelState.AddModelError("Saat", "Randevu saati çalışanın mesai saatleri dışında.");
                     }
+
+                    var mevcutRandevular = await _context.Randevular
+                        .Where(r => r.CalisanId == randevu.CalisanId && r.Tarih == randevu.Tarih)
+                        .ToListAsync();
+
+                    foreach (var mevcutRandevu in mevcutRandevular)
+                    {
+                        var mevcutRandevuBaslangic = mevcutRandevu.Saat;
+                        var mevcutRandevuBitis = mevcutRandevu.Saat.Add(mevcutRandevu.Islem.Sure);
+
+                        if ((randevuBaslangic >= mevcutRandevuBaslangic && randevuBaslangic < mevcutRandevuBitis) ||
+                            (randevuBitis > mevcutRandevuBaslangic && randevuBitis <= mevcutRandevuBitis) ||
+                            (mevcutRandevuBaslangic >= randevuBaslangic && mevcutRandevuBaslangic < randevuBitis) ||
+                            (mevcutRandevuBitis > randevuBaslangic && mevcutRandevuBitis <= randevuBitis))
+                        {
+                            ModelState.AddModelError("Saat", "Bu saat aralığında zaten bir randevu mevcut.");
+                            break;
+                        }
+                    }
                 }
             }
 
@@ -164,6 +183,8 @@ namespace WebProgramlamaProje.Controllers
             ViewData["SalonId"] = new SelectList(_context.Salonlar, "SalonId", "Isim", randevu.SalonId);
             return View(randevu);
         }
+
+
         public JsonResult GetCalisanUygunluk(int calisanId)
         {
             var uygunluklar = _context.CalisanUygunluklar
@@ -187,7 +208,6 @@ namespace WebProgramlamaProje.Controllers
                 .ToList();
             return Json(calisanlar);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("RandevuId,CalisanId,IslemId,SalonId,KullaniciId,Tarih,Saat,OnaylandiMi")] Randevu randevu)
@@ -198,13 +218,9 @@ namespace WebProgramlamaProje.Controllers
             }
 
             var userRole = GetUserRole();
-            if (userRole != "Employee" && userRole != "Admin")
+            if ((userRole != "Employee" || userRole != "Admin") && randevu.OnaylandiMi != _context.Randevular.AsNoTracking().FirstOrDefault(r => r.RandevuId == id)?.OnaylandiMi)
             {
-                var originalRandevu = await _context.Randevular.AsNoTracking().FirstOrDefaultAsync(r => r.RandevuId == id);
-                if (originalRandevu != null && randevu.OnaylandiMi != originalRandevu.OnaylandiMi)
-                {
-                    ModelState.AddModelError("OnaylandiMi", "Randevunun onaylanma durumunu sadece çalışanlar ve yöneticiler değiştirebilir.");
-                }
+                ModelState.AddModelError("OnaylandiMi", "Randevunun onaylanma durumunu sadece çalışanlar değiştirebilir.");
             }
 
             if (randevu.Tarih < DateOnly.FromDateTime(DateTime.Now))
@@ -231,6 +247,25 @@ namespace WebProgramlamaProje.Controllers
                     if (randevuBaslangic < calisanUygunluk.Baslangic || randevuBitis > calisanUygunluk.Bitis)
                     {
                         ModelState.AddModelError("Saat", "Randevu saati çalışanın mesai saatleri dışında.");
+                    }
+
+                    var mevcutRandevular = await _context.Randevular
+                        .Where(r => r.CalisanId == randevu.CalisanId && r.Tarih == randevu.Tarih && r.RandevuId != randevu.RandevuId)
+                        .ToListAsync();
+
+                    foreach (var mevcutRandevu in mevcutRandevular)
+                    {
+                        var mevcutRandevuBaslangic = mevcutRandevu.Saat;
+                        var mevcutRandevuBitis = mevcutRandevu.Saat.Add(mevcutRandevu.Islem.Sure);
+
+                        if ((randevuBaslangic >= mevcutRandevuBaslangic && randevuBaslangic < mevcutRandevuBitis) ||
+                            (randevuBitis > mevcutRandevuBaslangic && randevuBitis <= mevcutRandevuBitis) ||
+                            (mevcutRandevuBaslangic >= randevuBaslangic && mevcutRandevuBaslangic < randevuBitis) ||
+                            (mevcutRandevuBitis > randevuBaslangic && mevcutRandevuBitis <= randevuBitis))
+                        {
+                            ModelState.AddModelError("Saat", "Bu saat aralığında zaten bir randevu mevcut.");
+                            break;
+                        }
                     }
                 }
             }

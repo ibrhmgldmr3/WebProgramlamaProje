@@ -1,0 +1,23 @@
+﻿@model List<WebProgramlamaProje.Controllers.CalisanVerimlilikController.IslemIstatistik>
+
+<h3>Salon İşlem İstatistikleri</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>İşlem Adı</th>
+            <th>Toplam İşlem Sayısı</th>
+            <th>Toplam Kazanç</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var istatistik in Model)
+        {
+            <tr>
+                <td>@istatistik.IslemAdi</td>
+                <td>@istatistik.ToplamIslemSayisi</td>
+                <td>@istatistik.ToplamKazanc</td>
+            </tr>
+        }
+    </tbody>
+</table>
