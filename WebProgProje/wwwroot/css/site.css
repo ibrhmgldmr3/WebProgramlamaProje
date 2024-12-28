@@ -21,11 +21,18 @@ body {
     flex-direction: column;
     min-height: 100%;
     margin: 0;
+    padding-top: 56px; /* Navbar yüksekliði kadar üstten boþluk býrak */
 }
 
 main {
     flex: 1;
+    margin: 0 auto; /* Ortalamak için */
+    padding: 0 15px; /* Soldan ve saðdan taþmayý önlemek için */
+    width: 100%;
+    max-width: 1200px; /* Ýsteðe baðlý olarak maksimum geniþlik belirleyebilirsiniz */
+    box-sizing: border-box; /* Padding ve border'ý geniþliðe dahil et */
 }
+
 
 /* Navbar linkleri */
 .navbar-nav .nav-link {
@@ -162,4 +169,9 @@ color: red !important; /* Kýrmýzý renk zorla uygulanýr */
 
 .nav-link.cikis:hover {
     color: #ff0000 !important; /* Hover durumunda kýrmýzý zorla uygulanýr */
+}
+
+.btn .btn-primary .btn-sm
+{
+    border-radius: 10px !important;
 }

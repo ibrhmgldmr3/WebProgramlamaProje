@@ -26,19 +26,28 @@ namespace WebProgProje.Controllers
             }
             return null;
         }
+        private int? GetUserId()
+        {
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            if (userEmail != null)
+            {
+                var user = _context.Kullanicilar.SingleOrDefault(u => u.Email == userEmail);
+                if (user != null)
+                {
+                    return user.KullaniciId;
+                }
+            }
+            return null;
+        }
         public IslemsController(SalonDbContext context)
         {
             _context = context;
         }
 
         // GET: Islems
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Hizmetler()
         {
-            var userRole = GetUserRole();
-            if (userRole != "Admin")
-            {
-                return Unauthorized();
-            }
+            
             return View(await _context.Islemler.ToListAsync());
         }
 
@@ -67,7 +76,8 @@ namespace WebProgProje.Controllers
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
             return View();
         }
@@ -94,7 +104,8 @@ namespace WebProgProje.Controllers
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
             if (id == null)
             {
@@ -150,7 +161,8 @@ namespace WebProgProje.Controllers
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
             if (id == null)
             {

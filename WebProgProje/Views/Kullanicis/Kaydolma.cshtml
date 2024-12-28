@@ -5,10 +5,25 @@
 }
 
 <div class="form-div">
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div id="error-message" class="alert alert-danger" role="alert" style="display:none;">
+            @TempData["ErrorMessage"]
+        </div>
+        <script type="text/javascript">
+            window.onload = function () {
+                var errorMessageDiv = document.getElementById('error-message');
+                if (errorMessageDiv) {
+                    errorMessageDiv.style.display = 'block';
+                }
+            };
+        </script>
+    }
     <form asp-action="Kaydolma" method="post">
 
         <h3>Kayıt Ol</h3>
         <fieldset>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div>
                 <label for="exampleInput" class="form-label mt-4">Ad Soyad</label>
                 <input asp-for="FullName" class="form-control" id="exampleInput" placeholder="Adınızı Soyadınızı giriniz" autocomplete="off">
@@ -32,10 +47,10 @@
             <div class="button-group">
                 <a asp-action="Login" class="btn btn-primary">Giriş Yap</a>
                 <button type="submit" class="btn btn-success">Kayıt Ol</button>
-
             </div>
         </fieldset>
     </form>
+    
 </div>
 
 @section Styles {

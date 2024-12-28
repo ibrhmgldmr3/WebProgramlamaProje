@@ -2,7 +2,35 @@
     Layout = "../Shared/_NewLayout.cshtml";
 }
 <h1>@ViewData["Title"]</h1>
-
+@if (TempData["ErrorMessage"] != null)
+{
+    <div id="error-message" class="alert alert-danger" role="alert" style="display:none;">
+        @TempData["ErrorMessage"]
+    </div>
+    <script type="text/javascript">
+        window.onload = function () {
+            var errorMessageDiv = document.getElementById('error-message');
+            if (errorMessageDiv) {
+                errorMessageDiv.style.display = 'block';
+            }
+        };
+    </script>
+}
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Hata</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="errorModalMessage">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
 <section class="hp-image">
     <div class="hp-image-container">
         <img class="homepage-img" src="/img/sakaltirasi1.png" />
@@ -50,5 +78,5 @@
 </section>
 @section Styles {
     <link rel="stylesheet" href="~/css/home.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+
 }

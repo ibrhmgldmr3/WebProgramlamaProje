@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<WebProgramlamaProje.Models.Randevu>
-
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
 @{
     ViewData["Title"] = "Randevular";
 }
@@ -75,3 +77,6 @@
 </table>
 
 
+@section Styles {
+    <link rel="stylesheet" href="~/css/site.css" />
+}

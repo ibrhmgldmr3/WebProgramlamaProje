@@ -38,7 +38,8 @@ namespace WebProgramlamaProje.Controllers
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
             var salonDbContext = _context.CalisanUygunluklar.Include(c => c.Calisan);
             return View(await salonDbContext.ToListAsync());
@@ -50,7 +51,8 @@ namespace WebProgramlamaProje.Controllers
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
             if (id == null)
             {
@@ -74,7 +76,8 @@ namespace WebProgramlamaProje.Controllers
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
             ViewData["CalisanId"] = new SelectList(_context.Calisanlar, "CalisanId", "Ad");
             return View();
@@ -101,7 +104,8 @@ namespace WebProgramlamaProje.Controllers
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
             if (id == null)
             {
@@ -157,7 +161,8 @@ namespace WebProgramlamaProje.Controllers
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
             if (id == null)
             {

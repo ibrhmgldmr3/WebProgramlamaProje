@@ -37,7 +37,8 @@ namespace WebProgramlamaProje.Controllers
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
             return View(await _context.Uzmanliklar.ToListAsync());
         }
@@ -48,7 +49,8 @@ namespace WebProgramlamaProje.Controllers
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
             if (id == null)
             {
@@ -72,7 +74,8 @@ namespace WebProgramlamaProje.Controllers
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
             ViewData["Islemler"] = new MultiSelectList(_context.Islemler, "IslemId", "Ad");
             return View();
@@ -105,7 +108,8 @@ namespace WebProgramlamaProje.Controllers
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
             if (id == null)
             {
@@ -175,7 +179,8 @@ namespace WebProgramlamaProje.Controllers
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
             if (id == null)
             {
