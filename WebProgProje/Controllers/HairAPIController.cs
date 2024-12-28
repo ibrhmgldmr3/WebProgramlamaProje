@@ -42,7 +42,7 @@ namespace WebProgramlamaProje.Controllers
                     RequestUri = new Uri("https://hairstyle-changer.p.rapidapi.com/huoshan/facebody/hairstyle"),
                     Headers =
             {
-                { "x-rapidapi-key", "f8554904bcmshfa40b71bf3571dfp1aec4fjsneb996f07db98" },
+                { "x-rapidapi-key", "8e5a78b5demsh42a068efa1ae39ep1914efjsne26d83232ef1" },
                 { "x-rapidapi-host", "hairstyle-changer.p.rapidapi.com" }
             },
                     Content = new MultipartFormDataContent

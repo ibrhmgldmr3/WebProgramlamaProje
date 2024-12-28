@@ -57,6 +57,9 @@ namespace WebProgramlamaProje.Controllers
         public async Task<IActionResult> GetSalonIslemIstatistikleri()
         {
             var istatistikler = await _context.Randevular
+                .Include(r => r.Salon)
+                .Include(r => r.Islem)
+                .Where(r => r.Salon != null && r.Islem != null)
                 .GroupBy(r => new { r.Salon.Isim, r.Islem.Ad })
                 .Select(g => new
                 {
@@ -71,10 +74,11 @@ namespace WebProgramlamaProje.Controllers
         }
 
         [HttpGet("randevu-istatistikleri")]
-        public async Task<IActionResult> GetRandevuIstatistikleri(DateTime baslangicTarihi, DateTime bitisTarihi)
+        public async Task<IActionResult> GetRandevuIstatistikleri(DateOnly baslangicTarihi, DateOnly bitisTarihi)
         {
             var istatistikler = await _context.Randevular
-                .Where(r => r.Tarih >= DateOnly.FromDateTime(baslangicTarihi) && r.Tarih <= DateOnly.FromDateTime(bitisTarihi))
+                .Include(r => r.Islem)
+                .Where(r => r.Tarih >= baslangicTarihi && r.Tarih <= bitisTarihi)
                 .GroupBy(r => r.Tarih)
                 .Select(g => new
                 {
@@ -86,6 +90,7 @@ namespace WebProgramlamaProje.Controllers
 
             return Ok(istatistikler);
         }
+
 
         [HttpGet("calisan/calisma-saatleri")]
         public async Task<IActionResult> GetCalisanCalismaSaatleri()
@@ -104,6 +109,57 @@ namespace WebProgramlamaProje.Controllers
 
             return Ok(calismaSaatleri);
         }
+        [HttpGet("kullanici/{kullaniciId}/randevular")]
+        public async Task<IActionResult> GetKullaniciRandevular(int kullaniciId)
+        {
+            var randevular = await _context.Randevular
+                .Include(r => r.Islem)
+                .Include(r => r.Salon)
+                .Include(r => r.Calisan)
+                .Where(r => r.KullaniciId == kullaniciId)
+                .Select(r => new
+                {
+                    r.RandevuId,
+                    r.Tarih,
+                    r.Saat,
+                    IslemAdi = r.Islem.Ad,
+                    IslemUcreti = r.Islem.Ucret,
+                    SalonAdi = r.Salon.Isim,
+                    CalisanAdi = r.Calisan.Ad,
+                    CalisanSoyadi = r.Calisan.Soyad,
+                    r.OnaylandiMi
+                })
+                .ToListAsync();
+
+            if (randevular == null || !randevular.Any())
+            {
+                return NotFound(new { Message = "Bu kullanıcıya ait randevu bulunamadı." });
+            }
+
+            return Ok(randevular);
+        }
+
+        [HttpGet("api/randevus/calisan/{calisanId}/uygunluk")]
+        public async Task<IActionResult> GetCalisanUygunluk(int calisanId)
+        {
+            var uygunluklar = await _context.CalisanUygunluklar
+                .Where(cu => cu.CalisanId == calisanId)
+                .Select(cu => new
+                {
+                    cu.Gun,
+                    cu.Baslangic,
+                    cu.Bitis
+                }).ToListAsync();
+
+            if (uygunluklar == null || !uygunluklar.Any())
+            {
+                return NotFound(new { Message = "Bu çalışana ait uygunluk bilgisi bulunamadı." });
+            }
+
+            return Ok(uygunluklar);
+        }
+
+
     }
 }
 

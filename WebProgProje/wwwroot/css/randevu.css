@@ -1,0 +1,7 @@
+﻿.container-randevu {
+    display: flex; /* Flexbox kullanımı */
+    justify-content: center; /* Yatayda ortalama */
+    align-items: center; /* Dikeyde ortalama */
+    height: 100vh; /* Tüm sayfa yüksekliği */
+    width: 100%; /* Sayfanın tam genişliği */
+}

@@ -49,11 +49,14 @@
                 @Html.DisplayFor(modelItem => item.Salon.Adres)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CalisanId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CalisanId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CalisanId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.CalisanId" class="btn btn-primary btn-sm rounded-pill">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CalisanId" class="btn btn-primary btn-sm rounded-pill">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CalisanId" class="btn btn-primary btn-sm rounded-pill">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+@section Styles {
+    <link rel="stylesheet" href="~/css/site.css" />
+}

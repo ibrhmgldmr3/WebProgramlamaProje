@@ -2,10 +2,12 @@
 
 <@{
     ViewData["Title"] = "Edit";
-    var userRole = (string)ViewData["UserRole"];
+    var userRole = ViewData["UserRole"] as string ?? string.Empty;
+    var userId = ViewData["UserId"] as int? ?? 0;
+    bool isEditable = (userId == Model.KullaniciId);
 }
 
-<h1>Edit</h1>
+<h1>Düzenle</h1>
 
 <h4>Randevu</h4>
 <hr />
@@ -14,41 +16,72 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="RandevuId" />
-            <div class="form-group">
-                <label asp-for="CalisanId" class="control-label"></label>
-                <select asp-for="CalisanId" class="form-control" asp-items="ViewBag.CalisanId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="IslemId" class="control-label"></label>
-                <select asp-for="IslemId" class="form-control" asp-items="ViewBag.IslemId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="SalonId" class="control-label"></label>
-                <select asp-for="SalonId" class="form-control" asp-items="ViewBag.SalonId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="KullaniciId" class="control-label"></label>
-                <select asp-for="KullaniciId" class="form-control" asp-items="ViewBag.KullaniciId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tarih" class="control-label"></label>
-                <input asp-for="Tarih" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Saat" class="control-label"></label>
-                <input asp-for="Saat" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="OnaylandiMi" class="control-label"></label>
-                @if (userRole == "Employee" || userRole == "Admin")
+            @if (isEditable)
                 {
-                    <input asp-for="OnaylandiMi" class="form-control" />
-                }
-                else
-                {
-                    <input asp-for="OnaylandiMi" class="form-control" readonly />
-                }
+                    <div class="form-group">
+                        <label asp-for="CalisanId" class="control-label"></label>
+                        <select asp-for="CalisanId" class="form-control" asp-items="ViewBag.CalisanId"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="IslemId" class="control-label"></label>
+                        <select asp-for="IslemId" class="form-control" asp-items="ViewBag.IslemId"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SalonId" class="control-label"></label>
+                        <select asp-for="SalonId" class="form-control" asp-items="ViewBag.SalonId"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="KullaniciId" class="control-label"></label>
+                        <select asp-for="KullaniciId" class="form-control" asp-items="ViewBag.KullaniciId"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tarih" class="control-label"></label>
+                        <input asp-for="Tarih" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Saat" class="control-label"></label>
+                        <input asp-for="Saat" class="form-control" />
+                        </div>
+            }
+            @if (!isEditable)
+            {
+                        <div class="form-group">
+                            <label asp-for="CalisanId" class="control-label"></label>
+                            <select asp-for="CalisanId" class="form-control" asp-items="ViewBag.CalisanId" readonly></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="IslemId" class="control-label"></label>
+                            <select asp-for="IslemId" class="form-control" asp-items="ViewBag.IslemId" readonly></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SalonId" class="control-label"></label>
+                                <select asp-for="SalonId" class="form-control" asp-items="ViewBag.SalonId" readonly></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="KullaniciId" class="control-label"></label>
+                                <select asp-for="KullaniciId" class="form-control" asp-items="ViewBag.KullaniciId" readonly></select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Tarih" class="control-label"></label>
+                                <input asp-for="Tarih" class="form-control" readonly/>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Saat" class="control-label"></label>
+                                <input asp-for="Saat" class="form-control" readonly />
+                            </div>
+            }
+                    <div class="form-group">
+                        <label asp-for="OnaylandiMi" class="control-label"></label>
+                        @if (userRole == "Employee" || userRole == "Admin")
+                        {
+                            <input asp-for="OnaylandiMi" class="form-control" />
+                        }
+                        else
+                        {
+                            <input asp-for="OnaylandiMi" class="form-control" readonly />
+                        }
             </div>
+                
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ namespace WebProgramlamaProje.Controllers
     {
         private readonly SalonDbContext _context;
 
+
         public KullanicisController(SalonDbContext context)
         {
             _context = context;
@@ -22,16 +24,43 @@ namespace WebProgramlamaProje.Controllers
 
         private string GetUserRole()
         {
-            return HttpContext.Session.GetString("UserRole");
+            return HttpContext.Session.GetString("UserRole") ?? string.Empty;
+        }
+
+        public IActionResult YetkisizDeneme(string sayfaAdi)
+        {
+            var userRole = GetUserRole();
+            if (userRole != "Admin")
+            {
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
+            }
+            return View(sayfaAdi);
+        }
+
+        private async Task<int?> GetUserId()
+        {
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            if (userEmail != null)
+            {
+                var user = await _context.Kullanicilar.SingleOrDefaultAsync(u => u.Email == userEmail);
+                if (user != null)
+                {
+                    return user.KullaniciId;
+                }
+            }
+            return null;
         }
 
         // GET: Kullanicis
         public async Task<IActionResult> Index()
         {
             var userRole = GetUserRole();
+
             if (userRole != "Admin")
             {
-                return Unauthorized();
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
             return View(await _context.Kullanicilar.ToListAsync());
         }
@@ -50,6 +79,12 @@ namespace WebProgramlamaProje.Controllers
             {
                 return NotFound();
             }
+            var userId = await GetUserId();
+            if (userId != kullanici.KullaniciId)
+            {
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
+            }
 
             return View(kullanici);
         }
@@ -67,18 +102,28 @@ namespace WebProgramlamaProje.Controllers
         {
             kullanici.ProfilResmi = "";
             kullanici.Role = "Member";
+
+            // Aynı e-posta adresiyle kayıtlı kullanıcı var mı kontrol et
+            var existingUser = await _context.Kullanicilar.SingleOrDefaultAsync(u => u.Email == kullanici.Email);
+            if (existingUser != null)
+            {
+                TempData["ErrorMessage"] = "Bu e-posta adresiyle daha önce kayıt yapılmış! >:(";
+                return View(kullanici);
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(kullanici);
                 await _context.SaveChangesAsync();
-                TempData["Message"] = kullanici.Email + ' ' + kullanici.FullName + " kaydınız başarıyla tamamlandı!!";
+                TempData["Message"] = kullanici.Email + ' ' + kullanici.FullName + " kaydınız başarıyla tamamlandı!! :)";
 
                 return RedirectToAction(nameof(Index));
             }
-            TempData["Message"] = "Kaydolma Başarısız! ):";
+            TempData["ErrorMessage"] = "Kaydolma Başarısız! ):";
 
             return View(kullanici);
         }
+
 
         // GET: Kullanicis/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -89,10 +134,18 @@ namespace WebProgramlamaProje.Controllers
             }
 
             var kullanici = await _context.Kullanicilar.FindAsync(id);
+
             if (kullanici == null)
             {
                 return NotFound();
             }
+            var userId = await GetUserId();
+            if (userId != kullanici.KullaniciId)
+            {
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
+            }
+
             return View(kullanici);
         }
 
@@ -111,6 +164,11 @@ namespace WebProgramlamaProje.Controllers
                 try
                 {
 
+                    if (kullanici.KullaniciId != id)
+                    {
+                        TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                        RedirectToAction("Index", "home");
+                    }
                     _context.Update(kullanici);
                     await _context.SaveChangesAsync();
                 }
@@ -140,9 +198,16 @@ namespace WebProgramlamaProje.Controllers
 
             var kullanici = await _context.Kullanicilar
                 .FirstOrDefaultAsync(m => m.KullaniciId == id);
+
             if (kullanici == null)
             {
                 return NotFound();
+            }
+            var userId = await GetUserId();
+            if (userId != kullanici.KullaniciId)
+            {
+                TempData["ErrorMessage"] = "Yetkisiz Erişim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
 
             return View(kullanici);
@@ -154,11 +219,14 @@ namespace WebProgramlamaProje.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var kullanici = await _context.Kullanicilar.FindAsync(id);
-            if (kullanici != null)
+            if (kullanici == null)
             {
-                _context.Kullanicilar.Remove(kullanici);
+                TempData["Message"] = "Silme işlemi başarısız! ):";
+                return RedirectToAction("Delete", "Kullanicis");
             }
 
+            TempData["Message"] = kullanici.Email + ' ' + kullanici.FullName + " silme işlemi başarıyla tamamlandı!!";
+            _context.Kullanicilar.Remove(kullanici);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -186,6 +254,7 @@ namespace WebProgramlamaProje.Controllers
                     // Kullanıcı bilgilerini session'a kaydet
                     HttpContext.Session.SetString("UserEmail", user.Email);
                     HttpContext.Session.SetString("UserRole", user.Role);
+                    HttpContext.Session.SetString("UserId", user.KullaniciId.ToString());
 
                     // Ana sayfaya yönlendir
                     return RedirectToAction("Index", "Home");
@@ -207,14 +276,10 @@ namespace WebProgramlamaProje.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private Kullanici AuthenticateUser(string email, string password)
+        private Kullanici? AuthenticateUser(string email, string password)
         {
-            // Bu metot, kullanıcıyı doğrulamak için veritabanı kontrolü yapar
             return _context.Kullanicilar.SingleOrDefault(u => u.Email == email && u.PasswordHash == password);
         }
+
     }
 }
-
-
-
-

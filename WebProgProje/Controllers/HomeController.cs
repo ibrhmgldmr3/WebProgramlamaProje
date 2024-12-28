@@ -27,16 +27,20 @@ namespace WebProgramlamaProje.Controllers
             }
             return null;
         }
-
-        // Yönetici Paneli (Yalnýzca Admin kullanýcýlarý eriþebilir)
-        public IActionResult Admin()
+        public IActionResult YetkisizDeneme(string sayfaAdi) 
         {
             var userRole = GetUserRole();
             if (userRole != "Admin")
             {
-                return Unauthorized(); // Yetkisiz eriþim
+                ViewData["ErrorMessage"] = "Yetkisiz Eriþim";
+                return RedirectToAction("Index", "Home"); // Ana sayfaya yönlendir
             }
-            return View();
+            return View(sayfaAdi);
+        }
+        // Yönetici Paneli (Yalnýzca Admin kullanýcýlarý eriþebilir)
+        public IActionResult Admin()
+        {
+            return YetkisizDeneme("Admin");
         }
 
         // Ana Sayfa
