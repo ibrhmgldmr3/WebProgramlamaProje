@@ -10,13 +10,10 @@
 
 - [Proje Hakkında](#proje-hakkında)
 - [Teknolojiler](#teknolojiler)
-- [Ekran Görüntüleri](#ekran-görüntüleri)
 - [Kurulum](#kurulum)
 - [Çalıştırma](#çalıştırma)
 - [Kullanım](#kullanım)
 - [Dizin Yapısı](#dizin-yapısı)
-- [Katkıda Bulunma](#katkıda-bulunma)
-- [Lisans](#lisans)
 - [İletişim](#iletişim)
 
 ---
