@@ -51,12 +51,6 @@ Başlıca modüller:
 
 ---
 
-## Ekran Görüntüleri
-
-> `./docs/screenshots/` klasörüne `.png`/`.jpg` dosyalarını ekleyip burada gösterebilirsin.
-
----
-
 ## Kurulum
 
 ### 1. Depoyu klonla
