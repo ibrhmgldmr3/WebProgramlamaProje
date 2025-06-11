@@ -35,8 +35,6 @@ Başlıca modüller:
 | **Yönetim Paneli**| Site ayarları, istatistikler, log takibi          |
 | **API**          | RESTful JSON end-point’ler                         |
 
-> **Not:** Bu başlıkları kendi gerçek modüllerinle değiştir.  
-
 ---
 
 ## Teknolojiler
@@ -128,23 +126,8 @@ WebProgramlamaProje/
 └── docs/                  # belgeler, ekran görüntüleri
 ```
 
-> Tam yol ve klasör adlarını kendi projenle eşleştir.
-
 ---
 
-## Katkıda Bulunma
-
-1. Fork → Branch (`feature/isim`) → Commit → Pull Request  
-2. PR açıklamasında **değişiklik gerekçesini** kısaca özetle.  
-3. Kod biçimlendirme rehberine (`.editorconfig`) uyduğuna emin ol.
-
----
-
-## Lisans
-
-Projede aksi belirtilmedikçe **MIT Lisansı** geçerlidir. Ayrıntı için `LICENSE` dosyasına bakınız.
-
----
 
 ## İletişim
 
@@ -155,5 +138,3 @@ Projede aksi belirtilmedikçe **MIT Lisansı** geçerlidir. Ayrıntı için `LIC
 | GitHub  | <https://github.com/ibrhmgldmr3>  |
 
 ---
-
-> Bu README taslağını güncelledikten sonra commit edip GitHub’da **Settings → General → Description** alanına kısa bir cümlelik özet (ör. “Full-stack web uygulaması – SU Web Programlama projesi”) eklemeyi unutma.
