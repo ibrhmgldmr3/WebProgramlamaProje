@@ -1,7 +1,7 @@
 # Web Programlama Projesi (2024-2025 Güz Dönemi)
 
 > Sakarya Üniversitesi Bilgisayar Mühendisliği – Web Programlama dersi dönem projesi  
-> **Geliştirici:** İbrahim Güldemir  
+> **Geliştirici:** İbrahim Güldemir - Süleyman Samet Kaya
 > **Repo:** https://github.com/ibrhmgldmr3/WebProgramlamaProje
 
 ---
