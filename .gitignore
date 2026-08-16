@@ -33,3 +33,17 @@
 /WebProgProje/bin/Debug/net8.0/WebProgProje.pdb
 /WebProgProje/obj/Debug/net8.0
 /package-lock.json
+
+################################################################################
+# Derleme çıktıları ve gizli bilgiler
+################################################################################
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+
+# Yerel geliştirme ayarları — API anahtarları buraya yazılır, repoya girmez.
+appsettings.Development.json
+appsettings.*.Local.json
+*.local.json
+.env

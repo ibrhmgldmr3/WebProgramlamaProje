@@ -1,0 +1,973 @@
+diff --git a/.gitignore b/.gitignore
+index de70daa..2d1a341 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -33,3 +33,17 @@
+ /WebProgProje/bin/Debug/net8.0/WebProgProje.pdb
+ /WebProgProje/obj/Debug/net8.0
+ /package-lock.json
++
++################################################################################
++# Derleme çıktıları ve gizli bilgiler
++################################################################################
++[Bb]in/
++[Oo]bj/
++.vs/
++*.user
++
++# Yerel geliştirme ayarları — API anahtarları buraya yazılır, repoya girmez.
++appsettings.Development.json
++appsettings.*.Local.json
++*.local.json
++.env
+diff --git a/README.md b/README.md
+index b40f1a1..d070c21 100644
+--- a/README.md
++++ b/README.md
+@@ -119,12 +119,63 @@ WebProgramlamaProje/
+ │   ├── Views/
+ │   ├── wwwroot/           # statik dosyalar
+ │   └── WebProgProje.csproj
++├── WebProgProje.Tests/    # xUnit birim testleri
+ ├── scripts/               # yardımcı betikler
+ └── docs/                  # belgeler, ekran görüntüleri
+ ```
+ 
+ ---
+ 
++---
++
++## Yapılandırma (API anahtarları)
++
++Bu projede kullanılan harici servislerin anahtarları **kaynak koda yazılmaz**; ASP.NET Core
++konfigürasyon sisteminden okunur. `appsettings.json` yalnızca anahtarsız varsayılanları içerir.
++
++Yerel geliştirmede **User Secrets** kullanın:
++
++```bash
++cd WebProgProje
++dotnet user-secrets init
++dotnet user-secrets set "HairstyleApi:ApiKey" "SIZIN_RAPIDAPI_ANAHTARINIZ"
++dotnet user-secrets set "AILabApi:ApiKey"     "SIZIN_AILAB_ANAHTARINIZ"
++dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=...;Database=...;Trusted_Connection=True;"
++```
++
++Sunucu / CI ortamında ortam değişkeni de kullanılabilir (iki alt çizgi bölüm ayıracıdır):
++
++```bash
++export HairstyleApi__ApiKey="..."
++export AILabApi__ApiKey="..."
++export ApiSettings__BaseUrl="https://sunucu-adresiniz"
++```
++
++Kullanılan konfigürasyon anahtarları:
++
++| Anahtar | Açıklama |
++| ------- | -------- |
++| `ConnectionStrings:DefaultConnection` | MS SQL bağlantı dizesi (boşsa LocalDB'ye düşer) |
++| `ApiSettings:BaseUrl` | Uygulamanın kendi REST API'sinin adresi |
++| `HairstyleApi:Endpoint` / `:Host` / `:ApiKey` | Saç modeli değiştirme servisi |
++| `AILabApi:BaseUrl` / `:ApiKey` | Saç stili düzenleme servisi |
++
++Anahtar tanımlı değilse ilgili uç nokta hata döndürür ve durum log'a yazılır; uygulama çökmez.
++
++---
++
++## Testler
++
++Birim testleri `WebProgProje.Tests` projesindedir (xUnit + EF Core InMemory sağlayıcısı).
++İstatistik REST API'sinin LINQ toplulaştırma sorguları ve kullanıcı servisi test edilir.
++
++```bash
++dotnet test
++```
++
++Testler gerçek bir veritabanına ihtiyaç duymaz; her test kendi izole InMemory veritabanını kurar.
++
++---
+ 
+ ## İletişim
+ 
+diff --git a/WebProgProje.Tests/CalisanVerimlilikIstatistikControllerTests.cs b/WebProgProje.Tests/CalisanVerimlilikIstatistikControllerTests.cs
+new file mode 100644
+index 0000000..a935b59
+--- /dev/null
++++ b/WebProgProje.Tests/CalisanVerimlilikIstatistikControllerTests.cs
+@@ -0,0 +1,122 @@
++using Microsoft.AspNetCore.Mvc;
++using WebProgramlamaProje.Controllers;
++using Xunit;
++
++namespace WebProgProje.Tests
++{
++    /// <summary>
++    /// İstatistik REST API'sinin LINQ toplulaştırma sorgularını doğrular.
++    /// </summary>
++    public class CalisanVerimlilikIstatistikControllerTests
++    {
++        private static readonly DateOnly TestTarihi = new DateOnly(2025, 3, 10);
++
++        [Fact]
++        public async Task GetCalisanVerimlilik_CalisanBasinaRandevuSayisiVeToplamKazanciDondurur()
++        {
++            using var context = TestVeritabani.OrnekVeriliContext(TestTarihi);
++            var controller = new CalisanVerimlilikIstatistikController(context);
++
++            var sonuc = await controller.GetCalisanVerimlilik();
++
++            var ok = Assert.IsType<OkObjectResult>(sonuc);
++            var veri = JsonYardimcisi.Ayristir(ok.Value);
++
++            Assert.Equal(1, veri.GetArrayLength());
++
++            var calisan = veri[0];
++            Assert.Equal("Ayse", calisan.GetProperty("Ad").GetString());
++            Assert.Equal(2, calisan.GetProperty("RandevuSayisi").GetInt32());
++            Assert.Equal(450m, calisan.GetProperty("ToplamKazanc").GetDecimal());
++        }
++
++        [Fact]
++        public async Task GetGunlukKazanc_YalnizcaVerilenTarihtekiRandevulariToplar()
++        {
++            using var context = TestVeritabani.OrnekVeriliContext(TestTarihi);
++            var controller = new CalisanVerimlilikIstatistikController(context);
++
++            var sonuc = await controller.GetGunlukKazanc(TestTarihi.ToDateTime(TimeOnly.MinValue));
++
++            var ok = Assert.IsType<OkObjectResult>(sonuc);
++            var veri = JsonYardimcisi.Ayristir(ok.Value);
++
++            // O gün yalnızca 150 TL'lik saç kesimi randevusu var; 300 TL'lik boya ertesi gün.
++            Assert.Equal(150m, veri[0].GetProperty("GunlukKazanc").GetDecimal());
++        }
++
++        [Fact]
++        public async Task GetRandevuIstatistikleri_TarihAraligiDisindakiRandevulariHaricTutar()
++        {
++            using var context = TestVeritabani.OrnekVeriliContext(TestTarihi);
++            var controller = new CalisanVerimlilikIstatistikController(context);
++
++            // Aralık yalnızca ilk günü kapsıyor.
++            var sonuc = await controller.GetRandevuIstatistikleri(TestTarihi, TestTarihi);
++
++            var ok = Assert.IsType<OkObjectResult>(sonuc);
++            var veri = JsonYardimcisi.Ayristir(ok.Value);
++
++            Assert.Equal(1, veri.GetArrayLength());
++            Assert.Equal(1, veri[0].GetProperty("ToplamRandevuSayisi").GetInt32());
++            Assert.Equal(150m, veri[0].GetProperty("ToplamKazanc").GetDecimal());
++        }
++
++        [Fact]
++        public async Task GetSalonIslemIstatistikleri_SalonVeIslemKiriliminaGoreGruplar()
++        {
++            using var context = TestVeritabani.OrnekVeriliContext(TestTarihi);
++            var controller = new CalisanVerimlilikIstatistikController(context);
++
++            var sonuc = await controller.GetSalonIslemIstatistikleri();
++
++            var ok = Assert.IsType<OkObjectResult>(sonuc);
++            var veri = JsonYardimcisi.Ayristir(ok.Value);
++
++            // İki farklı işlem → iki grup.
++            Assert.Equal(2, veri.GetArrayLength());
++            foreach (var satir in veri.EnumerateArray())
++            {
++                Assert.Equal("Test Salon", satir.GetProperty("SalonAdi").GetString());
++                Assert.Equal(1, satir.GetProperty("ToplamIslemSayisi").GetInt32());
++            }
++        }
++
++        [Fact]
++        public async Task GetCalisanUygunluk_KayitYoksaNotFoundDondurur()
++        {
++            using var context = TestVeritabani.OrnekVeriliContext(TestTarihi);
++            var controller = new CalisanVerimlilikIstatistikController(context);
++
++            var sonuc = await controller.GetCalisanUygunluk(calisanId: 999);
++
++            Assert.IsType<NotFoundObjectResult>(sonuc);
++        }
++
++        [Fact]
++        public async Task GetKullaniciRandevular_KullanicininRandevulariniDondurur()
++        {
++            using var context = TestVeritabani.OrnekVeriliContext(TestTarihi);
++            var controller = new CalisanVerimlilikIstatistikController(context);
++
++            var sonuc = await controller.GetKullaniciRandevular(kullaniciId: 1);
++
++            var ok = Assert.IsType<OkObjectResult>(sonuc);
++            var veri = JsonYardimcisi.Ayristir(ok.Value);
++
++            Assert.Equal(2, veri.GetArrayLength());
++            Assert.Equal("Test Salon", veri[0].GetProperty("SalonAdi").GetString());
++        }
++
++        [Fact]
++        public async Task GetKullaniciRandevular_RandevusuOlmayanKullaniciIcinNotFoundDondurur()
++        {
++            using var context = TestVeritabani.OrnekVeriliContext(TestTarihi);
++            var controller = new CalisanVerimlilikIstatistikController(context);
++
++            var sonuc = await controller.GetKullaniciRandevular(kullaniciId: 42);
++
++            Assert.IsType<NotFoundObjectResult>(sonuc);
++        }
++    }
++}
+diff --git a/WebProgProje.Tests/JsonYardimcisi.cs b/WebProgProje.Tests/JsonYardimcisi.cs
+new file mode 100644
+index 0000000..4b9c5f4
+--- /dev/null
++++ b/WebProgProje.Tests/JsonYardimcisi.cs
+@@ -0,0 +1,18 @@
++using System.Text.Json;
++
++namespace WebProgProje.Tests
++{
++    /// <summary>
++    /// API controller'ları anonim tip döndürdüğü için, dönen nesneyi JSON'a çevirip
++    /// alanlar üzerinden doğrulama yapıyoruz.
++    /// </summary>
++    public static class JsonYardimcisi
++    {
++        public static JsonElement Ayristir(object? deger)
++        {
++            var json = JsonSerializer.Serialize(deger);
++            using var document = JsonDocument.Parse(json);
++            return document.RootElement.Clone();
++        }
++    }
++}
+diff --git a/WebProgProje.Tests/KullaniciServiceTests.cs b/WebProgProje.Tests/KullaniciServiceTests.cs
+new file mode 100644
+index 0000000..cba6269
+--- /dev/null
++++ b/WebProgProje.Tests/KullaniciServiceTests.cs
+@@ -0,0 +1,50 @@
++using WebProgramlamaProje.Models;
++using Xunit;
++
++namespace WebProgProje.Tests
++{
++    /// <summary>
++    /// Kullanıcı servisinin e-posta ile arama davranışını doğrular.
++    /// </summary>
++    public class KullaniciServiceTests
++    {
++        private static Kullanici OrnekKullanici() => new Kullanici
++        {
++            KullaniciId = 1,
++            Email = "musteri@test.com",
++            PasswordHash = "gizli-parola",
++            Role = "Member",
++            FullName = "Test Musteri",
++            PhoneNumber = "05000000000"
++        };
++
++        [Fact]
++        public void GetKullaniciByEmail_KayitliKullaniciyiDondurur()
++        {
++            using var context = TestVeritabani.YeniContext();
++            context.Kullanicilar.Add(OrnekKullanici());
++            context.SaveChanges();
++
++            var servis = new KullaniciService(context);
++
++            var kullanici = servis.GetKullaniciByEmail("musteri@test.com");
++
++            Assert.NotNull(kullanici);
++            Assert.Equal("Test Musteri", kullanici!.FullName);
++        }
++
++        [Fact]
++        public void GetKullaniciByEmail_KayitliOlmayanEmailIcinNullDondurur()
++        {
++            using var context = TestVeritabani.YeniContext();
++            context.Kullanicilar.Add(OrnekKullanici());
++            context.SaveChanges();
++
++            var servis = new KullaniciService(context);
++
++            var kullanici = servis.GetKullaniciByEmail("olmayan@test.com");
++
++            Assert.Null(kullanici);
++        }
++    }
++}
+diff --git a/WebProgProje.Tests/TestVeritabani.cs b/WebProgProje.Tests/TestVeritabani.cs
+new file mode 100644
+index 0000000..958d0bc
+--- /dev/null
++++ b/WebProgProje.Tests/TestVeritabani.cs
+@@ -0,0 +1,121 @@
++using Microsoft.EntityFrameworkCore;
++using WebProgramlamaProje.Models;
++
++namespace WebProgProje.Tests
++{
++    /// <summary>
++    /// Testler için InMemory sağlayıcısıyla izole bir <see cref="SalonDbContext"/> üretir.
++    /// Her test kendi veritabanı adını kullandığı için testler birbirini etkilemez.
++    /// </summary>
++    public static class TestVeritabani
++    {
++        public static SalonDbContext YeniContext()
++        {
++            var options = new DbContextOptionsBuilder<SalonDbContext>()
++                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
++                .Options;
++
++            return new SalonDbContext(options);
++        }
++
++        /// <summary>
++        /// Tek salon, tek çalışan, iki işlem ve iki randevudan oluşan küçük bir veri seti kurar.
++        /// Beklenen toplam kazanç: 150 + 300 = 450.
++        /// </summary>
++        public static SalonDbContext OrnekVeriliContext(DateOnly randevuTarihi)
++        {
++            var context = YeniContext();
++
++            var salon = new Salon
++            {
++                SalonId = 1,
++                Isim = "Test Salon",
++                Adres = "Sakarya",
++                Telefon = "02640000000",
++                Tip = "Kuaför",
++                CalismaBaslangic = new TimeSpan(9, 0, 0),
++                CalismaBitis = new TimeSpan(19, 0, 0)
++            };
++
++            var uzmanlik = new Uzmanlik { UzmanlikId = 1, Ad = "Saç Kesimi" };
++
++            var kullanici = new Kullanici
++            {
++                KullaniciId = 1,
++                Email = "musteri@test.com",
++                PasswordHash = "gizli-parola",
++                Role = "Member",
++                FullName = "Test Musteri",
++                PhoneNumber = "05000000000"
++            };
++
++            var calisan = new Calisan
++            {
++                CalisanId = 1,
++                Ad = "Ayse",
++                Soyad = "Yilmaz",
++                SalonId = 1,
++                UzmanlikId = 1
++            };
++
++            var sacKesimi = new Islem
++            {
++                IslemId = 1,
++                Ad = "Saç Kesimi",
++                Sure = new TimeSpan(0, 30, 0),
++                Ucret = 150m
++            };
++
++            var boya = new Islem
++            {
++                IslemId = 2,
++                Ad = "Boya",
++                Sure = new TimeSpan(1, 30, 0),
++                Ucret = 300m
++            };
++
++            context.Salonlar.Add(salon);
++            context.Uzmanliklar.Add(uzmanlik);
++            context.Kullanicilar.Add(kullanici);
++            context.Calisanlar.Add(calisan);
++            context.Islemler.AddRange(sacKesimi, boya);
++
++            context.Randevular.AddRange(
++                new Randevu
++                {
++                    RandevuId = 1,
++                    CalisanId = 1,
++                    IslemId = 1,
++                    SalonId = 1,
++                    KullaniciId = 1,
++                    Tarih = randevuTarihi,
++                    Saat = new TimeSpan(10, 0, 0),
++                    OnaylandiMi = true
++                },
++                new Randevu
++                {
++                    RandevuId = 2,
++                    CalisanId = 1,
++                    IslemId = 2,
++                    SalonId = 1,
++                    KullaniciId = 1,
++                    Tarih = randevuTarihi.AddDays(1),
++                    Saat = new TimeSpan(14, 0, 0),
++                    OnaylandiMi = false
++                });
++
++            context.CalisanUygunluklar.Add(new CalisanUygunluk
++            {
++                CalisanUygunlukId = 1,
++                CalisanId = 1,
++                Gun = DayOfWeek.Monday,
++                Baslangic = new TimeSpan(9, 0, 0),
++                Bitis = new TimeSpan(18, 0, 0)
++            });
++
++            context.SaveChanges();
++
++            return context;
++        }
++    }
++}
+diff --git a/WebProgProje.Tests/WebProgProje.Tests.csproj b/WebProgProje.Tests/WebProgProje.Tests.csproj
+new file mode 100644
+index 0000000..d9578f8
+--- /dev/null
++++ b/WebProgProje.Tests/WebProgProje.Tests.csproj
+@@ -0,0 +1,25 @@
++<Project Sdk="Microsoft.NET.Sdk">
++
++  <PropertyGroup>
++    <TargetFramework>net8.0</TargetFramework>
++    <Nullable>enable</Nullable>
++    <ImplicitUsings>enable</ImplicitUsings>
++    <IsPackable>false</IsPackable>
++    <IsTestProject>true</IsTestProject>
++  </PropertyGroup>
++
++  <ItemGroup>
++    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
++    <PackageReference Include="xunit" Version="2.9.2" />
++    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
++      <PrivateAssets>all</PrivateAssets>
++      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
++    </PackageReference>
++    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0" />
++  </ItemGroup>
++
++  <ItemGroup>
++    <ProjectReference Include="..\WebProgProje\WebProgProje.csproj" />
++  </ItemGroup>
++
++</Project>
+diff --git a/WebProgProje.sln b/WebProgProje.sln
+index 6f20e92..6101a1f 100644
+--- a/WebProgProje.sln
++++ b/WebProgProje.sln
+@@ -1,22 +1,27 @@
+-﻿
+-Microsoft Visual Studio Solution File, Format Version 12.00
+-# Visual Studio Version 17
+-VisualStudioVersion = 17.12.35521.163
+-MinimumVisualStudioVersion = 10.0.40219.1
+-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProgProje", "WebProgProje\WebProgProje.csproj", "{DE851263-A6B8-4261-A68D-EDE3A6A9D188}"
+-EndProject
+-Global
+-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+-		Debug|Any CPU = Debug|Any CPU
+-		Release|Any CPU = Release|Any CPU
+-	EndGlobalSection
+-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+-		{DE851263-A6B8-4261-A68D-EDE3A6A9D188}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+-		{DE851263-A6B8-4261-A68D-EDE3A6A9D188}.Debug|Any CPU.Build.0 = Debug|Any CPU
+-		{DE851263-A6B8-4261-A68D-EDE3A6A9D188}.Release|Any CPU.ActiveCfg = Release|Any CPU
+-		{DE851263-A6B8-4261-A68D-EDE3A6A9D188}.Release|Any CPU.Build.0 = Release|Any CPU
+-	EndGlobalSection
+-	GlobalSection(SolutionProperties) = preSolution
+-		HideSolutionNode = FALSE
+-	EndGlobalSection
+-EndGlobal
++Microsoft Visual Studio Solution File, Format Version 12.00
++# Visual Studio Version 17
++VisualStudioVersion = 17.12.35521.163
++MinimumVisualStudioVersion = 10.0.40219.1
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProgProje", "WebProgProje\WebProgProje.csproj", "{DE851263-A6B8-4261-A68D-EDE3A6A9D188}"
++EndProject
++Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProgProje.Tests", "WebProgProje.Tests\WebProgProje.Tests.csproj", "{7B2F1C4E-9A63-4D51-8E0F-2C6D5A9B4E12}"
++EndProject
++Global
++	GlobalSection(SolutionConfigurationPlatforms) = preSolution
++		Debug|Any CPU = Debug|Any CPU
++		Release|Any CPU = Release|Any CPU
++	EndGlobalSection
++	GlobalSection(ProjectConfigurationPlatforms) = postSolution
++		{DE851263-A6B8-4261-A68D-EDE3A6A9D188}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
++		{DE851263-A6B8-4261-A68D-EDE3A6A9D188}.Debug|Any CPU.Build.0 = Debug|Any CPU
++		{DE851263-A6B8-4261-A68D-EDE3A6A9D188}.Release|Any CPU.ActiveCfg = Release|Any CPU
++		{DE851263-A6B8-4261-A68D-EDE3A6A9D188}.Release|Any CPU.Build.0 = Release|Any CPU
++		{7B2F1C4E-9A63-4D51-8E0F-2C6D5A9B4E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
++		{7B2F1C4E-9A63-4D51-8E0F-2C6D5A9B4E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
++		{7B2F1C4E-9A63-4D51-8E0F-2C6D5A9B4E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
++		{7B2F1C4E-9A63-4D51-8E0F-2C6D5A9B4E12}.Release|Any CPU.Build.0 = Release|Any CPU
++	EndGlobalSection
++	GlobalSection(SolutionProperties) = preSolution
++		HideSolutionNode = FALSE
++	EndGlobalSection
++EndGlobal
+diff --git a/WebProgProje/Controllers/AIResultsController.cs b/WebProgProje/Controllers/AIResultsController.cs
+index 5640c52..f9f5f48 100644
+--- a/WebProgProje/Controllers/AIResultsController.cs
++++ b/WebProgProje/Controllers/AIResultsController.cs
+@@ -14,10 +14,20 @@ namespace WebProgramlamaProje.Controllers
+     public class AIResultsController : Controller
+     {
+         private readonly SalonDbContext _context;
+-
+-        public AIResultsController(SalonDbContext context)
++        private readonly IHttpClientFactory _httpClientFactory;
++        private readonly IConfiguration _configuration;
++        private readonly ILogger<AIResultsController> _logger;
++
++        public AIResultsController(
++            SalonDbContext context,
++            IHttpClientFactory httpClientFactory,
++            IConfiguration configuration,
++            ILogger<AIResultsController> logger)
+         {
+             _context = context;
++            _httpClientFactory = httpClientFactory;
++            _configuration = configuration;
++            _logger = logger;
+         }
+ 
+         // GET: AIResults
+@@ -89,7 +99,7 @@ namespace WebProgramlamaProje.Controllers
+             }
+ 
+             // API çağrısı ve gelen resmi kaydetme işlemleri
+-            string apiResultImage = await CallApiAndGetResult(aiResult.ImageBase64, aiResult.SuggestedStyle);
++            string? apiResultImage = await CallApiAndGetResult(aiResult.ImageBase64, aiResult.SuggestedStyle);
+ 
+             if (!string.IsNullOrEmpty(apiResultImage))
+             {
+@@ -106,13 +116,24 @@ namespace WebProgramlamaProje.Controllers
+         }
+ 
+ 
+-        private async Task<string> CallApiAndGetResult(string base64Image, string suggestedStyle)
++        private async Task<string?> CallApiAndGetResult(string base64Image, string suggestedStyle)
+         {
+-            using var client = new HttpClient();
+-            client.BaseAddress = new Uri("https://www.ailabtools.com/api/ai-portrait/effects/hairstyle-editor-pro/");
+-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "***REMOVED-AILAB-BEARER-TOKEN***"); // API anahtarınızı buraya koyun
++            // API anahtarı ve adresi kaynak kodda tutulmaz; konfigürasyondan okunur.
++            // Bkz. README > Yapılandırma.
++            var apiKey = _configuration["AILabApi:ApiKey"];
++            var baseUrl = _configuration["AILabApi:BaseUrl"];
++
++            if (string.IsNullOrWhiteSpace(apiKey) || string.IsNullOrWhiteSpace(baseUrl))
++            {
++                _logger.LogError("AILabApi yapılandırması eksik: ApiKey/BaseUrl tanımlı değil.");
++                return null;
++            }
++
++            var client = _httpClientFactory.CreateClient();
++            client.BaseAddress = new Uri(baseUrl);
++            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+ 
+-            var requestContent = new MultipartFormDataContent
++            using var requestContent = new MultipartFormDataContent
+     {
+         { new StringContent(base64Image), "image" },
+         { new StringContent(suggestedStyle), "styleId" }
+@@ -122,7 +143,7 @@ namespace WebProgramlamaProje.Controllers
+ 
+             if (!response.IsSuccessStatusCode)
+             {
+-                // Hata durumunda null döndürün veya hata mesajını kaydedin
++                _logger.LogError("AILab servisi hata döndürdü. Durum kodu: {StatusCode}", response.StatusCode);
+                 return null;
+             }
+ 
+diff --git a/WebProgProje/Controllers/CalisanVerimlilikIstatistikController.cs b/WebProgProje/Controllers/CalisanVerimlilikIstatistikController.cs
+index 53b5b55..de220ea 100644
+--- a/WebProgProje/Controllers/CalisanVerimlilikIstatistikController.cs
++++ b/WebProgProje/Controllers/CalisanVerimlilikIstatistikController.cs
+@@ -7,10 +7,17 @@ namespace WebProgramlamaProje.Controllers
+     public class CalisanVerimlilikController : Controller
+     {
+         private readonly HttpClient _httpClient;
++        private readonly string _apiBaseUrl;
+ 
+-        public CalisanVerimlilikController(HttpClient httpClient)
++        public CalisanVerimlilikController(HttpClient httpClient, IConfiguration configuration)
+         {
+             _httpClient = httpClient;
++
++            // API adresi kaynak kodda sabit tutulmaz; konfigurasyondan okunur.
++            var baseUrl = configuration["ApiSettings:BaseUrl"];
++            _apiBaseUrl = string.IsNullOrWhiteSpace(baseUrl)
++                ? "http://localhost:5237"
++                : baseUrl.TrimEnd('/');
+         }
+ 
+         private string GetUserRole()
+@@ -48,7 +55,7 @@ namespace WebProgramlamaProje.Controllers
+                 ViewData["ErrorMessage"] = "Yetkisiz Erişim";
+                 return RedirectToAction("Index", "home");
+             }
+-            var verimlilikList = await _httpClient.GetFromJsonAsync<List<CalisanVerimlilik>>("http://localhost:5237/api/CalisanVerimlilikIstatistik/verimlilik");
++            var verimlilikList = await _httpClient.GetFromJsonAsync<List<CalisanVerimlilik>>($"{_apiBaseUrl}/api/CalisanVerimlilikIstatistik/verimlilik");
+             return View(verimlilikList);
+         }
+ 
+@@ -60,7 +67,7 @@ namespace WebProgramlamaProje.Controllers
+                 ViewData["ErrorMessage"] = "Yetkisiz Erişim";
+                 return RedirectToAction("Index", "home");
+             }
+-            var gunlukKazancList = await _httpClient.GetFromJsonAsync<List<GunlukKazanclar>>($"http://localhost:5237/api/CalisanVerimlilikIstatistik/gunluk-kazanc?tarih={tarih:yyyy-MM-dd}");
++            var gunlukKazancList = await _httpClient.GetFromJsonAsync<List<GunlukKazanclar>>($"{_apiBaseUrl}/api/CalisanVerimlilikIstatistik/gunluk-kazanc?tarih={tarih:yyyy-MM-dd}");
+             return View(gunlukKazancList);
+         }
+ 
+@@ -72,7 +79,7 @@ namespace WebProgramlamaProje.Controllers
+                 ViewData["ErrorMessage"] = "Yetkisiz Erişim";
+                 return RedirectToAction("Index", "home");
+             }
+-            var istatistikler = await _httpClient.GetFromJsonAsync<List<IslemIstatistik>>("http://localhost:5237/api/CalisanVerimlilikIstatistik/salon/islem-istatistikleri");
++            var istatistikler = await _httpClient.GetFromJsonAsync<List<IslemIstatistik>>($"{_apiBaseUrl}/api/CalisanVerimlilikIstatistik/salon/islem-istatistikleri");
+             return View(istatistikler);
+         }
+ 
+@@ -84,13 +91,13 @@ namespace WebProgramlamaProje.Controllers
+                 ViewData["ErrorMessage"] = "Yetkisiz Erişim";
+                 return RedirectToAction("Index", "home");
+             }
+-            var istatistikler = await _httpClient.GetFromJsonAsync<List<RandevuIstatistik>>($"http://localhost:5237/api/CalisanVerimlilikIstatistik/randevu-istatistikleri?baslangicTarihi={baslangicTarihi:yyyy-MM-dd}&bitisTarihi={bitisTarihi:yyyy-MM-dd}");
++            var istatistikler = await _httpClient.GetFromJsonAsync<List<RandevuIstatistik>>($"{_apiBaseUrl}/api/CalisanVerimlilikIstatistik/randevu-istatistikleri?baslangicTarihi={baslangicTarihi:yyyy-MM-dd}&bitisTarihi={bitisTarihi:yyyy-MM-dd}");
+             return View(istatistikler);
+         }
+ 
+         public async Task<IActionResult> CalismaSaatleri()
+         {
+-            var calismaSaatleri = await _httpClient.GetFromJsonAsync<List<CalismaSaati>>("http://localhost:5237/api/CalisanVerimlilikIstatistik/calisan/calisma-saatleri");
++            var calismaSaatleri = await _httpClient.GetFromJsonAsync<List<CalismaSaati>>($"{_apiBaseUrl}/api/CalisanVerimlilikIstatistik/calisan/calisma-saatleri");
+             return View(calismaSaatleri);
+         }
+ 
+@@ -98,7 +105,7 @@ namespace WebProgramlamaProje.Controllers
+         {
+             try
+             {
+-                var randevular = await _httpClient.GetFromJsonAsync<List<Randevu>>($"http://localhost:5237/api/CalisanVerimlilikIstatistik/kullanici/{kullaniciId}/randevular");
++                var randevular = await _httpClient.GetFromJsonAsync<List<Randevu>>($"{_apiBaseUrl}/api/CalisanVerimlilikIstatistik/kullanici/{kullaniciId}/randevular");
+                 if (randevular == null || !randevular.Any())
+                 {
+                     ViewData["ErrorMessage"] = "Bu kullanıcıya ait randevu bulunamadı.";
+@@ -116,7 +123,7 @@ namespace WebProgramlamaProje.Controllers
+         [HttpGet("api/randevus/calisan/{calisanId}/uygunluk")]
+         public async Task<IActionResult> GetCalisanUygunluk(int calisanId)
+         {
+-            var uygunluklar = await _httpClient.GetFromJsonAsync<List<CalismaSaati>>($"http://localhost:5237/api/CalisanVerimlilikIstatistik/calisan/{calisanId}/uygunluk");
++            var uygunluklar = await _httpClient.GetFromJsonAsync<List<CalismaSaati>>($"{_apiBaseUrl}/api/CalisanVerimlilikIstatistik/calisan/{calisanId}/uygunluk");
+             if (uygunluklar == null || !uygunluklar.Any())
+             {
+                 return NotFound(new { Message = "Bu çalışana ait uygunluk bilgisi bulunamadı." });
+diff --git a/WebProgProje/Controllers/HairAPIController.cs b/WebProgProje/Controllers/HairAPIController.cs
+index 320afad..1600849 100644
+--- a/WebProgProje/Controllers/HairAPIController.cs
++++ b/WebProgProje/Controllers/HairAPIController.cs
+@@ -1,16 +1,23 @@
+-﻿using Microsoft.AspNetCore.Mvc;
++using Microsoft.AspNetCore.Mvc;
+ using System.Net.Http.Headers;
+-using Newtonsoft.Json;
++using System.Text.Json;
+ 
+ namespace WebProgramlamaProje.Controllers
+ {
+     public class HairAPIController : Controller
+     {
+         private readonly ILogger<HairAPIController> _logger;
++        private readonly IHttpClientFactory _httpClientFactory;
++        private readonly IConfiguration _configuration;
+ 
+-        public HairAPIController(ILogger<HairAPIController> logger)
++        public HairAPIController(
++            ILogger<HairAPIController> logger,
++            IHttpClientFactory httpClientFactory,
++            IConfiguration configuration)
+         {
+             _logger = logger;
++            _httpClientFactory = httpClientFactory;
++            _configuration = configuration;
+         }
+ 
+         public IActionResult ChangeHairstyleForm()
+@@ -26,76 +33,90 @@ namespace WebProgramlamaProje.Controllers
+         [HttpPost]
+         public async Task<IActionResult> ChangeHairstyle([FromBody] ChangeHairstyleRequest request)
+         {
+-            if (string.IsNullOrEmpty(request.Base64Image))
++            if (request is null || string.IsNullOrEmpty(request.Base64Image))
+             {
+                 return Json(new { error = "Lütfen bir resim yükleyin." });
+             }
+ 
++            // API bilgileri kaynak kodda tutulmaz; konfigürasyondan (User Secrets / ortam
++            // değişkeni / appsettings) okunur. Bkz. README > Yapılandırma.
++            var apiKey = _configuration["HairstyleApi:ApiKey"];
++            var apiHost = _configuration["HairstyleApi:Host"];
++            var endpoint = _configuration["HairstyleApi:Endpoint"];
++
++            if (string.IsNullOrWhiteSpace(apiKey) ||
++                string.IsNullOrWhiteSpace(apiHost) ||
++                string.IsNullOrWhiteSpace(endpoint))
++            {
++                _logger.LogError("HairstyleApi yapılandırması eksik: ApiKey/Host/Endpoint tanımlı değil.");
++                return Json(new { error = "Servis yapılandırması eksik. Lütfen yöneticinize başvurun." });
++            }
++
+             try
+             {
+                 var imageBytes = Convert.FromBase64String(request.Base64Image);
+ 
+-                var client = new HttpClient();
+-                var apiRequest = new HttpRequestMessage
++                var client = _httpClientFactory.CreateClient();
++
++                using var content = new MultipartFormDataContent();
++
++                var imageContent = new ByteArrayContent(imageBytes);
++                imageContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                 {
+-                    Method = HttpMethod.Post,
+-                    RequestUri = new Uri("https://hairstyle-changer.p.rapidapi.com/huoshan/facebody/hairstyle"),
+-                    Headers =
+-            {
+-                { "x-rapidapi-key", "***REMOVED-RAPIDAPI-KEY***" },
+-                { "x-rapidapi-host", "hairstyle-changer.p.rapidapi.com" }
+-            },
+-                    Content = new MultipartFormDataContent
+-            {
+-                new ByteArrayContent(imageBytes)
++                    Name = "image_target",
++                    FileName = "uploaded_image.jpg"
++                };
++                content.Add(imageContent);
++
++                var hairTypeContent = new StringContent(request.HairType ?? string.Empty);
++                hairTypeContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
++                {
++                    Name = "hair_type"
++                };
++                content.Add(hairTypeContent);
++
++                using var apiRequest = new HttpRequestMessage(HttpMethod.Post, endpoint)
+                 {
+-                    Headers =
+-                    {
+-                        ContentDisposition = new ContentDispositionHeaderValue("form-data")
+-                        {
+-                            Name = "image_target",
+-                            FileName = "uploaded_image.jpg"
+-                        }
+-                    }
+-                },
+-                new StringContent(request.HairType)
++                    Content = content
++                };
++                apiRequest.Headers.Add("x-rapidapi-key", apiKey);
++                apiRequest.Headers.Add("x-rapidapi-host", apiHost);
++
++                using var response = await client.SendAsync(apiRequest);
++                var responseBody = await response.Content.ReadAsStringAsync();
++
++                if (!response.IsSuccessStatusCode)
+                 {
+-                    Headers =
+-                    {
+-                        ContentDisposition = new ContentDispositionHeaderValue("form-data")
+-                        {
+-                            Name = "hair_type"
+-                        }
+-                    }
++                    // Yanıt gövdesi log'a yazılır, kullanıcıya sızdırılmaz.
++                    _logger.LogError("Saç modeli servisi hata döndürdü. Durum kodu: {StatusCode}", response.StatusCode);
++                    return Json(new { error = $"API Hatası: {response.StatusCode}" });
+                 }
+-            }
+-                };
+ 
+-                using (var response = await client.SendAsync(apiRequest))
++                using var document = JsonDocument.Parse(responseBody);
++                if (document.RootElement.TryGetProperty("data", out var data) &&
++                    data.TryGetProperty("image", out var image))
+                 {
+-                    var responseBody = await response.Content.ReadAsStringAsync();
+-                    if (response.IsSuccessStatusCode)
+-                    {
+-                        dynamic jsonResponse = Newtonsoft.Json.JsonConvert.DeserializeObject(responseBody);
+-                        return Json(new { resultImage = jsonResponse?.data?.image?.ToString() });
+-                    }
+-                    else
+-                    {
+-                        return Json(new { error = $"API Hatası: {response.StatusCode}" });
+-                    }
++                    return Json(new { resultImage = image.GetString() });
+                 }
++
++                _logger.LogWarning("Saç modeli servisinden beklenen alanlar dönmedi.");
++                return Json(new { error = "Servisten beklenen yanıt alınamadı." });
++            }
++            catch (FormatException)
++            {
++                return Json(new { error = "Görsel formatı geçersiz. Lütfen tekrar deneyin." });
+             }
+             catch (Exception ex)
+             {
+-                return Json(new { error = $"Bir hata oluştu: {ex.Message}" });
++                _logger.LogError(ex, "Saç modeli değiştirme isteği başarısız oldu.");
++                return Json(new { error = "Bir hata oluştu. Lütfen daha sonra tekrar deneyin." });
+             }
+         }
+ 
+         public class ChangeHairstyleRequest
+         {
+-            public string Base64Image { get; set; }
+-            public string HairType { get; set; }
++            public string Base64Image { get; set; } = string.Empty;
++            public string HairType { get; set; } = string.Empty;
+         }
+-
+     }
+ }
+diff --git a/WebProgProje/Program.cs b/WebProgProje/Program.cs
+index 84326e9..14d94a9 100644
+--- a/WebProgProje/Program.cs
++++ b/WebProgProje/Program.cs
+@@ -6,51 +6,54 @@ using WebProgramlamaProje.Models;
+ var builder = WebApplication.CreateBuilder(args);
+ 
+ // **Servislerin eklenmesi**
+-builder.Services.AddControllersWithViews(); // MVC deste�i
+-builder.Services.AddHttpContextAccessor(); // HttpContext eri�imi
++builder.Services.AddControllersWithViews(); // MVC deste�i
++builder.Services.AddHttpContextAccessor(); // HttpContext eri�imi
+ builder.Services.AddSession(options =>
+ {
+-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Session zaman a��m� s�resi
++    options.IdleTimeout = TimeSpan.FromMinutes(30); // Session zaman a��m� s�resi
+     options.Cookie.HttpOnly = true;
+     options.Cookie.IsEssential = true;
+ });
+ 
++// IHttpClientFactory + varsayılan HttpClient kaydı (controller'lara enjekte edilir)
+ builder.Services.AddHttpClient();
+-builder.Services.AddHttpClient<HairAPIController>(); // HttpClient i�in servis
+ builder.Services.Configure<FormOptions>(options =>
+ {
+     options.MultipartBodyLengthLimit = 104857600; // 100 MB
+ });
+ 
+ 
+-// **Veritaban� ba�lant� ayarlar�**
+-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+-                       ?? "Server=(localdb)\\mssqllocaldb;Database=WebProgramlamaProje;Trusted_Connection=True;";
++// **Veritaban� ba�lant� ayarlar�**
++var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
++if (string.IsNullOrWhiteSpace(connectionString))
++{
++    connectionString = "Server=(localdb)\\mssqllocaldb;Database=WebProgramlamaProje;Trusted_Connection=True;";
++}
+ builder.Services.AddDbContext<SalonDbContext>(options =>
+ {
+     options.UseSqlServer(connectionString);
+ });
+ 
+ // **Custom Servislerin Eklenmesi**
+-builder.Services.AddScoped<KullaniciService>(); // Kullan�c� servisi
++builder.Services.AddScoped<KullaniciService>(); // Kullan�c� servisi
+ 
+ var app = builder.Build();
+ 
+-// **HTTP Request Pipeline Ayarlar�**
++// **HTTP Request Pipeline Ayarlar�**
+ if (!app.Environment.IsDevelopment())
+ {
+-    app.UseExceptionHandler("/Home/Error"); // Hata y�nlendirme
++    app.UseExceptionHandler("/Home/Error"); // Hata y�nlendirme
+     app.UseHsts(); // HTTP Strict Transport Security
+ }
+ 
+-app.UseHttpsRedirection(); // HTTPS y�nlendirmesi
+-app.UseStaticFiles(); // Statik dosyalar (CSS, JS, resimler vb.) i�in
++app.UseHttpsRedirection(); // HTTPS y�nlendirmesi
++app.UseStaticFiles(); // Statik dosyalar (CSS, JS, resimler vb.) i�in
+ 
+ app.UseRouting();
+-app.UseSession(); // Session kullan�m�n� aktif et
++app.UseSession(); // Session kullan�m�n� aktif et
+ app.UseAuthorization(); // Yetkilendirme middleware'i
+ 
+-// **Rota ayarlar�**
++// **Rota ayarlar�**
+ app.MapControllerRoute(
+     name: "admin",
+     pattern: "Home/Admin",
+@@ -73,5 +76,5 @@ app.UseEndpoints(endpoints =>
+ });
+ 
+ 
+-// **Uygulaman�n �al��t�r�lmas�**
++// **Uygulaman�n �al��t�r�lmas�**
+ app.Run();
+diff --git a/WebProgProje/WebProgProje.csproj b/WebProgProje/WebProgProje.csproj
+index 4e5b1c2..2dc831f 100644
+--- a/WebProgProje/WebProgProje.csproj
++++ b/WebProgProje/WebProgProje.csproj
+@@ -4,6 +4,8 @@
+     <TargetFramework>net8.0</TargetFramework>
+     <Nullable>enable</Nullable>
+     <ImplicitUsings>enable</ImplicitUsings>
++    <!-- API anahtarları için: dotnet user-secrets set "HairstyleApi:ApiKey" "..." -->
++    <UserSecretsId>webprogproje-salon-2024</UserSecretsId>
+   </PropertyGroup>
+ 
+   <ItemGroup>
+diff --git a/WebProgProje/appsettings.json b/WebProgProje/appsettings.json
+index 349b9cc..ebff33c 100644
+--- a/WebProgProje/appsettings.json
++++ b/WebProgProje/appsettings.json
+@@ -1,13 +1,24 @@
+-{
+-  "Logging": {
+-    "LogLevel": {
+-      "Default": "Information",
+-      "Microsoft.AspNetCore": "Warning"
+-    }
+-  },
+-  "AllowedHosts": "*",
+-  "AILabAPI": {
+-    "ApiKey": "***REMOVED-AILAB-APIKEY***",
+-    "BaseUrl": "https://www.ailabapi.com/api/"
+-  }
+-}
++{
++  "Logging": {
++    "LogLevel": {
++      "Default": "Information",
++      "Microsoft.AspNetCore": "Warning"
++    }
++  },
++  "AllowedHosts": "*",
++
++  // ÖNEMLİ: Bu dosya sürüm kontrolüne dahildir; buraya GERÇEK API anahtarı yazılmaz.
++  // Anahtarlar User Secrets veya ortam değişkeni ile verilir. Bkz. README > Yapılandırma.
++  "ApiSettings": {
++    "BaseUrl": "http://localhost:5237"
++  },
++  "HairstyleApi": {
++    "Endpoint": "https://hairstyle-changer.p.rapidapi.com/huoshan/facebody/hairstyle",
++    "Host": "hairstyle-changer.p.rapidapi.com",
++    "ApiKey": ""
++  },
++  "AILabApi": {
++    "BaseUrl": "https://www.ailabtools.com/api/ai-portrait/effects/hairstyle-editor-pro/",
++    "ApiKey": ""
++  }
++}

@@ -7,10 +7,17 @@ namespace WebProgramlamaProje.Controllers
     public class CalisanVerimlilikController : Controller
     {
         private readonly HttpClient _httpClient;
+        private readonly string _apiBaseUrl;
 
-        public CalisanVerimlilikController(HttpClient httpClient)
+        public CalisanVerimlilikController(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
+
+            // API adresi kaynak kodda sabit tutulmaz; konfigurasyondan okunur.
+            var baseUrl = configuration["ApiSettings:BaseUrl"];
+            _apiBaseUrl = string.IsNullOrWhiteSpace(baseUrl)
+                ? "http://localhost:5237"
+                : baseUrl.TrimEnd('/');
         }
 
         private string GetUserRole()
@@ -48,7 +55,7 @@ namespace WebProgramlamaProje.Controllers
                 ViewData["ErrorMessage"] = "Yetkisiz Erişim";
                 return RedirectToAction("Index", "home");
             }
-            var verimlilikList = await _httpClient.GetFromJsonAsync<List<CalisanVerimlilik>>("http://localhost:5237/api/CalisanVerimlilikIstatistik/verimlilik");
+            var verimlilikList = await _httpClient.GetFromJsonAsync<List<CalisanVerimlilik>>($"{_apiBaseUrl}/api/CalisanVerimlilikIstatistik/verimlilik");
             return View(verimlilikList);
         }
 
@@ -60,7 +67,7 @@ namespace WebProgramlamaProje.Controllers
                 ViewData["ErrorMessage"] = "Yetkisiz Erişim";
                 return RedirectToAction("Index", "home");
             }
-            var gunlukKazancList = await _httpClient.GetFromJsonAsync<List<GunlukKazanclar>>($"http://localhost:5237/api/CalisanVerimlilikIstatistik/gunluk-kazanc?tarih={tarih:yyyy-MM-dd}");
+            var gunlukKazancList = await _httpClient.GetFromJsonAsync<List<GunlukKazanclar>>($"{_apiBaseUrl}/api/CalisanVerimlilikIstatistik/gunluk-kazanc?tarih={tarih:yyyy-MM-dd}");
             return View(gunlukKazancList);
         }
 
@@ -72,7 +79,7 @@ namespace WebProgramlamaProje.Controllers
                 ViewData["ErrorMessage"] = "Yetkisiz Erişim";
                 return RedirectToAction("Index", "home");
             }
-            var istatistikler = await _httpClient.GetFromJsonAsync<List<IslemIstatistik>>("http://localhost:5237/api/CalisanVerimlilikIstatistik/salon/islem-istatistikleri");
+            var istatistikler = await _httpClient.GetFromJsonAsync<List<IslemIstatistik>>($"{_apiBaseUrl}/api/CalisanVerimlilikIstatistik/salon/islem-istatistikleri");
             return View(istatistikler);
         }
 
@@ -84,13 +91,13 @@ namespace WebProgramlamaProje.Controllers
                 ViewData["ErrorMessage"] = "Yetkisiz Erişim";
                 return RedirectToAction("Index", "home");
             }
-            var istatistikler = await _httpClient.GetFromJsonAsync<List<RandevuIstatistik>>($"http://localhost:5237/api/CalisanVerimlilikIstatistik/randevu-istatistikleri?baslangicTarihi={baslangicTarihi:yyyy-MM-dd}&bitisTarihi={bitisTarihi:yyyy-MM-dd}");
+            var istatistikler = await _httpClient.GetFromJsonAsync<List<RandevuIstatistik>>($"{_apiBaseUrl}/api/CalisanVerimlilikIstatistik/randevu-istatistikleri?baslangicTarihi={baslangicTarihi:yyyy-MM-dd}&bitisTarihi={bitisTarihi:yyyy-MM-dd}");
             return View(istatistikler);
         }
 
         public async Task<IActionResult> CalismaSaatleri()
         {
-            var calismaSaatleri = await _httpClient.GetFromJsonAsync<List<CalismaSaati>>("http://localhost:5237/api/CalisanVerimlilikIstatistik/calisan/calisma-saatleri");
+            var calismaSaatleri = await _httpClient.GetFromJsonAsync<List<CalismaSaati>>($"{_apiBaseUrl}/api/CalisanVerimlilikIstatistik/calisan/calisma-saatleri");
             return View(calismaSaatleri);
         }
 
@@ -98,7 +105,7 @@ namespace WebProgramlamaProje.Controllers
         {
             try
             {
-                var randevular = await _httpClient.GetFromJsonAsync<List<Randevu>>($"http://localhost:5237/api/CalisanVerimlilikIstatistik/kullanici/{kullaniciId}/randevular");
+                var randevular = await _httpClient.GetFromJsonAsync<List<Randevu>>($"{_apiBaseUrl}/api/CalisanVerimlilikIstatistik/kullanici/{kullaniciId}/randevular");
                 if (randevular == null || !randevular.Any())
                 {
                     ViewData["ErrorMessage"] = "Bu kullanıcıya ait randevu bulunamadı.";
@@ -116,7 +123,7 @@ namespace WebProgramlamaProje.Controllers
         [HttpGet("api/randevus/calisan/{calisanId}/uygunluk")]
         public async Task<IActionResult> GetCalisanUygunluk(int calisanId)
         {
-            var uygunluklar = await _httpClient.GetFromJsonAsync<List<CalismaSaati>>($"http://localhost:5237/api/CalisanVerimlilikIstatistik/calisan/{calisanId}/uygunluk");
+            var uygunluklar = await _httpClient.GetFromJsonAsync<List<CalismaSaati>>($"{_apiBaseUrl}/api/CalisanVerimlilikIstatistik/calisan/{calisanId}/uygunluk");
             if (uygunluklar == null || !uygunluklar.Any())
             {
                 return NotFound(new { Message = "Bu çalışana ait uygunluk bilgisi bulunamadı." });

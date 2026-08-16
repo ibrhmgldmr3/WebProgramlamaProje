@@ -6,51 +6,54 @@ using WebProgramlamaProje.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // **Servislerin eklenmesi**
-builder.Services.AddControllersWithViews(); // MVC desteði
-builder.Services.AddHttpContextAccessor(); // HttpContext eriþimi
+builder.Services.AddControllersWithViews(); // MVC desteï¿½i
+builder.Services.AddHttpContextAccessor(); // HttpContext eriï¿½imi
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Session zaman aþýmý süresi
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Session zaman aï¿½ï¿½mï¿½ sï¿½resi
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
 
+// IHttpClientFactory + varsayÄ±lan HttpClient kaydÄ± (controller'lara enjekte edilir)
 builder.Services.AddHttpClient();
-builder.Services.AddHttpClient<HairAPIController>(); // HttpClient için servis
 builder.Services.Configure<FormOptions>(options =>
 {
     options.MultipartBodyLengthLimit = 104857600; // 100 MB
 });
 
 
-// **Veritabaný baðlantý ayarlarý**
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-                       ?? "Server=(localdb)\\mssqllocaldb;Database=WebProgramlamaProje;Trusted_Connection=True;";
+// **Veritabanï¿½ baï¿½lantï¿½ ayarlarï¿½**
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    connectionString = "Server=(localdb)\\mssqllocaldb;Database=WebProgramlamaProje;Trusted_Connection=True;";
+}
 builder.Services.AddDbContext<SalonDbContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
 
 // **Custom Servislerin Eklenmesi**
-builder.Services.AddScoped<KullaniciService>(); // Kullanýcý servisi
+builder.Services.AddScoped<KullaniciService>(); // Kullanï¿½cï¿½ servisi
 
 var app = builder.Build();
 
-// **HTTP Request Pipeline Ayarlarý**
+// **HTTP Request Pipeline Ayarlarï¿½**
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error"); // Hata yönlendirme
+    app.UseExceptionHandler("/Home/Error"); // Hata yï¿½nlendirme
     app.UseHsts(); // HTTP Strict Transport Security
 }
 
-app.UseHttpsRedirection(); // HTTPS yönlendirmesi
-app.UseStaticFiles(); // Statik dosyalar (CSS, JS, resimler vb.) için
+app.UseHttpsRedirection(); // HTTPS yï¿½nlendirmesi
+app.UseStaticFiles(); // Statik dosyalar (CSS, JS, resimler vb.) iï¿½in
 
 app.UseRouting();
-app.UseSession(); // Session kullanýmýný aktif et
+app.UseSession(); // Session kullanï¿½mï¿½nï¿½ aktif et
 app.UseAuthorization(); // Yetkilendirme middleware'i
 
-// **Rota ayarlarý**
+// **Rota ayarlarï¿½**
 app.MapControllerRoute(
     name: "admin",
     pattern: "Home/Admin",
@@ -73,5 +76,5 @@ app.UseEndpoints(endpoints =>
 });
 
 
-// **Uygulamanýn çalýþtýrýlmasý**
+// **Uygulamanï¿½n ï¿½alï¿½ï¿½tï¿½rï¿½lmasï¿½**
 app.Run();

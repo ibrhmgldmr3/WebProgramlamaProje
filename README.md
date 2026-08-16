@@ -119,12 +119,63 @@ WebProgramlamaProje/
 │   ├── Views/
 │   ├── wwwroot/           # statik dosyalar
 │   └── WebProgProje.csproj
+├── WebProgProje.Tests/    # xUnit birim testleri
 ├── scripts/               # yardımcı betikler
 └── docs/                  # belgeler, ekran görüntüleri
 ```
 
 ---
 
+---
+
+## Yapılandırma (API anahtarları)
+
+Bu projede kullanılan harici servislerin anahtarları **kaynak koda yazılmaz**; ASP.NET Core
+konfigürasyon sisteminden okunur. `appsettings.json` yalnızca anahtarsız varsayılanları içerir.
+
+Yerel geliştirmede **User Secrets** kullanın:
+
+```bash
+cd WebProgProje
+dotnet user-secrets init
+dotnet user-secrets set "HairstyleApi:ApiKey" "SIZIN_RAPIDAPI_ANAHTARINIZ"
+dotnet user-secrets set "AILabApi:ApiKey"     "SIZIN_AILAB_ANAHTARINIZ"
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=...;Database=...;Trusted_Connection=True;"
+```
+
+Sunucu / CI ortamında ortam değişkeni de kullanılabilir (iki alt çizgi bölüm ayıracıdır):
+
+```bash
+export HairstyleApi__ApiKey="..."
+export AILabApi__ApiKey="..."
+export ApiSettings__BaseUrl="https://sunucu-adresiniz"
+```
+
+Kullanılan konfigürasyon anahtarları:
+
+| Anahtar | Açıklama |
+| ------- | -------- |
+| `ConnectionStrings:DefaultConnection` | MS SQL bağlantı dizesi (boşsa LocalDB'ye düşer) |
+| `ApiSettings:BaseUrl` | Uygulamanın kendi REST API'sinin adresi |
+| `HairstyleApi:Endpoint` / `:Host` / `:ApiKey` | Saç modeli değiştirme servisi |
+| `AILabApi:BaseUrl` / `:ApiKey` | Saç stili düzenleme servisi |
+
+Anahtar tanımlı değilse ilgili uç nokta hata döndürür ve durum log'a yazılır; uygulama çökmez.
+
+---
+
+## Testler
+
+Birim testleri `WebProgProje.Tests` projesindedir (xUnit + EF Core InMemory sağlayıcısı).
+İstatistik REST API'sinin LINQ toplulaştırma sorguları ve kullanıcı servisi test edilir.
+
+```bash
+dotnet test
+```
+
+Testler gerçek bir veritabanına ihtiyaç duymaz; her test kendi izole InMemory veritabanını kurar.
+
+---
 
 ## İletişim
 

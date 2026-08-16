@@ -14,10 +14,20 @@ namespace WebProgramlamaProje.Controllers
     public class AIResultsController : Controller
     {
         private readonly SalonDbContext _context;
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IConfiguration _configuration;
+        private readonly ILogger<AIResultsController> _logger;
 
-        public AIResultsController(SalonDbContext context)
+        public AIResultsController(
+            SalonDbContext context,
+            IHttpClientFactory httpClientFactory,
+            IConfiguration configuration,
+            ILogger<AIResultsController> logger)
         {
             _context = context;
+            _httpClientFactory = httpClientFactory;
+            _configuration = configuration;
+            _logger = logger;
         }
 
         // GET: AIResults
@@ -89,7 +99,7 @@ namespace WebProgramlamaProje.Controllers
             }
 
             // API çağrısı ve gelen resmi kaydetme işlemleri
-            string apiResultImage = await CallApiAndGetResult(aiResult.ImageBase64, aiResult.SuggestedStyle);
+            string? apiResultImage = await CallApiAndGetResult(aiResult.ImageBase64, aiResult.SuggestedStyle);
 
             if (!string.IsNullOrEmpty(apiResultImage))
             {
@@ -106,13 +116,24 @@ namespace WebProgramlamaProje.Controllers
         }
 
 
-        private async Task<string> CallApiAndGetResult(string base64Image, string suggestedStyle)
+        private async Task<string?> CallApiAndGetResult(string base64Image, string suggestedStyle)
         {
-            using var client = new HttpClient();
-            client.BaseAddress = new Uri("https://www.ailabtools.com/api/ai-portrait/effects/hairstyle-editor-pro/");
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "***REMOVED-AILAB-BEARER-TOKEN***"); // API anahtarınızı buraya koyun
+            // API anahtarı ve adresi kaynak kodda tutulmaz; konfigürasyondan okunur.
+            // Bkz. README > Yapılandırma.
+            var apiKey = _configuration["AILabApi:ApiKey"];
+            var baseUrl = _configuration["AILabApi:BaseUrl"];
 
-            var requestContent = new MultipartFormDataContent
+            if (string.IsNullOrWhiteSpace(apiKey) || string.IsNullOrWhiteSpace(baseUrl))
+            {
+                _logger.LogError("AILabApi yapılandırması eksik: ApiKey/BaseUrl tanımlı değil.");
+                return null;
+            }
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(baseUrl);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+
+            using var requestContent = new MultipartFormDataContent
     {
         { new StringContent(base64Image), "image" },
         { new StringContent(suggestedStyle), "styleId" }
@@ -122,7 +143,7 @@ namespace WebProgramlamaProje.Controllers
 
             if (!response.IsSuccessStatusCode)
             {
-                // Hata durumunda null döndürün veya hata mesajını kaydedin
+                _logger.LogError("AILab servisi hata döndürdü. Durum kodu: {StatusCode}", response.StatusCode);
                 return null;
             }
 
